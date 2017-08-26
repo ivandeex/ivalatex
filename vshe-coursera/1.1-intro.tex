@@ -15,19 +15,38 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{cmap}					% поиск в PDF
-\usepackage[T2A]{fontenc}			% кодировка
+
+% https://tex.stackexchange.com/questions/7185/how-to-make-the-pdf-output-of-better-print-quality/7188#7188
+% https://tex.stackexchange.com/questions/172079/t1-encoding-causing-bad-pdf-quality
+% https://tex.stackexchange.com/questions/106789/why-does-usepackaget2afontenc-take-over
+%
+% How can the pdf text be made of more clear print? Install the cm-super package.
+% It will install T1-compatible versions of the Computer Modern fonts.
+% No need to import anything more or to change the document.
+% The T1 font encoding is an 8-bit encoding and uses fonts that have 256 glyphs.
+% If you don't use T1, words with accented characters can`t be automatically hyphenated
+%
+\usepackage[T2A,T1]{fontenc}		% кодировка
 \usepackage[utf8]{inputenc}			% кодировка исходного текста
 \usepackage[english,russian]{babel}	% локализация и переносы
 
+%\renewcommand{\familydefault}{\sfdefault}
+
 \author{Иван Андреев}
-\title{Наш первый документ}
+\title{Наш первый документ / Our first document}
 \date{\today}
 
 \begin{document} % Конец преамбулы, начало текста.
 	
 \maketitle
 	
+Hello, world!
+
 Привет, мир!
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32
 	
 \section{Первый раздел}\label{razd}
 	
