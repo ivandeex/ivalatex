@@ -9,19 +9,19 @@
 \usepackage{graphicx}
 
 
-%\usepackage{caption}
-%\captionsetup{labelsep=period}
+\usepackage{caption}
+\captionsetup{labelsep=period}
 
 
 \begin{document}
 
 \section*{Рисунок}
 
-На рис.~1 изображены два квадрата: красный и черный.
+На рис.\ref{squares} изображены два квадрата: красный и черный.
 
-\begin{figure}
+\begin{figure}[bhtp]
 \centering
-\++++++++++++ЗДЕСЬ ДОЛЖЕН БЫТЬ ВАШ КОД++++++++++++
+\includegraphics{figure.pdf}
 \caption{Квадраты}\label{squares}
 \end{figure}
 
