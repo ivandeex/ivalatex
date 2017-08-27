@@ -254,6 +254,8 @@
 \end{longtable}
 
 \begin{wrapfigure}{l}{0.3333\linewidth}
+% linewidth похожа на textwidth но меняется внутри блока если много колонок итд
+	% здесь текущая linewidth это уже 1/3 от исходной
 	\includegraphics[width=\linewidth]{logo}
 	\caption{Картинка с обтеканием}
 \end{wrapfigure}Распоряжением Правительства Российской Федерации от 12 августа 2008 г. ВШЭ перешла в ведение Правительства РФ. До 12 августа 2008 г. ВШЭ находилась в ведении Министерства экономического развития и торговли РФ.
@@ -285,7 +287,8 @@
 \newcommand{\blue}[1]{\textcolor[rgb]{0,0,1}{#1}}
 \begin{longtable}{|c|p{4em}|p{8em}|p{8em}|l|}
 	\caption{Excel2\LaTeX caption} \\
-	\toprule
+	\endfirsthead
+		\toprule
 		\textbf{key} & \textbf{name} & \textbf{description} & \textbf{location} & \textbf{official} \\
 	\endhead
 		\bottomrule
