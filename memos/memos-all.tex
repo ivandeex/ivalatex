@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{article}
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%%% Программирование
+\usepackage{etoolbox} % логические операторы
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+\DeclareMathOperator{\thh}{\mathop{th}}
+\DeclareMathOperator{\arsh}{\mathop{arsh}}
+\DeclareMathOperator{\arch}{\mathop{arch}}
+\DeclareMathOperator{\arth}{\mathop{arth}}
+\DeclareMathOperator{\arcth}{\mathop{arcth}}
+
+%%% Запрет на перенос строк в формулах
+\binoppenalty=10000  % разрывы строк после знаков бинарных операций (+ - * итд)
+\relpenalty=10000    % разрывы строк после знаков бинарных отношений (= > < итд)
+
+\usepackage{setspace}
+  \onehalfspacing        % полуторный интервал для всего текста
+% \singlespacing         % одиночный интервал для всего текста
+% \doublespacing         % двойной интервал для всего текста
+% \setstretch{множитель} % произвольный интервал
+% \begin{onehalfspace}
+% \begin{doublespace}
+
+\usepackage{mdframed}
+
+\begin{document} % конец преамбулы, начало документа
+
+\section{Производные}
+
+\begin{mdframed}[innertopmargin=-.6\baselineskip,linewidth=.8pt]
+\begin{align*}
+ &  \left( \frac 1 x \right)' = - \frac 1 {x^2}
+ && \left( \frac 1 {x^n} \right)' = - \frac n {x^{n+1}}
+ && ( \sqrt{x} )' = \frac 1 {2\sqrt{x}}
+ && ( \sqrt[n] x )' = \frac 1 {n \sqrt[n]{x^{n-1}}}
+\\& (a^x)' = a^x \ln a
+ && (10^x)' = 10^x \ln 10
+ && (x^x)' = x^x (1+\ln x)
+ &&
+\\& (\ln x)' = \frac 1 x
+ && (\lg x)' = \frac 1 {x \ln 10}
+ && ( \log_{a}x  )' = \frac 1 {x \ln a}
+ &&
+\\& \sin x' = \cos x
+ && \cos x' = - \sin x
+ && \tg x' = \frac 1 {\cos^2 x}
+ && \ctg x' = - \frac 1 {\sin^2 x}
+\\& \arcsin x' = \frac 1 {\sqrt{1-x^2}}
+ && \arccos x' = - \frac 1 {\sqrt{1-x^2}}
+ && \arctg x' = \frac 1 {1+x^2}
+ && \arcctg x' = - \frac 1 {1+x^2}
+\\& \arsh x' = \frac 1 {\sqrt{1+x^2}}
+ && \arch x' = \frac 1 {\sqrt{x^2-1}}
+ && \arth x' = \frac 1 {1-x^2}
+ && \arcth x' = \frac 1 {x^2-1}
+\\& 
+ && 
+ && \thh x' = \frac 1 {\ch^2 x}
+ && \cth x' = - \frac 1 {\sh^2 x}
+\end{align*}
+\end{mdframed}
+
+\begin{mdframed}[innertopmargin=-.6\baselineskip,linewidth=.8pt]
+\begin{align*}
+&  y = f(x) \quad x = g(y) \quad g = f^{-1}
+  \qquad \Rightarrow \qquad
+  g'(y) = \frac 1 {f'(x)} \quad
+  \left( f(g(x)) \right)' = f'(t) g'(x)
+\\&     (a \cdot b)' = a'b + ab'
+\qquad \left( \frac a b \right)' = \frac{a'b-ab'}{b^2}
+\qquad (a \cdot b)^{(n)} = \sum_{k=0}^n{C_n^k a^{(k)} b^{(n-k)}}
+\end{align*}
+\end{mdframed}
+
+\begin{mdframed}[innertopmargin=-.6\baselineskip,linewidth=.8pt]
+\[\arraycolsep=8pt\def\arraystretch{1.8}
+\begin{array}{lll}
+  \multicolumn{2}{c}{%
+      (x^m)^{(n)} = \begin{cases}
+          m(m-1)\cdots(m-n+1)x^{m-n}, & n \leqslant m \\
+          0,                          & n > 0
+      \end{cases}
+  }%
+\\ (a^{kx})^{(n)} = (k \ln a)^n a^{kx}
+&  (\log_{a}x)^{(n)} = (-1)^{n-1} (n-1)! \frac 1 {\ln a \cdot x^{n-1}}
+\\ (\sin kx)^{(n)} = k^n \sin(x+n\pi/2)
+&  (\cos kx)^{(n)} = k^n \cos(x+n\pi/2)
+\\ (\sh x)^{(n)} = \begin{cases} sh x, & n=2k \\ ch x, & n=2k+1 \end{cases}
+&  (\ch x)^{(n)} = \begin{cases} ch x, & n=2k \\ sh x, & n=2k+1 \end{cases}
+\end{array}
+\]
+\end{mdframed}
+
+
+\end{document}
