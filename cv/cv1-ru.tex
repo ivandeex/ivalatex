@@ -1,0 +1,105 @@
+\documentclass[11pt,a4paper]{moderncv}
+
+\moderncvtheme[blue]{classic}
+\usepackage[utf8x]{inputenc}
+\usepackage[scale=0.8]{geometry}
+\usepackage[russian]{babel}
+
+\usepackage[unicode]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
+
+\firstname{Иван}
+\familyname{Андреев}
+\address{}{Москва, Россия}
+\mobile{+7(925)***-****}
+\email{ivandeex\,@\,gmail\,.\,com}
+\homepage{http://about\,.\,ivandeex\,.\,com}
+
+\makeatletter
+\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+\makeatother
+
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\ttdefault}{cmtt}
+
+\begin{document}
+\maketitle
+
+\section{Интересы}
+\cvline{}{
+  Мое основное направление работы --- системное программирование: разработка ххх и ххх.\newline{}
+  Основной язык, который я использую --- это Python.\newline{}
+  Я люблю открытое ПО и утилиты, которые я применяю в профессии и в хобби.}
+  
+\section{Образование}
+\cventry
+  {Сентябрь 2004 - Июль 2009}
+  {Информационные системы}
+  {Московский Физико-Технический Институт (Государственный Университет), Москва, Россия}
+  {}{}
+  {Инженер}
+
+\section{Опыт работы}
+\cventry
+  {Октябрь 2013 - настоящее время}
+  {Разработчик}
+  {Корпорация ХХХ}
+  {}{}
+  {
+    Разработка и поддержка ХХХ
+  }
+\cventry
+  {Декабрь 2009 - Сентябрь 2013}
+  {Разработчик}
+  {DB ХХ}
+  {}{}
+  {
+  	Парсинг, трансляция и обработка запросов\newline{}
+    Клиентские утилиты\newline{}
+    Система сборки и пакетирования
+  }
+
+\section{Навыки разработки}
+\subsection{Языки программирования}
+\cvline{}{C++, C, Python, Bash, Java, LaTeX}{}
+
+\subsection{Утилиты}
+\cvline{}{gcc, gdb, git, svn, ant}
+
+\section{Другие навыки}
+\cvcomputer{IDE}{Eclipse, Xcode}{}{}
+\cvcomputer{OS}{GNU Linux}{}{}
+
+\section{Проекты}
+\subsection{C++}
+\cvline{XxxSoft}{
+  \url{http://xxx.org/product.html}\newline{}
+  Форк с улучшенной безопасностью
+}
+\cvline{XxxDB}{
+  \url{http://www.xxxdb.org}\newline{}
+  Распределенная база на массивах
+}
+
+\subsection{Python}
+\cvline{Xxx4py}{
+  \url{https://github.com/ivandeex/xxx}\newline{}
+  Реализация драйвера на Python
+}
+
+\section{Знание иностранных языков}
+\cvline{Английский язык}{Upper Intermediate}
+
+\section{Публикации}
+
+\cvline{}{Архитектура сетевого взаимодействия\newline{}
+Системы и методы обработки: Сборник статей, Выпуск XXX, 2009, Андреев И. В.}
+
+\section{Ссылки}
+\cvline{Персональная страница}{\url{http://about.ivandeex.com/}}
+\cvline{LinkedIn}{\url{http://www.linkedin.com/in/ivandeex}}
+\cvline{GitHub}{\url{https://github.com/ivandeex}}
+
+\end{document}

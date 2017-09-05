@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{moderncv}
+
+\moderncvtheme[blue]{classic}
+\usepackage[utf8]{inputenc}
+\usepackage[scale=0.8]{geometry}
+
+\usepackage[unicode]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
+
+\firstname{Ivan}
+\familyname{Andreev}
+\address{}{Moscow, Russia}
+\mobile{+7(925)***-****}
+\email{ivandeex\,@\,gmail\,.\,com}
+\homepage{https://about\,.\,ivandeex\,.\,com}
+
+\makeatletter
+\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+\makeatother
+
+\begin{document}
+\maketitle
+
+\section{Brief description}
+\cvline{}{
+  My main direction --- system development and testing.\newline{}
+  My primary programming language --- Python.\newline{}
+  I enjoy OpenSource software and tools I use for work and fun.
+}
+
+\section{Projects}
+\subsection{C++}
+\cvline{XxxSoft}{
+  \url{http://www.xxx.com/product.html}\newline{}
+  Xxx fork with security
+}
+
+\subsection{Python}
+\cvline{Xxx4py}{
+  \url{https://github.com/ivandeex/xxx4py}\newline{}
+  Pure python Xxx library implementation
+}
+
+\section{Experience}
+\cventry
+  {Oct 2013 - present}
+  {Software Engineer}
+  {Freelance LLC}
+  {}{}
+  {
+    Development and support of Database
+  }
+\cventry 
+  {Dec 2009 - Sep 2013}
+  {Software Engineer}
+  {XxxSoft}
+  {}{}
+  {Query parsing, translating and processing\newline{}
+   Client tools\newline{}
+   Build system, packaging}
+
+\section{Development skills}
+\subsection{Programming Languages}
+\cvlanguage{C++, C, Bash}{Expert}{}
+\cvlanguage{Python, Xxx}{Intermediate}{}
+\cvlanguage{LaTeX, Xxx}{Basic}{}
+\subsection{Tools}
+\cvline{}{gcc, gdb, git, svn, xxx}
+
+\section{Computer skills}
+\cvcomputer{IDE}{Eclipse, Xcode}{}{}
+\cvcomputer{OS}{Linux (RedHat, Debian), Windows}{}{}
+
+\section{Education}
+\cventry
+  {Sep 2004 -  Jul 2009}
+  {Information Technology}
+  {Moscow Institute of Physics and Technology, Moscow, Russia}
+  {}{}
+  {Engineer}
+
+\section{Publications}
+\cvline{}{Target-oriented distributed approach for X (rus)\newline{}
+Andreev I.V. Proceedings of <<Scientific X (NC-2012)>>. 2012. \#3. Pp. 1-9.}
+\cvline{}{Problems of optimization in X (rus)\newline{}
+Andreev I.V. Algorithms, methods and systems of data processing. 2011. N1(28).}
+
+
+\section{Links}
+\cvline{Personal~page}{\url{https://about.ivandeex.com/}}
+\cvline{LinkedIn}{\url{https://www.linkedin.com/in/ivandeex}}
+\cvline{GitHub}{\url{https://github.com/ivandeex}}
+
+\end{document}
