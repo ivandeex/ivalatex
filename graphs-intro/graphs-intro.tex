@@ -1,5 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 
+\usepackage[margin=2.5cm]{geometry}  % change page margins
+
 %%% Работа с русским языком
 \usepackage{cmap}					% поиск в PDF
 \usepackage{mathtext} 				% русские буквы в формулах
@@ -17,7 +19,7 @@
 \usepackage{mathrsfs} % Красивый матшрифт
 
 %% Перенос знаков в формулах (по Львовскому)
-%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
 
 %%% Работа с таблицами
 \usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
@@ -26,6 +28,20 @@
 
 \usepackage{color}
 
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{{images/}}
+
+\newtheorem{definition}{Опр.}[section]
+\newtheorem{property}{Св.}[definition]
+\newtheorem{theorem}{Tеор.}[section]
+\newtheorem{corollary}{Сл.}[theorem]
+\newtheorem{lemma}{Л.}[theorem]
+\newtheorem{problem}{Зад.}[section]
+
+\def\ilet{$\gimel\;$}
+\def\iiff{$\;\Longleftrightarrow\;$}
+
 %%% Заголовок
 \title{Основы теории графов}
 \author{}
@@ -33,57 +49,198 @@
 
 \begin{document}
 
-\newtheorem{theorem}{Теорема}
-\def\ilet{$\gimel$}
-\def\iiff{$\;\Longleftrightarrow\;$}
 \maketitle
+
+\section{Basics}
+
+\begin{theorem}
+	\[ \sum_{v \in V} \deg(v) = 2 |E(G)|  \]
+\end{theorem}
+
+\begin{definition}
+	\textbf{Мост} -- ребро, при его удалении граф развалится
+\end{definition}
+
+\subsection{Задачи}
+
+\subsection{Иллюстрации}
 
 \section{Вершинная связность}
 
-\begin{theorem}[Хёринга]
+\begin{lemma}[Хёринг]
 	$\max$ кол-во путей $P(x \rightarrow y)$ (не перес. во внутр. точках) $=$ $|R|$ -- $\max$ мн-ва вершин, отделяющих $x$ и $y$.
-\end{theorem}
+\end{lemma}
 
-\begin{theorem}[Менгера]
+\begin{theorem}[Менгер]
 	Для $\forall$ несмежных вершин $x,y \in V$ $\nexists e(x,y)$ размер мин. \textbf{верш.}-разделяющего мн-ва $|R_{min}(x \leftrightarrow y)|$ $=$ $\max$ числу простых путей $P(x \rightarrow y)$, отличных во внутренних точках.
 \end{theorem}
 
 \begin{theorem}[Уитни]
-	Граф $G$ $k$-связный \iiff $\forall x,y \in V$, $\exists$ $k$ простых путей $P(x \rightarrow y)$, не пересекающихся во внутренних точках $P_i \neq P_j \text{(внут.)}$.
+	$G$ -- $k$-связный \iiff $\forall x,y \in V$, $\exists$ $k$ простых путей $P(x \rightarrow y)$, не пересекающихся во внутренних точках $P_i \neq P_j \text{(внут.)}$.
 \end{theorem}
+
+\begin{theorem}
+	\ilet $\kappa$ -- вершинная связность, $\lambda$ -- рёберная связность,
+	\[ \kappa(G) \leqslant \lambda(G) \leqslant \delta(G) \]
+	\[ \text{где} \quad \delta(G) = \min_V deg(v) \]
+\end{theorem}
+
+\subsection{Задачи}
+
+\subsection{Иллюстрации}
 
 \section{Рёберная связность}
 
-\begin{theorem}[Форда-Фалкерсона]
-$\max$ поток $Q$ через сеть $=$ пропускной способности минимального $S$-$T$ разреза.
+\begin{theorem}[Форд-Фалкерсон]
+	$\max$ поток $Q$ через сеть $=$ пропускной способности минимального $S$-$T$ разреза.
 \end{theorem}
 
-\begin{theorem}[Менгера ``рёберная'']
-Для $\forall$ несмежных вершин $x,y \in V$ $\nexists e(x,y)$ размер $\min$ \textbf{рёберно}-разделяющего мн-ва $|R^{edge}_{min}(x \leftrightarrow y)|=$ $\max$ числу простых \textbf{рёберно}-непересекающихся путей $P(x \rightarrow y)$.
+\begin{theorem}[Менгер ``рёберная'']
+	Для $\forall$ несмежных вершин $x,y \in V$ $\nexists e(x,y)$ размер $\min$ \textbf{рёберно}-разделяющего мн-ва $|R^{edge}_{min}(x \leftrightarrow y)|=$ $\max$ числу простых \textbf{рёберно}-непересекающихся путей $P(x \rightarrow y)$.
 \end{theorem}
+
+\subsection{Задачи}
+
+\begin{problem}
+	Рассмотрим граф $G$ с двумя выделенными несмежными вершинами $s$ и $t$. Множество вершин $X$, не содержащее вершин $s$ и $t$, назовём вершинным разрезом, если после его удаления из графа пути между $s$ и $t$ будут отсутствовать.
+	
+	Рассмотрим наряду с графом $G$ граф $H$, полученный с помощью следующей процедуры. Каждую вершину $v_i$ графа $G$ разделим на две вершины $v_{i1}$ и $v_{i2}$, которые дополнительно соединим направленным ребром $(v_{i1},v_{i2})$ в случае, если $v_i$ отлична от $s$ и от $t$. Каждое ребро ${v_i,v_j}$ заменим на два ребра $(v_{i2},v_{j1})$ и $(v_{j2},v_{i1})$.
+	
+	Из получившегося графа $H$ получим сеть $H'$, приписав каждому ребру пропускную способность 1, в качестве истока взяв $s_2$, а в качестве стока — $t_1$. Докажите, что величина максимального потока в сети $H'$ равна величине минимального вершинного разреза в графе $G$.
+\end{problem}
+\begin{proof}
+	В качестве иллюстрации своих рассуждений приведу пример исходного графа:
+	
+	\includegraphics[width=5cm]{flow-problem-step-12-fig1.png}
+	
+	и сети, полученной из него по правилам в условии задачи:
+	
+	\includegraphics[width=13cm]{flow-problem-step-12-fig2.png}
+	
+	Для краткости буду называть вершины сети вида $v_{i1}$ чётными полувершинами (верхний ряд на рисунке), а вершины вида $v_{i2}$ -- чётными полувершинами.
+	
+	Во-первых, заметим, что только у стока (s2) допустим нулевой входной поток, а значит вершину t2 без входящих рёбер можно из рассмотрения выбросить. Поток из неё во все оранжевые рёбра всегда будет нулевым. Аналогично выбрасываем вершину s1 (у неё исходящиё поток тоже ноль) и идущие к ней оранжевые рёбра, т.к. поток через них всегда будет нулевым.
+	
+	Запустив на нашу сеть алгоритм Форда-Фалкерсона, мы найдём максимальный поток, который определяется (по теореме) минимальным S-T-разрезом. Попробуем угадать, какие рёбра в него войдут. Мы хотим получить разрез с минимальным потоком. Такие разрезы легче найти среди разрезов с минимальной пропускной способностью. Поскольку пропускная способность всех рёбер по правилам задачи одинакова и равна 1, мы ищем разрез с минимальным числом рёбер из S-половины в T-половину, причём рёбра, идущие из T в S (в обратном направлении) в разрезе не учитываются.
+	
+	Рассмотрим какую-нибудь пару полувершин, например $v_{11}$ и $v_{12}$. Если бы нечётная полувершина входила во множество T разреза, то мы бы учитывали входящие в неё рёбра из вершин s2, v22, v42. Если бы мы включили её в S-половину разреза вместе c s2, а v22 и v42 в T-половину, то все входящие в неё ребра не учитывались бы (все рёбра из зелёной s2 находятся внутри S-половины, а v22 и v42 были бы "обратными" $T \rightarrow S$-рёбрами). Учитывалось бы только единственное исходящее - вертикальное синее ребро $(v_{11} \rightarrow v_{12})$.
+	
+	Так же и в целом по построению сети ситуация такова: только синие рёбра (рёбра вида $v_{i1} \rightarrow v_{i2}$) идут сверху вниз, а все остальные снизу вверх. Поэтому минимальный S-T разрез будет иметь вид: S - это какое-то подмножество нечётных полувершин (верхний синий ряд) плюс s2, а T - какое-то подмножество чётных полувершин (нижний синий ряд) плюс t1. Соответственно рёбра в найденном минимальном разрезе будут из подмножества синих рёбер.
+	
+	Теперь заметим, что каждое синее ребро взаимно однозначно соответствует чётно-нечётной паре полувершин в $H$, т.е. их вершине-прототипу в $G$, и его удаление соответствует удалению этой вершины (т.е. удаление некоторого $(v_{i1} \rightarrow v_{i2})$ в $H$ однозначно соответствует удалению $v_i$ в $G$), а минимальный рёберный разрез по синим рёбрам в $H$ соответствует минимальному разделяющему множеству вершин в $G$.
+	
+	Найденный алгоритмом Форда-Фалкерсона максимальный поток -- это поток через минимальный рёберный разрез в $H'$ (какой бы он ни был, он будет среди синих рёбер) и соответвествует такому набору рёбер в $H$, что при его удалении путей между $s2$ и $t1$ не останется. Таким образом, максимальный поток в $H'$ даст нам размер минимального вершинно-разделяющего множества в $G$.
+\end{proof}
+
+\subsection{Иллюстрации}
 
 \section{Паросочетания}
 
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\cline{2-3}
-\multicolumn{1}{c|}{} & вершинное & рёберное     & \multicolumn{1}{|c}{} \\ \hline
-незав. мн-во          & $\alpha$  & $\alpha'$    & $\max$                \\ \hline
-покрытие              & $\beta$   & $\beta'$     & $\min$                \\ \hline
-\multicolumn{1}{c|}{} & вершинное & п-сочетание  & \multicolumn{1}{|c}{} \\ \cline{2-3}
-\end{tabular}
+  \begin{tabular}{|c|c|c|c|}
+	\cline{2-3}
+	\multicolumn{1}{c|}{} & вершинное & рёберное     & \multicolumn{1}{|c}{} \\ \hline
+	незав. мн-во          & $\alpha$  & $\alpha'$    & $\max$                \\ \hline
+	покрытие              & $\beta$   & $\beta'$     & $\min$                \\ \hline
+	\multicolumn{1}{c|}{} & вершинное & п-сочетание  & \multicolumn{1}{|c}{} \\ \cline{2-3}
+  \end{tabular}
 \end{center}
 
+\begin{property}
+	Если $S$ -- независ.мн-во вершин, то $\bar{S}$ -- покрытие (необязательно $\max$).\\
+	Замечание: это неверно для рёбер.
+\end{property}
+
 \begin{theorem}[Галаи]
-\[ \alpha + \beta = \alpha' + \beta' = n \]
+	\[ \alpha + \beta = \alpha' + \beta' = n \]
 \end{theorem}
 
-\begin{theorem}[Кёнига]
-В $\forall$ 2-дольном графе $B(m,n)$: $\beta = \alpha'$
+\begin{theorem}[Кёниг]
+	В $\forall$ 2-дольном графе $B(m,n)$: $\beta = \alpha'$
 \end{theorem}
 
-\begin{theorem}[Татта]
-В графе $\exists$ совершенное паро-сочетание \iiff при удалении $\forall$ подмножества вершин $S$ образуется нечётных компонент $C_o(G \setminus S) \leqslant |S|$
+\begin{definition}
+	\textbf{Кубический} граф -- регулярный $(\deg v_i = \mathrm{const})$ граф: $\deg = 3$
+\end{definition}
+
+\begin{property}
+	В кубическом графе $|V|$ -- чётное
+\end{property}
+
+\begin{theorem}[Татт]
+	$\exists$ совершенное п.с. \iiff при удалении $\forall$ $S \subset V$ образуется нечётных компонент
+	\[ C_{o}(G \setminus S) \leqslant |S| \]
 \end{theorem}
+
+\begin{corollary}[Петерсен]
+	В кубическом графе $\exists$ с.п.с., если $\mathrm{N}(мостов) \leqslant 2$
+\end{corollary}
+
+\begin{property}
+В чётном графе если $C_{o}(G \setminus S) \ge |S|$ то $C_{o}(G \setminus S) \geqslant |S|+2$
+\end{property}
+
+\begin{definition}
+	Дефицит -- число вершин, не покрытых максимальным п.с.
+	\[ \mathrm{def}(G)=|V|-2\max|M| \]
+\end{definition}
+
+\begin{theorem}[Татта-Бержа]
+	$ \mathrm{def}(G) = \max\limits_{S \subset V} \big( C_{o}(G \setminus S) - \left|S\right| \big) $
+\end{theorem}
+
+\begin{corollary}
+	$ \mathrm{def} \equiv |V| \; (\mathrm{mod} 2) $
+\end{corollary}
+
+\subsection{Задачи}
+
+\begin{problem}
+	Докажите, что любой кубический граф, имеющий не более двух мостов, можно покрыть путями длины 3, не пересекающимися по рёбрам.
+\end{problem}
+\begin{proof}
+	В таком графе найдётся совершенное паросочетание. Удаляя его, мы получаем некоторый подграф. Каждая вершина в нём имеет степень 2. Значит, подграф состоит из циклов. Сориентируем рёбра каждого цикла графа в одном направлении:
+	\begin{center}
+		\includegraphics[width=10cm]{cubic-graph-cover-paths-3.png}
+	\end{center}
+	У каждой вершины будет одно входящее, одно исходящее и одно удалённое ``совершенное'' ребро. Пути длины 3 строим так: ребро ${u,v} \in M$, ребро исходящее из $v$, ребро исходящее из $u$.
+\end{proof}
+
+\begin{problem}
+  Назовём граф критическим, если в нём нет совершенного паросочетания, но при удалении любой вершины оно появляется. Иначе говоря, для любой вершины в графе есть паросочетание,	покрывающее все вершины, кроме неё. Докажите, что $c_o(G \setminus S) - |S| \leqslant -1$ для любого непустого множества $S$ вершин критического графа.
+\end{problem}
+\begin{proof}
+  Рассмотрим произвольное произвольное непустое множество $S$ в графе $G$
+  и выделим произвольную (возможно, единственную, если $|S|=1$) вершину $x \in S$.
+  Обозначим $G' = G \setminus x$ и $S' = S \setminus x$.
+  Заметим, что $ |S| = |S'| + 1 $.
+  Тогда:
+  $ G \setminus S = G \setminus (S' \cup x) = (G \setminus x) \setminus S' = G' \setminus S' $.
+  По условию задачи, в $G'$ всегда найдётся совершенное паросочетание, а значит:
+  $ \mathrm{def}(G') = \max \limits_{\forall S'' \subset V'(G')} \big[ C_o(G' \setminus S'') - |S''| \big] = 0 $.
+  Соединяя вместе эти формулы, получаем:
+  $C_o(G \setminus S) - |S| = C_o(G' \setminus S') - (|S'| + 1) = \big[ C_o(G' \setminus S') - |S'| \big] - 1 \leqslant
+   \max \limits_{\forall S'' \subset V'(G')} \big[ C_o(G' \setminus S'') - |S''| \big] - 1
+   = \mathrm{def}(G') - 1 = 0 - 1 = -1 $
+  Что и требовалось доказать. 
+\end{proof}
+\subsection{Иллюстрации}
+
+\begin{wrapfigure}{c}{5cm}
+	\includegraphics[width=5cm]{cubic-graph-example1.png}
+	\caption{Кубический граф}
+\end{wrapfigure}
+
+\begin{wrapfigure}{c}{14cm}
+	\begin{center}
+		\includegraphics[width=9cm]{minimum-cubic-graph-with3-bridges.png}
+	\end{center}
+	\caption{Мин. (16 вершин) кубический граф с 3 мостами (сов.п.с. $\nexists$)}
+\end{wrapfigure}
+
+\begin{wrapfigure}{c}{10cm}
+	\includegraphics[width=10cm]{matching-deficit-2.png}
+	\caption{Дефицит графа}
+\end{wrapfigure}
 
 \end{document}
