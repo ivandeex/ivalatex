@@ -1,0 +1,158 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}  % change page margins
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{amsmath}
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Шрифты
+\usepackage{euscript} % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Перенос знаков в формулах (по Львовскому)
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+
+%%% Работа с таблицами
+\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
+\usepackage{longtable}  % Длинные таблицы
+\usepackage{multirow} % Слияние строк в таблице
+
+\usepackage{color}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{{images/}}
+
+\newtheorem{definition}{Опр.}[section]
+\newtheorem{property}{Св.}[definition]
+\newtheorem{theorem}{Tеор.}[section]
+\newtheorem{corollary}{Сл.}[theorem]
+\newtheorem{lemma}{Л.}[theorem]
+
+\def\ilet{$\gimel\;$}
+\def\iiff{$\;\Longleftrightarrow\;$}
+
+%%% Заголовок
+\title{Основы теории графов. Теория}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Основы}
+
+\begin{theorem}
+	\[ \sum_{v \in V} \deg(v) = 2 |E(G)|  \]
+\end{theorem}
+
+\section{Вершинная связность}
+
+\begin{definition}
+	Точка сочленения -- если удалить, то распадётся.
+\end{definition}
+
+\begin{lemma}[Хёринг]
+	$\max$ кол-во путей $P(x \rightarrow y)$ (не перес. во внутр. точках) $=$ $|R|$ -- $\max$ мн-ва вершин, отделяющих $x$ и $y$.
+\end{lemma}
+
+\begin{theorem}[Менгер]
+	Для $\forall$ несмежных вершин $x,y \in V$ $\nexists e(x,y)$ размер мин. \textbf{верш.}-разделяющего мн-ва $|R_{min}(x \leftrightarrow y)|$ $=$ $\max$ числу простых путей $P(x \rightarrow y)$, отличных во внутренних точках.
+\end{theorem}
+
+\begin{theorem}[Уитни]
+	$G$ -- $k$-связный \iiff $\forall x,y \in V$, $\exists$ $k$ простых путей $P(x \rightarrow y)$, не пересекающихся во внутренних точках $P_i \neq P_j \text{(внут.)}$.
+\end{theorem}
+
+\begin{theorem}
+	\ilet $\kappa$ -- вершинная связность, $\lambda$ -- рёберная связность,
+	\[ \kappa(G) \leqslant \lambda(G) \leqslant \delta(G) \]
+	\[ \text{где} \quad \delta(G) = \min_V deg(v) \]
+\end{theorem}
+
+\section{Рёберная связность}
+
+\begin{definition}
+	\textbf{Мост} -- ребро, при его удалении граф развалится
+\end{definition}
+
+\begin{theorem}[Форд-Фалкерсон]
+	$\max$ поток $Q$ через сеть $=$ пропускной способности минимального $S$-$T$ разреза.
+\end{theorem}
+
+\begin{theorem}[Менгер ``рёберная'']
+	Для $\forall$ несмежных вершин $x,y \in V$ $\nexists e(x,y)$ размер $\min$ \textbf{рёберно}-разделяющего мн-ва $|R^{edge}_{min}(x \leftrightarrow y)|=$ $\max$ числу простых \textbf{рёберно}-непересекающихся путей $P(x \rightarrow y)$.
+\end{theorem}
+
+\subsection{Задачи}
+
+\section{Паросочетания}
+
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+	\cline{2-3}
+	\multicolumn{1}{c|}{} & вершинное & рёберное     & \multicolumn{1}{|c}{} \\ \hline
+	незав. мн-во          & $\alpha$  & $\alpha'$    & $\max$                \\ \hline
+	покрытие              & $\beta$   & $\beta'$     & $\min$                \\ \hline
+	\multicolumn{1}{c|}{} & вершинное & п-сочетание  & \multicolumn{1}{|c}{} \\ \cline{2-3}
+  \end{tabular}
+\end{center}
+
+\begin{property}
+	Если $S$ -- независ.мн-во вершин, то $\bar{S}$ -- покрытие (необязательно $\max$).\\
+	Замечание: это неверно для рёбер.
+\end{property}
+
+\begin{theorem}[Галаи]
+	\[ \alpha + \beta = \alpha' + \beta' = n \]
+\end{theorem}
+
+\begin{theorem}[Кёниг]
+	В $\forall$ 2-дольном графе $B(m,n)$: $\beta = \alpha'$
+\end{theorem}
+
+\begin{definition}
+	\textbf{Кубический} граф -- регулярный $(\deg v_i = \mathrm{const})$ граф: $\deg = 3$
+\end{definition}
+
+\begin{property}
+	В кубическом графе $|V|$ -- чётное
+\end{property}
+
+\begin{theorem}[Татт]
+	$\exists$ совершенное п.с. \iiff при удалении $\forall$ $S \subset V$ образуется нечётных компонент
+	\[ C_{o}(G \setminus S) \leqslant |S| \]
+\end{theorem}
+
+\begin{corollary}[Петерсен]
+	В кубическом графе $\exists$ с.п.с., если $\mathrm{N}(мостов) \leqslant 2$
+\end{corollary}
+
+\begin{property}
+В чётном графе если $C_{o}(G \setminus S) \ge |S|$ то $C_{o}(G \setminus S) \geqslant |S|+2$
+\end{property}
+
+\begin{definition}
+	Дефицит -- число вершин, не покрытых максимальным п.с.
+	\[ \mathrm{def}(G)=|V|-2\max|M| \]
+\end{definition}
+
+\begin{theorem}[Татта-Бержа]
+	$ \mathrm{def}(G) = \max\limits_{S \subset V} \big( C_{o}(G \setminus S) - \left|S\right| \big) $
+\end{theorem}
+
+\begin{corollary}
+	$ \mathrm{def} \equiv |V| \; (\mathrm{mod} 2) $
+\end{corollary}
+
+\end{document}
