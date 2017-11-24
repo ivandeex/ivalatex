@@ -40,6 +40,7 @@
 
 \def\ilet{$\gimel\;$}
 \def\iiff{$\;\Longleftrightarrow\;$}
+\def\iiChi{\mathcal{X}}
 
 %%% Заголовок
 \title{Основы теории графов. Теория}
@@ -154,5 +155,74 @@
 \begin{corollary}
 	$ \mathrm{def} \equiv |V| \; (\mathrm{mod} 2) $
 \end{corollary}
+
+\section{Раскраски}
+
+\begin{definition} $\Delta = \max \limits_{v \in V} \deg(v)$ \end{definition}
+
+\begin{property}
+	chromatic number $\iiChi(G) \leqslant \Delta + 1$ (оценка жадного алгоритма)
+\end{property}
+
+\begin{itemize}
+  \item  деревья:  $\iiChi=2$
+  \item  двудольные графы $B(m,n)$: $\iiChi=2$
+  \item  полные графы $K_n$:        $\Delta=n-1$, $\iiChi=n$
+  \item  циклы чётной длины $C_{2n}$:     $\Delta=2$, $\iiChi=2$
+  \item  циклы нечётной длины $C_{2n+1}$: $\Delta=2$, $\iiChi=3$
+\end{itemize}
+
+\begin{theorem}[Брукс]
+	$\iiChi(G) \leqslant \Delta$ для всех графов кроме полных и нечётных циклов
+\end{theorem}
+
+\begin{definition} Клика --- полный подграф \end{definition}
+
+\begin{definition}
+	Кликовое число $ \omega(G) = \max \limits_{K_n \subseteq G} n $
+\end{definition}
+
+\begin{property} $ \iiChi(G) \geqslant \omega(G) $ \end{property}
+
+\begin{property} $K_n$ содержит $K_{n-1}$, $K_{n-2}$, \dots, $K_3$ (треугольники) \end{property}
+
+\begin{theorem}[Мицельский]
+	$\forall n \in \mathbb{N} \;\; \exists G: \iiChi(G)=n, \; G \nsupseteq K_3$
+	(свободен от треугольников, т.е. $\omega(G)=2$)
+\end{theorem}
+
+\begin{definition}
+	Обхват $\Omega(G) = \min \limits_{C_n \subseteq G} n $, $C_n$ --- простой цикл
+\end{definition}
+
+\begin{theorem}[Эрдёш]
+	$\forall k \in \mathbb{N} \;\; \exists G: \iiChi(G)=k, \; \Omega(G) \geqslant k$
+\end{theorem}
+
+\begin{definition}
+	$P_G(k)$ -- число способов раскрасить $G$ в $k$ цветов, $P_G(k)=0$ при $k<\iiChi(G)$
+\end{definition}
+
+\begin{itemize}
+	\item полный граф $K_n$ \quad $P_{K_n}(z) = z(z-1)\cdots(z-n+1)$
+	\item пустой граф $\bar{K}_n$ \quad $P_{\overline{K}_n}(z) = z^n$
+	\item дерево $T_n$ \quad $P_{T_n}(z) = z(z-1)^{n-1}$
+	\item лес $T_{n,k}$ из $k$ деревьев и $n=n_1+\dots+n_k \geqslant k$ вершин \quad $P_{T_{n,k}}(z) = z^k(z-1)^{n-k}$
+	\item цикл $C_{n}$ \quad $P_{C_{n}}(z) = (z-1)^n + (-1)^n(z-1)$
+\end{itemize}
+
+\begin{property}
+	Если в графе есть кратные рёбра, то это никак не влияет на раскраску
+\end{property}
+
+\begin{lemma} ($G \setminus e$ -- стягивание ребра $e$)
+	\[ P_{G}(z) = P_{G-e}(z) - P_{G \setminus e}(z) \]
+\end{lemma}
+\begin{proof}
+	\begin{wrapfigure}{c}{12cm}
+		\includegraphics[width=12cm]{chromatic-polynome-rule.png}
+		\caption{chromatic polynome rule}
+	\end{wrapfigure}
+\end{proof}
 
 \end{document}
