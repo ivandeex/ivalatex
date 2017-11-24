@@ -30,8 +30,10 @@
 
 \usepackage{graphicx}
 \usepackage{wrapfig}
-\graphicspath{{images/}}
+\usepackage{float}
+\graphicspath{{images-problems/}}
 
+\theoremstyle{remark}
 \newtheorem{problem}{Зад.}[section]
 
 \def\ilet{$\gimel\;$}
@@ -46,13 +48,19 @@
 
 \maketitle
 
+
+
 \section{Основы}
+
+
 
 \section{Вершинная связность}
 
 \subsection{Задачи}
 
 \subsection{Иллюстрации}
+
+
 
 \section{Рёберная связность}
 
@@ -91,6 +99,8 @@
 
 \subsection{Иллюстрации}
 
+
+
 \section{Паросочетания}
 
 \subsection{Задачи}
@@ -126,21 +136,61 @@
 \end{proof}
 \subsection{Иллюстрации}
 
-\begin{wrapfigure}{c}{5cm}
-	\includegraphics[width=5cm]{cubic-graph-example1.png}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm]{cubic-graph-example1.png}
 	\caption{Кубический граф}
-\end{wrapfigure}
+\end{figure}
 
-\begin{wrapfigure}{c}{14cm}
-	\begin{center}
-		\includegraphics[width=9cm]{minimum-cubic-graph-with3-bridges.png}
-	\end{center}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=9cm]{minimum-cubic-graph-with3-bridges.png}
 	\caption{Мин. (16 вершин) кубический граф с 3 мостами (сов.п.с. $\nexists$)}
-\end{wrapfigure}
+\end{figure}
 
-\begin{wrapfigure}{c}{10cm}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=10cm]{matching-deficit-2.png}
 	\caption{Дефицит графа}
-\end{wrapfigure}
+\end{figure}
+
+
+
+\section{Раскраска}
+
+
+
+\section{Планарные графы}
+
+\subsection{Задачи}
+
+\begin{problem}
+	Без использования теоремы о четырех красках доказать, что любой планарный связный граф, построенный на не более чем $n=11$ вершинах, является $4$-раскрашиваемым. \\
+	Указание: вначале доказать, что в таком графе существует вершина, степень которой меньше или равна четырем.
+\end{problem}
+\begin{proof}
+	
+	Пусть $\delta = \min \limits_{v \in V(G)} \deg(v)$.
+	Тогда $\delta \cdot V \leqslant \sum \limits_{v \in V(G)} {\deg(v)}
+	      = 2E \leqslant 2(3V-6) = 6V-12$,
+	поскольку для простых связных планарных графов верно $E \leqslant 3V-6$.
+	Отсюда $ 12 / (6 - \delta) \leqslant V$.
+	Но по условию $V \leqslant 11$, а значит $12 \leqslant 66 - 11 \delta$.
+	Получаем, что $\delta \leqslant (54 / 11) \approx 4.9$,
+	то есть целое число $\delta \leqslant 4$
+	и найдется вершина $v$, у которой $\deg(v) \leqslant 4$.
+	
+	Теперь проведём рассуждение, полностью аналогичное приведённому на последней лекции, но вместо 5 цветов и соседей у нас будет 4.
+	
+	Проводим индукцию по количеству вершин. Для $V=4$ утверждение очевидно (а для меньшего числа тривиально/бессмысленно). Предположим, что для $(V-1)$ индукция уже доказана. Докажем теперь шаг индукции для $V$ ($V \leqslant 11$). Выделим вершину степени не больше 4 (мы показали, что она всегда найдётся), временно удалим, раскрасим остальной граф (это возможно по предположению шага) и вернём вершину на место. В худшем случае у вершины 4 соседа у которых 4 разных цвета (иначе раскрашиваем вершину 0 в оставшийся цвет). Например, 1-красный, 2-синий, 3-жёлтый, 4-зелёный, а самой вершине дадим индекс 0, как показано на рисунке.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=8cm]{stepik-lesson12347-step8-problem.png}
+	\end{figure}
+
+	Сначала выбираем пару смежных вершин 1(красный)-3(жёлтый). Пытаемся перекрасить 1-ю в желтый, если же у неё есть жёлтый сосед 1', пытаемся перекрасить его в красный, при неудаче рассматриваем соседей соседа итд. Если удалось, меняем цвета в цепочке, 1-ю в жёлтый, 0-ю в красный и празднуем успех. В случае полной неудачи, худший случай - это когда цепочка дотянется до вершины 3. Тогда выбираем вторую пару 2(синий)-4(зелёный) и пытаемся перекрасить 4-ю в синий, а если найдётся синий сосед 4', пытаемся раскрасить его в зелёный, при неудаче тянем цепочку дальше. Рано или поздно сине-зелёная цепочка упрётся в красно-жёлтую, потому что та образует вместе с вершиной 0 замкнутый цикл, так что в этом случае удача нам гарантирована. Это доказывает шаг индукции и завершает задачу.
+\end{proof}
+
 
 \end{document}
