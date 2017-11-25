@@ -156,6 +156,14 @@
 	2-связный граф допускает разложение на цикл и ручки
 \end{theorem}
 
+1-связный граф можно представить в виде дерева блоков (2-связные подмножества и мосты) и точек сочленения.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm]{1conn-tree-of-blocks-and-junctons-fig1.png}
+	\includegraphics[width=7cm]{1conn-tree-of-blocks-and-junctons-fig2.png}
+\end{figure}
+
+
 \iiTODO
 
 
@@ -331,16 +339,17 @@
 
 \section{Планарные графы I}
 
-\begin{definition}[Грань $f_i$] ...
-\end{definition}
+\begin{definition}[Планарный] можно правильно уложить в плоскость/сферу \end{definition}
 
-\begin{property}
-	$ \sum{\deg(f_i)} = 2|E| \qquad ... = \sum{\deg(v_i)}$
-\end{property}
+\begin{property} Непланарные -- $K_5$, $K_{3,3}$ \end{property}
 
-\begin{theorem}
-	Граница \iiany грани 2-связного плоского графа --- простой цикл
-\end{theorem}
+\begin{definition}[Грань $f_i$] ... \end{definition}
+
+Уложив планарный граф в сферу и поворачивая сферу можно \iiany заданную вершину уложить во внешнюю грань.
+
+\begin{property} $ \sum{\deg(f_i)} = 2|E| \qquad ... = \sum{\deg(v_i)}$ \end{property}
+
+\begin{theorem}	Граница \iiany грани 2-связного плоского графа --- простой цикл \end{theorem}
 
 \begin{corollary}
 	Вершины, смежные с \iiany вершиной 3-связного плоского графа -- лежат на простом цикле
@@ -382,9 +391,30 @@
 	Плоский граф $\longrightarrow$ дуальный (грани $\Leftrightarrow$ вершины), а вершины плоского дуального графа $\Leftrightarrow$ вершинам его планарного. Так что задача $\equiv$ правильной раскраске \textbf{вершин} планарного графа
 \end{corollary}
 
+\begin{theorem}[Коши???]
+	если точка $A$ лежит внутри замкнутого контура, а $B$ -- вне его, то любой путь $(A,B)$ пересечёт контур минимум 1 раз
+\end{theorem}
 
 
 \section{Планарные графы II}
+
+\begin{theorem}
+	Если 2-связные графы в дереве блоков 1-связного графа планарны, то и весь граф планарный 
+\end{theorem}
+\begin{proof}
+	(по индукции по точкам сочленения).
+\end{proof}
+
+\begin{definition}[подразбиение графа] добавление вершин $\deg=2$ внутри рёбер \end{definition}
+
+\begin{theorem}[критерий Куратовского]
+	граф не планарный \iiff он содержит подразбиение $K_5$ или $K_{3,3}$
+\end{theorem}
+
+\begin{theorem}[Татт]
+	\iiany 3-связный планарный граф можно вложить на плоскость так, что \iiany внутренняя грань будет выпуклым многоугольником
+\end{theorem}
+
 
 \iiTODO
 
