@@ -19,19 +19,19 @@
 \usepackage{mathrsfs} % Красивый матшрифт
 \usepackage{pifont}   % Dingbats
 
+\usepackage{relsize}  % for \mathlarger
+
 %% Перенос знаков в формулах (по Львовскому)
 \newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
 
 %%% Работа с таблицами
 \usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
 \usepackage{longtable}  % Длинные таблицы
-\usepackage{multirow} % Слияние строк в таблице
+\usepackage{multirow}   % Слияние строк в таблице
 
 \usepackage{color}
 
-\usepackage{graphicx}
-\usepackage{wrapfig}
-\usepackage{float}
+\usepackage{graphicx,wrapfig,float}
 \numberwithin{figure}{section}
 \graphicspath{{images-combinat/}}
 
@@ -70,6 +70,8 @@
 \begin{document}
 
 \maketitle
+
+\tableofcontents
 
 
 
@@ -345,9 +347,26 @@ $\binom{n}{k}$ --- количество неупорядоченных $k$-эл�
 \[ \hat{S}(n,k) = \sum_{i=0}^k{ (-1)^{k-i} \binom{k}{i} i^n }
    \qquad \text{причём } \hat{S}(n,k)\bigr|_{k>n}=0 \]
 
-Отображения $f: X_n \rightarrow Y_k$ ``изоморфны'' $\longleftrightarrow$ $k$-разделениям $X$ (\ref{def.division}), $|\{\mathcal{D}_k\}|=k^n$.
+Отображения $f: X_{|n|} \rightarrow Y_{|k|}$ ``изоморфны'' $\longleftrightarrow$ $k$-разделениям $X$ (\ref{def.division}), $|\{\mathcal{D}_k\}|=k^n$.
 
 Сюръекции $\longleftrightarrow$ упорядоченным $k$-разбиениям $X$ (\ref{def.ord.break}), $|\{\mathcal{B}_k\}|=\hat{S}(n,k)$.
+
+
+
+\section{Разделения $\{a_i\}$}
+
+\def\iinfracai{ \frac{n!}{a_1!a_2!...a_k!} }
+\def\iisumain{ a_1+...+a_k=n }
+\newcommand{\iisubsum}[1]{ {\mathlarger\sum_{\mathclap{\substack{#1}}}} }
+
+
+\[ P(n;a_1,...,a_k) = \binom{n}{a_1} \cdot \binom{n-a_1}{a_2} \cdot ...
+     = \iinfracai   \qquad a_i \geqslant 0, \; \iisumain \]
+
+\begin{align*}
+	k^n &= \iisubsum{\iisumain, \\ a_i \geqslant 0} \iinfracai \\
+	\hat{S}(n,k) &= \iisubsum{ \iisumain, \\ a_i > 0} \iinfracai
+\end{align*}
 
 
 
