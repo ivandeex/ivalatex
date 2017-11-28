@@ -29,10 +29,17 @@
 
 \usepackage{color}
 
-\usepackage{graphicx}
-\usepackage{wrapfig}
-\usepackage{float}
+\usepackage{graphicx,wrapfig,float}
+\numberwithin{figure}{section}
 \graphicspath{{images-theory/}}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Опр.}[section]
@@ -43,6 +50,7 @@
 \newtheorem{theorem}{Tеор.}[section]
 \newtheorem*{corollary}{Сл-е} %[theorem]
 \newtheorem{lemma}{Лемма}[section]
+\renewcommand\qedsymbol{$\blacksquare$}
 
 \def\ilet{$\gimel\;$}
 \def\iiff{$\;\Longleftrightarrow\;$}
@@ -58,6 +66,8 @@
 \begin{document}
 
 \maketitle
+
+\tableofcontents
 
 
 
@@ -249,6 +259,10 @@
 
 \section{Раскраски}
 
+
+\subsection{Хроматическое число}
+
+
 \begin{definition} $\Delta = \max \limits_{v \in V} \deg(v)$ \end{definition}
 
 \begin{property}
@@ -289,6 +303,10 @@
 \begin{theorem}[Эрдёш]
 	$\forall k,m \in \mathbb{N} \;\; \exists \, G: \iiChi(G)=k, \; \Omega(G) \geqslant m$
 \end{theorem}
+
+
+\subsection{Хроматический многочлен}
+
 
 \begin{definition}
 	$P_G(k)$ -- число способов раскрасить $G$ в $k$ цветов, $P_G(k)=0$ при $k<\iiChi(G)$
