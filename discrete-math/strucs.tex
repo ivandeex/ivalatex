@@ -1,0 +1,90 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}  % change page margins
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{amsmath}
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Шрифты
+\usepackage{euscript} % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+\usepackage{pifont}   % Dingbats
+
+%%% Работа с таблицами
+\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
+\usepackage{longtable}  % Длинные таблицы
+\usepackage{multirow}   % Слияние строк в таблице
+
+\usepackage{color}
+
+\usepackage{graphicx,wrapfig,float}
+\numberwithin{figure}{section}
+\graphicspath{{images-combinat/}}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+
+\def\ilet{$\gimel\;$}
+\def\iiff{$\;\Longleftrightarrow\;$}
+\def\iiany{$\forall\;$}
+\def\iiTODO{\guillemotleft$\mathcal{TODO}$\guillemotright\textellipsis}
+
+%%% Заголовок
+\title{Дискретные структуры.}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+\section{Введение}
+
+\begin{align*}
+	x & = \lfloor x \rfloor + \{ x \}					\\
+	x & = \lceil x \rceil - 1 + \{ x \}
+			\quad & (x \notin \mathbb{Z})				\\
+	\lfloor x \rfloor + \lfloor y \rfloor + \lfloor x+y \rfloor
+		& \leqslant \lfloor 2x \rfloor + \lfloor 2y \rfloor
+			\quad & (\forall x,y \in \mathbb{R})		\\
+	\lceil \log_2 (2k-1) \rceil & =  \lceil \log_2 k \rceil + 1
+			\quad & (\forall k \in \mathbb{N})			\\
+	\{ x + y \} & \leqslant \{ x \} + \{ y \}
+			\quad & (\forall x,y \in \mathbb{R})
+\end{align*}
+
+Gregorian day of week (Zeller's formula):
+\begin{align*}
+	dow' &= \left( mday + \left\lceil \frac{13(month' + 1)}{5} \right\rceil
+	             + cyr' + \left\lceil \frac{cyr'}{4} \right\rceil
+	             + \left\lceil \frac{cent'}{4} \right\rceil - 2 \dot cent' \right)
+	        \hspace{-.8em}\mod{7} \\
+	dow' &- \text{day of week: 0=Saturday, 1=Sunday, 2=Monday, ..., 6=Friday} \\
+	mday &- \text{day of month} \\
+	month' &- \text{adjusted month: 3=March, ..., 12=December, 13=January, 14=February)} \\
+	year' &- \text{adjusted year: next year for January/February, current year otherwise} \\
+	cyr' &- (year' \hspace{-.8em}\mod 100) \\
+	cent' &- \lceil \frac{year'}{100} \rceil
+\end{align*}
+
+
+\vspace{80pt} \noindent \hrulefill~ \raisebox{-8pt}[10pt][10pt]{\Large\ding{102}}~ \hrulefill
+
+\end{document}
