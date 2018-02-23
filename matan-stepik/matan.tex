@@ -1,0 +1,679 @@
+% page margins
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\setlength{\parindent}{0cm}
+
+% languages
+\usepackage{cmap}					% lookup in pdf
+\usepackage{mathtext} 				% cyrillic letters in formulas
+\usepackage[T2A]{fontenc}			% encoding
+\usepackage[utf8]{inputenc}			% source encoding
+\usepackage[english,russian]{babel}	% l18n and hyphenation
+
+% mathematics
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+% fonts
+\usepackage{euscript,mathrsfs,pifont} % euclid font, cool math font, dingbats
+
+% tables
+\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
+\usepackage{longtable,multirow}  % long tables, merge table rows
+
+% figures
+\usepackage{graphicx,wrapfig,float}
+\numberwithin{figure}{section}
+\graphicspath{{images/}}
+
+% links
+\usepackage{color,hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+
+% styles
+\usepackage{mathtools,thmtools}
+%\renewcommand\qedsymbol{$\blacksquare$}
+\theoremstyle{definition}
+\newtheorem{definition}{Опр-е.}[section]
+\newtheorem*{property}{Св-во}  %[definition]
+%\theoremstyle{plain}
+%\theoremstyle{remark}
+\theoremstyle{definition}
+\newtheorem{theorem}{Tеор.}[section]
+\newtheorem*{corollary}{След-е} %[theorem]
+\newtheorem{lemma}{Лемма}[section]
+
+\declaretheoremstyle[
+spaceabove=0pt, spacebelow=24pt,
+headfont=\normalfont\bfseries, headpunct={.},
+notefont=\normalfont\mdseries, notebraces={(}{)},
+%postheadspace=.5em,
+postheadspace=\newline,
+bodyfont=\normalfont, qed=\qedsymbol
+]{solution}
+
+\declaretheorem[name=Задача,numberwithin=section,style=definition]{problem}
+\declaretheorem[name=Решение,numbered=no,style=solution]{solution}
+
+% math mode macros
+\def\.{\;\;}
+\def\eps{\varepsilon}
+\def\ntoinf{n \to \infty}
+\def\ringU{\mathring{U}}
+\def\mathN{\mathbb{N}}
+\def\mathR{\mathbb{R}}
+\def\leqs{\leqslant}
+\def\geqs{\geqslant}
+
+% text mode macros
+\def\circleone{\ding{192}$\;$}
+\def\circletwo{\ding{193}$\;$}
+\def\lets {$\gimel\;$}
+\def\iff {$\;\Longleftrightarrow\;$}
+\def\any {$\forall\;$}
+\def\rowak{$\displaystyle\sum_{k=1}^{\infty}a_k$}
+\def\rowbk{$\displaystyle\sum_{k=1}^{\infty}b_k$}
+\def\todo {\guillemotleft$\mathcal{TODO}$\guillemotright\textellipsis}
+\def\vignette {\vspace{48pt} \noindent \hrulefill~ \raisebox{-8pt}[10pt][10pt]{\Huge\ding{102}}~ \hrulefill}
+
+% figures
+
+\newcommand\CenterFigure[2]{
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=#1]{#2}
+	\end{figure}
+}
+
+\newcommand\CenterFigureCaption[3]{
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=#1]{#2}
+		\caption{#3}
+	\end{figure}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Введение в математический анализ.}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
+\section{Последовательности}
+
+\subsection{Предел последовательности}
+
+\begin{definition}[Предел последовательности]
+	\[ \lim_{\ntoinf} x_n = l \]
+	\begin{itemize}
+		\item При любом $\eps>0$ вне интервала $(l-\eps,l+\eps)$
+			  находится лишь конечное число членов последовательности
+		\item $\forall \eps>0 \quad \exists N \quad \forall n>N \quad |x_n - l|<\eps$
+	\end{itemize}
+\end{definition}
+
+\begin{property}
+	Свойства последовательностей:
+	\begin{itemize}
+	\item Не может иметь двух различных пределов
+	\item Если имеет предел, то $|x_n| \leqs M$
+	\item Переход к пределу в неравенстве: \[
+		\lim_{\ntoinf}x_n=a, \lim_{\ntoinf}y_n=b, x_n \leqs y_n
+		\implies a \leqs b
+		\]
+	\item Пределы можно складывать, вычитать, умножать, делить, брать модуль
+	\end{itemize}
+\end{property}
+
+\begin{theorem}[О двух милиционерах]
+	\[ a_n \leqs b_n \leqs c_n , \quad
+	   \lim_{\ntoinf}a_n = \lim_{\ntoinf}b_n = A
+	   \implies \lim_{\ntoinf}c_n = A \]
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Арифметические операции с пределами}
+
+Арифметические операции с конечными пределами...
+
+\begin{definition}[Бесконечный предел] \[
+	\lim_{\ntoinf} x_n = +\infty
+	\qquad\equiv\qquad
+	\forall E \. \exists N \. \forall n>N \. x_n>E
+	\]
+\end{definition}
+
+\begin{theorem}
+	\lets $x_n \neq 0$. $x_n$ -- беск. большая \iff $\frac1{x_n}$ -- беск. малая
+\end{theorem}
+
+\begin{property}
+	Свойства бесконечно малых:
+	\begin{enumerate}
+		\item Беск. малая послед. ограничена
+		\item Сумма, разность, произведение бес. малых -- беск. малая
+		\item Произвед. беск. малой на ограниченную -- беск. малая
+	\end{enumerate}
+\end{property}
+
+Арифметические операции с бесконечностями...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Вещественные числа. Супремум и инфимум.}
+
+\begin{definition}[Вещественные числа] \ \\
+	\begin{itemize}
+		\item Аксиомы поля (9 штук)
+		\item Аксимомы порядка (5 штук)
+		\item Аксиома Архимеда:
+				$ \forall\. x,y>0 \. \exists \; n \in \mathN \;: nx>y $
+		\item Аксиома полноты:
+			Пусть $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset...$.
+			Тогда существует число $c \in \mathR$, принадлежащее всем отрезкам:
+			$\displaystyle c \in \bigcap_{n=1}^{\infty} [a_n,b_n]$
+	\end{itemize}
+\end{definition}
+
+\begin{theorem}[О стягивающихся отрезках] \ \\
+	Пусть $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset ...$
+	и $\displaystyle \lim_{\ntoinf}(b_n-a_n) = 0$.
+	Тогда пересечение всех отрезков состоит из одной точки:
+	$\displaystyle \{c\} = \bigcap_{n=1}^{\infty} [a_n,b_n]$, причём
+	$\displaystyle \lim_{\ntoinf}a_n = \lim_{\ntoinf}b_n = c$
+\end{theorem}
+
+\begin{definition}
+	\lets $E$ -- непустое множество \\
+	$\sup$ -- наименьшая из верхних границ \\
+	$\inf$ -- наибольшая из нижних границ
+	\[ b = \sup E \Longleftrightarrow
+		\begin{cases*}
+			\forall x \in E \quad x \leqs b \\
+			\forall \eps > 0 \. \exists\, x \in E : \;  x > b - \eps
+		\end{cases*}
+	\]
+\end{definition}
+
+\begin{theorem}
+	Всякое непустое ограниченное сверху (снизу) множество имеет $\sup$ ($\inf$)
+\end{theorem}
+\begin{proof} Делением отрезка пополам... \end{proof}
+
+\begin{theorem}  \ \\
+	\begin{itemize}
+		\item Монотонно возрастающая ограниченная сверху последовательность сходится.
+		\item Монотонно убывающая ограниченная снизу последовательность сходится.
+		\item Неограниченная сверху возрастающая последовательность стремится к $+\infty$.
+		\item Неограниченная снизу убывающая последовательность стремится к $-\infty$.
+	\end{itemize}
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Определение числа $e$}
+
+\begin{lemma}[Неравенство Бернулли]
+	\[ x>-1, n \in \mathN \implies (1+x)^n \geqs 1+nx \]
+\end{lemma}
+\begin{proof} По индукции... \end{proof}
+
+\begin{corollary}
+	\[ x>-1, n \in \mathN \implies \sqrt[n]{1+x} \leqs 1+\frac{x}{n} \]
+\end{corollary}
+
+\[ \lim_{\ntoinf} \frac{a^n}{n^k} = +\infty \quad a>1, \; k \in \mathN \]
+
+\[ \lim_{\ntoinf} \sqrt[n]{a} = 1 \quad a>0 \]
+
+\[ e = \lim_{\ntoinf}\left( 1 + \frac1n \right)^n \]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Теорема Больцано-Вейерштрасса}
+
+\begin{property}
+	\[ \{ a_n \} \to A \implies \{ a_{n_k} \} \to A \]
+\end{property}
+
+\begin{theorem}[Больцано-Вейерштрасса]
+	Из всякой ограниченной последовательности можно выделить сходящуюся (к конечному пределу) подпоследовательность
+\end{theorem}
+
+\begin{theorem}[Расширение теоремы Б-В]  \ \\
+	\begin{itemize}
+		\item Из неограниченной сверху последовательности можно выделить подпоследовательность, сходящуюся к $+\infty$.
+		\item Из неограниченной снизу последовательности можно выделить подпоследовательность, сходящуюся к $-\infty$.
+	\end{itemize}
+\end{theorem}
+
+\begin{corollary}
+	Из любой последовательности можно выделить под-последовательность, имеющую конечный \textit{или бесконечный} предел.
+\end{corollary}
+
+\begin{definition}
+	Последовательность фундаментальна, если
+	$\forall \eps>0 \quad \exists N \quad \forall m,n \geqs N \quad |x_m - x_n|<\eps$
+\end{definition}
+
+\begin{property} \ \\
+	\begin{enumerate}
+		\item Фундаментальная последовательность ограничена
+		\item Сходящаяся последовательность фундаментальна
+		\item Если у фундаментальной последовательности есть сходящаяся подпоследовательность, то исходная последовательность сходится
+	\end{enumerate}
+\end{property}
+
+\begin{corollary}[Критерий Коши]
+	Последовательность сходится \iff она фундаментальна
+\end{corollary}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Сходимость рядов}
+
+\begin{definition}
+	\[ S_n = \sum_{k=1}^n a_k \]
+	Если последовательность $\{S_n\} \to S$, то последовательность наз. сходящейся, а $S$ -- сумма ряда. Если $\{S_n\}$ не имеет предела или \textbf{бесконечный} предел, то ряд расходится.
+\end{definition}
+
+\begin{theorem}[Необходимое условие сходимости ряда] \ \\
+	Если ряд $\displaystyle \sum_{k=1}^n a_k$ сходится,
+	то $\displaystyle \lim_{\ntoinf}a_n = 0$.
+\end{theorem}
+
+Геометрическая прогрессия:
+	\[ S_n = \sum_{k=1}^n aq^{k-1} = a\frac{1-q^n}{1-q} \]
+	\[ \lim_{\ntoinf}S_n = \frac{a}{1-q} \quad \text{ при } |q|<1 \]
+
+Гармонический ряд $\displaystyle H_n = 1 + \frac12 + \frac13 + ... + \frac1n$
+расходится, т.к. $\displaystyle H_{2^n} \geqs \frac12$
+
+\bigbreak
+Пример:
+\[ S_n = \sum_{k=1}^n \frac1{k(k+1)}
+       = \frac1{1\cdot2} + \frac1{2\cdot3} + \frac1{3\cdot4} + ... + \frac1{n(n+1)}
+       = 1 - \frac1{n+1} \]
+\[ \lim_{\ntoinf}S_n = 1 \]
+
+\begin{property} Свойства сходящихся рядов:
+  \begin{enumerate}
+	\item Ряд не может иметь двух различных сумм
+	\item В сходящемся ряду можно произвольно расставлять скобки
+		  (т.к. это будет подпоследовательность сходящейся последовательности)
+	\item Добавление и отбрасывание конечного членов ряда не влияет на сходимость (но изменяет сумму)
+	\item Сходящиеся ряды можно складывать и вычитать
+	\item Сходящийся ряд можно домножать на константу
+  \end{enumerate}
+\end{property}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Признаки сходимости рядов}
+
+\begin{property}
+	Если $a_k \geqs 0$, а последовательность $S_n$ ограничена сверху, то ряд сходится
+\end{property}
+
+\begin{property}[Признак сравнения]
+	Если $0 \leqs a_k \leqs b_k$, то:
+	\begin{itemize}
+		\item если ряд \rowbk сходится, то ряд \rowak $\,$ сходится
+		\item если ряд \rowak расходится, то ряд \rowbk $\,$ расходится
+	\end{itemize}
+\end{property}
+
+Пример: ряд $\displaystyle\frac1{k^2}$ сходится. $\;$
+$\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
+
+\bigbreak
+Пример: ряд $\displaystyle\frac1{\sqrt{k}}$ расходится.
+
+\begin{theorem}[Признак Даламбера]
+  Пусть $a_n > 0$. Тогда:
+  \begin{enumerate}
+	\item Если $\displaystyle\frac{a_{n+1}}{a_n} \leqs d < 1$, то ряд \rowak сходится
+	\item Если $\displaystyle\frac{a_{n+1}}{a_n} \geqs 1$, то ряд расходится
+	\item Пусть $\displaystyle d_* = \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$. Тогда:
+	  \begin{itemize}
+	  	\item Если $d_* < 1$, то ряд сходится
+	  	\item Если $d_* > 1$, то ряд расходится
+	  	\item Если $d_* = 1$, то ряд может как сходиться, так и расходиться
+	  \end{itemize}
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Признак Коши]
+	Пусть $a_n>0$. Тогда:
+	\begin{enumerate}
+		\item Если $\displaystyle\sqrt[n]{a_n} \leqs d < 1$, то ряд \rowak сходится
+		\item Если $\displaystyle\sqrt[n]{a_n} \geqs 1$, то ряд расходится
+		\item Пусть $\displaystyle q_* = \lim_{\ntoinf} \sqrt[n]{a_n}$. Тогда:
+		\begin{itemize}
+			\item Если $d_* < 1$, то ряд сходится
+			\item Если $d_* > 1$, то ряд расходится
+			\item Если $d_* = 1$, то ряд может как сходиться, так и расходиться
+		\end{itemize}
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Факт] \ \\
+	Если $a_n>0$ и существует $\displaystyle \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$,
+	то также существует и $\displaystyle \lim_{\ntoinf} \sqrt[n]{a_n}$, и они равны.
+\end{theorem}
+
+\begin{theorem}[Признак Лейбница]
+	Знакочередующийся ряд $a_1 - a_2 + a_3 - a_4 + ...$ с монотонно убывающим по абсолютной величине членом $a_1 \geqs a_2 \geqs a_3 \geqs ... > 0$
+	сходится \iff $\displaystyle \lim_{\ntoinf} a_n = 0$
+\end{theorem}
+
+Пример -- ряд Лейбница: $\displaystyle 1-\frac13+\frac15-\frac17+\frac19-... = \frac\pi4$
+
+\begin{definition}[Абсолютная сходимость] \ \\
+	Ряд \rowak $\,$ сходится абсолютно, если ряд $\displaystyle\sum_{k=1}^{\infty}|a_k|$ сходится.
+\end{definition}
+
+\begin{theorem}
+	Абсолютно сходящийся ряд сходится, причём
+	$\displaystyle \left|\sum_{k=1}^{\infty}a_k\right| \leqs \sum_{k=1}^{\infty}|a_k|$
+\end{theorem}
+\begin{proof}
+	Рассмотрим $0 \leqs a_k + |a_k| \leqs 2|a_k|$
+\end{proof}
+
+\bigbreak
+Пример: если сходится ряд $\displaystyle \sum_{n=1}^{\infty}a_n^2$,
+то сходится и ряд $\displaystyle \sum_{n=1}^{\infty}\frac{a_n}n$.
+
+\bigbreak
+Свойство: если ряд $\displaystyle \sum_{n=1}^{\infty}a_n$ сходится,
+а ряд $\displaystyle \sum_{n=1}^{\infty}b_n$ расходится,
+то ряд $\displaystyle \sum_{n=1}^{\infty} (a_n + b_n)$ расходится.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Тесты на сходимость рядов}
+
+\CenterFigure{\linewidth}{rows-test-1.png}
+
+\CenterFigure{\linewidth}{rows-test-2.png}
+
+\CenterFigure{\linewidth}{rows-test-3.png}
+
+\CenterFigure{\linewidth}{rows-test-4.png}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
+\section{Функции и непрерывность}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Предел функции}
+
+\subsubsection{Предельные точки множества}
+
+\begin{definition} Окрестность точки $U_a$ -- любой интервал вида $(a-\eps,a+\eps)$ при $\eps>0$ \end{definition}
+
+\begin{definition} Проколотая окрестность $\ringU_a = U_a \setminus \{a\}$ \end{definition}
+
+\begin{definition} Окрестность $+\infty$ -- любой луч $(E,+\infty)$ \end{definition}
+
+\begin{definition} Окрестность $-\infty$ -- любой луч $(-\infty,E)$ \end{definition}
+
+\begin{definition}
+	$a$ -- предельная точка множества $E \subset \mathR$,
+	если $\ringU_a \cap E \neq \varnothing$ для любой $\ringU_a$
+\end{definition}
+
+\bigbreak
+Примеры:\begin{enumerate}
+	\item $[a,b]$ -- множество предельных точек $(a,b)$
+	\item $\{a\}$ -- предельная точка ряда $\{a_n\}\xrightarrow[\ntoinf]{}a$
+	\item $\varnothing$ -- нет предельных точек у одиночной точки $\{a\} \in \mathR$
+\end{enumerate}
+
+\begin{lemma}[Утверждение.]
+  Следующие условия равносильны:
+  \begin{enumerate}
+	\item $a$ -- предельная точка множества $E$
+	\item В \any окрестности точки $a$ найдётся бесконечно много точек из $E$
+	\item $\exists$ такая последовательность точек $x_n \in E$ ($x_n \neq a$),
+		  что $\displaystyle \lim_{\ntoinf}x_n=a$
+  \end{enumerate}
+\end{lemma}
+
+\subsubsection{Предел функции}
+
+\begin{definition}
+	Пусть дана функция $f$: $E\to\mathR$, заданная на множестве $E \subset \mathR$.
+	Пусть $a$ -- предельная точка множества $E$.
+	Тогда $\displaystyle \lim_{x \to a}f(x)=A$ (или $f(x) \xrightarrow[x \to a]{} A$),
+	если выполнено любое из равносильных условий:
+	\begin{enumerate}
+		\item Для \any окрестности $U_A$ $\exists$ такая окрестность $\ringU_a$,
+			  что $f(\ringU_a \cap E) \subset U_A$
+		\item $\forall \eps>0 \. \exists \delta>0 \. \forall x \in E$,
+			  т.ч. $x \ne a$ $\implies$ $\left|f(x)-A\right|<\eps$
+			  (определение по Коши)
+		\item Для \any последовательности $\{x_n\}$ точек из $E$ ($x_n\ne a$),
+			  т.ч. $\displaystyle \lim_{\ntoinf}x_n = a$
+			  $\implies$ $\displaystyle \lim_{\ntoinf}f(x_n) = A$
+			  (определение по Гейне)
+	\end{enumerate}
+\end{definition}
+
+\bigbreak
+Замечания к определению предела функции: \begin{enumerate}
+	\item Предел -- локальное свойство
+	\item Значение $f$ в точке $a$ не участвует в определении
+	\item Если в определении по Гейне \any последовательность $f(x_n)$ имеет предел,
+  		  то все эти пределы равны
+\end{enumerate}
+
+\bigbreak
+Свойства пределов: \begin{enumerate}
+	\item Предел единственный.
+	\item Локальная ограниченность: если $f\!: E\to \mathR$, $a$ -- предельная точка $E$,
+  		  $\displaystyle \lim_{x\to a}f(x)=A$ и $A \in \mathR$,
+  		  то $\exists$ такая окрестность $U_a$, что $f(x)$ ограничена на $U_a \cap E$.
+	\item Стабилизация знака: если $f\!: E\to \mathR$, $a$ -- предельная точка $E$,
+		  $\displaystyle \lim_{x\to a}f(x)=A$ и $A \in \mathR \setminus \{0\}$,
+  		  то $\exists$ такая окрестность $U_a$,
+  		  что знаки $f(x)$ при $x \in \ringU_a \cap E$ и $A$ совпадают.
+\end{enumerate}
+
+
+\subsubsection{Арифметические действия с пределами}
+
+Пределы двух функций в точке можно складывать, вычитать, перемножать и делить (если предел нижней функции не равен 0).
+
+
+\begin{theorem}[Предельный переход в неравенстве]
+  Если \begin{enumerate}
+	\item $f,g :\, E\to\mathR$, $\;$ $a$ -- предельная точка $E$
+	\item $f(x) \leqs g(x)$ при всех $x \in E \setminus \{a\}$
+	\item $\displaystyle\lim_{x\to a}f(x)=A$, $\displaystyle\lim_{x\to a}g(x)=B$
+  \end{enumerate}
+  Тогда $A \leqs B$
+\end{theorem}
+
+\begin{theorem}[Теорема о сжатой функции (аналог теоремы о двух милиционерах)]
+  Если \begin{enumerate}
+	\item $f,g,h :\, E\to\mathR$, $\;$ $a$ -- предельная точка $E$
+	\item $f(x) \leqs g(x) \leqs h(x)$ при всех $x \in E \setminus \{a\}$
+	\item $\displaystyle \lim_{x\to a}f(x)=\lim_{x\to a}h(x)=A$
+  \end{enumerate}
+  Тогда $\displaystyle \lim_{x\to a}g(x)=A$
+\end{theorem}
+
+\subsubsection{Односторонние пределы}
+
+\begin{definition}[Монотонная функция]
+	$f :\, E\to\mathR$ монотонно возрастает (убывает), если для \any $x \leqs y$
+	выполнено $f(x) \leqs f(y)$ (или $f(x) \geqs f(y)$)
+\end{definition}
+
+
+\begin{theorem}
+	Пусть $f:\, E\to\mathR$, $\;$ $a$ -- предельная точка множества $E_1=E \cap (-\infty,a)$.
+	Тогда: \begin{itemize}
+		\item Если $f$ возрастает и ограничена сверху, то
+			  $\exists$ $\displaystyle \lim_{x\to a-}f(x)$
+		\item Если $f$ \textit{убывает} и ограничена \textit{снизу}, то
+			  $\exists$ $\displaystyle \lim_{x\to a-}f(x)$
+	\end{itemize}
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Непрерывность функции}
+
+\begin{definition}
+  $f\!: E\to\mathR$ непрерывна в точке $a \in E$,
+  если выполнено любое из равносильных условий:
+  \begin{enumerate}
+	\item Если $a$ -- предельная точка, то $\displaystyle \lim_{x\to a}f(x)=f(a)$
+	\item $\displaystyle \forall\eps>0 \. \exists\delta>0 \text{ т.ч. }
+		   |x-a|<\delta \implies |f(x)-f(a)|<\eps$
+	\item Для \any окрестности $U_{f(a)}$ $\exists$ такая окрестность $U_a$,
+		  что $f(U_a \cap E) \subset U_{f(a)}$
+	\item Для \any послед. точек $\{x_n\} \subset E$ т.ч.
+		  $\displaystyle \lim_{\ntoinf}x_n=a \implies \lim_{\ntoinf}f(x_n)=f(a)$
+  \end{enumerate}
+\end{definition}
+
+Непрерывные в точке $a$ функции можно складывать, вычитать, умножать и (если $g(a)\ne0$) делить.
+
+\bigbreak
+Следствия: \begin{enumerate}
+	\item Многочлены $\displaystyle p(x)=\sum_{k=0}^n a_kx^k$ непрерывны на $\mathR$.
+	\item Рациональные функции (отношения многочленов $\displaystyle \frac{p(x)}{q(x)}$)
+		  непрерывны во всех точках, в которых знаменатель не обращается в ноль.
+\end{enumerate}
+
+\begin{theorem}[Теорема о стабилизации знака]
+	Если $f\!: E\to\mathR$ непрерывна в точке $a \in E$ и $f(a)\ne0$,
+	то найдётся такая окрестность $U_a$, что знак $f(x)$ совпадает с $f(a)$.
+\end{theorem}
+
+\begin{theorem}[Непрерывность композиции]
+	Пусть $f\!: D\to\mathR, \. g\!: E\to\mathR \. f(D)\subset E$ и
+	$f$ непрерывна в точке $a\in D$, а $g$ непрерывна в точке $f(a)$.
+	Тогда $g \circ f$ непрерывна в точке $a$.
+\end{theorem}
+
+Вспомогательное нер-во: если $0<x<\frac\pi2$, то $\sin x<x<\tg x$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Теорема Вейерштрасса}
+
+\begin{theorem}[Вейерштрасса]
+  Непрерывная на \textit{отрезке} функция: \\
+	\circleone ограничена;
+	\circletwo принимает наибольшее и наименьшее значения
+\end{theorem}
+
+\bigbreak
+Расширение теоремы: если функция $f$ непрерывна на $[a,+\infty]$,
+и $\exists$ конечный предел $\displaystyle \lim_{x\to+\infty}f(x)$,
+то $f$ ограничена на $[a,+\infty]$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Теорема Больцано-Коши}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Замечательные пределы}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Эквивалентные функции}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
+\section{Производные}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Дифференцируемость и производная}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Теоремы о среднем}
+
+\todo
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Производная и монотонность}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Правило Лопиталя}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Формула Тейлора}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Экстремумы функций}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
+\section{Интегралы}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Первообразная и неопределённый интеграл}
+
+\todo
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Действия с неопределёнными интегралами}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Площади и определённый интеграл}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Теорема Барроу и формула Ньютона-Лейбница}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Интегральные суммы}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Связь между суммами и интегралами}
+
+\vignette
+
+\end{document}
