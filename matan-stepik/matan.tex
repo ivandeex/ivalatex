@@ -1,7 +1,7 @@
 % page margins
 \documentclass[a4paper,12pt]{article}
 \usepackage[margin=2.5cm]{geometry}
-\setlength{\parindent}{0cm}
+\setlength{\parindent}{0cm}  % disable indentation
 
 % languages
 \usepackage{cmap}					% lookup in pdf
@@ -12,6 +12,9 @@
 
 % mathematics
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+% перенос формул по Львовскому
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
 
 % fonts
 \usepackage{euscript,mathrsfs,pifont} % euclid font, cool math font, dingbats
@@ -61,6 +64,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 
 % math mode macros
 \def\.{\;\;}
+\def\DS{\displaystyle}
 \def\eps{\varepsilon}
 \def\ntoinf{n \to \infty}
 \def\ringU{\mathring{U}}
@@ -68,6 +72,8 @@ bodyfont=\normalfont, qed=\qedsymbol
 \def\mathR{\mathbb{R}}
 \def\leqs{\leqslant}
 \def\geqs{\geqslant}
+\def\on{\!:}
+\def\intab{\left<a,b\right>}
 
 % text mode macros
 \def\circleone{\ding{192}$\;$}
@@ -75,8 +81,8 @@ bodyfont=\normalfont, qed=\qedsymbol
 \def\lets {$\gimel\;$}
 \def\iff {$\;\Longleftrightarrow\;$}
 \def\any {$\forall\;$}
-\def\rowak{$\displaystyle\sum_{k=1}^{\infty}a_k$}
-\def\rowbk{$\displaystyle\sum_{k=1}^{\infty}b_k$}
+\def\rowak{$\DS\sum_{k=1}^{\infty}a_k$}
+\def\rowbk{$\DS\sum_{k=1}^{\infty}b_k$}
 \def\todo {\guillemotleft$\mathcal{TODO}$\guillemotright\textellipsis}
 \def\vignette {\vspace{48pt} \noindent \hrulefill~ \raisebox{-8pt}[10pt][10pt]{\Huge\ding{102}}~ \hrulefill}
 
@@ -185,16 +191,16 @@ bodyfont=\normalfont, qed=\qedsymbol
 		\item Аксиома полноты:
 			Пусть $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset...$.
 			Тогда существует число $c \in \mathR$, принадлежащее всем отрезкам:
-			$\displaystyle c \in \bigcap_{n=1}^{\infty} [a_n,b_n]$
+			$\DS c \in \bigcap_{n=1}^{\infty} [a_n,b_n]$
 	\end{itemize}
 \end{definition}
 
 \begin{theorem}[О стягивающихся отрезках] \ \\
 	Пусть $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset ...$
-	и $\displaystyle \lim_{\ntoinf}(b_n-a_n) = 0$.
+	и $\DS \lim_{\ntoinf}(b_n-a_n) = 0$.
 	Тогда пересечение всех отрезков состоит из одной точки:
-	$\displaystyle \{c\} = \bigcap_{n=1}^{\infty} [a_n,b_n]$, причём
-	$\displaystyle \lim_{\ntoinf}a_n = \lim_{\ntoinf}b_n = c$
+	$\DS \{c\} = \bigcap_{n=1}^{\infty} [a_n,b_n]$, причём
+	$\DS \lim_{\ntoinf}a_n = \lim_{\ntoinf}b_n = c$
 \end{theorem}
 
 \begin{definition}
@@ -254,7 +260,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 	Из всякой ограниченной последовательности можно выделить сходящуюся (к конечному пределу) подпоследовательность
 \end{theorem}
 
-\begin{theorem}[Расширение теоремы Б-В]  \ \\
+\begin{theorem}[Расширение теоремы Больцано-Вейерштрасса]  \ \\
 	\begin{itemize}
 		\item Из неограниченной сверху последовательности можно выделить подпоследовательность, сходящуюся к $+\infty$.
 		\item Из неограниченной снизу последовательности можно выделить подпоследовательность, сходящуюся к $-\infty$.
@@ -292,16 +298,16 @@ bodyfont=\normalfont, qed=\qedsymbol
 \end{definition}
 
 \begin{theorem}[Необходимое условие сходимости ряда] \ \\
-	Если ряд $\displaystyle \sum_{k=1}^n a_k$ сходится,
-	то $\displaystyle \lim_{\ntoinf}a_n = 0$.
+	Если ряд $\DS \sum_{k=1}^n a_k$ сходится,
+	то $\DS \lim_{\ntoinf}a_n = 0$.
 \end{theorem}
 
 Геометрическая прогрессия:
 	\[ S_n = \sum_{k=1}^n aq^{k-1} = a\frac{1-q^n}{1-q} \]
 	\[ \lim_{\ntoinf}S_n = \frac{a}{1-q} \quad \text{ при } |q|<1 \]
 
-Гармонический ряд $\displaystyle H_n = 1 + \frac12 + \frac13 + ... + \frac1n$
-расходится, т.к. $\displaystyle H_{2^n} \geqs \frac12$
+Гармонический ряд $\DS H_n = 1 + \frac12 + \frac13 + ... + \frac1n$
+расходится, т.к. $\DS H_{2^n} \geqs \frac12$
 
 \bigbreak
 Пример:
@@ -337,18 +343,18 @@ bodyfont=\normalfont, qed=\qedsymbol
 	\end{itemize}
 \end{property}
 
-Пример: ряд $\displaystyle\frac1{k^2}$ сходится. $\;$
-$\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
+Пример: ряд $\DS\frac1{k^2}$ сходится. $\;$
+$\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 \bigbreak
-Пример: ряд $\displaystyle\frac1{\sqrt{k}}$ расходится.
+Пример: ряд $\DS\frac1{\sqrt{k}}$ расходится.
 
 \begin{theorem}[Признак Даламбера]
   Пусть $a_n > 0$. Тогда:
   \begin{enumerate}
-	\item Если $\displaystyle\frac{a_{n+1}}{a_n} \leqs d < 1$, то ряд \rowak сходится
-	\item Если $\displaystyle\frac{a_{n+1}}{a_n} \geqs 1$, то ряд расходится
-	\item Пусть $\displaystyle d_* = \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$. Тогда:
+	\item Если $\DS\frac{a_{n+1}}{a_n} \leqs d < 1$, то ряд \rowak сходится
+	\item Если $\DS\frac{a_{n+1}}{a_n} \geqs 1$, то ряд расходится
+	\item Пусть $\DS d_* = \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$. Тогда:
 	  \begin{itemize}
 	  	\item Если $d_* < 1$, то ряд сходится
 	  	\item Если $d_* > 1$, то ряд расходится
@@ -360,9 +366,9 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \begin{theorem}[Признак Коши]
 	Пусть $a_n>0$. Тогда:
 	\begin{enumerate}
-		\item Если $\displaystyle\sqrt[n]{a_n} \leqs d < 1$, то ряд \rowak сходится
-		\item Если $\displaystyle\sqrt[n]{a_n} \geqs 1$, то ряд расходится
-		\item Пусть $\displaystyle q_* = \lim_{\ntoinf} \sqrt[n]{a_n}$. Тогда:
+		\item Если $\DS\sqrt[n]{a_n} \leqs d < 1$, то ряд \rowak сходится
+		\item Если $\DS\sqrt[n]{a_n} \geqs 1$, то ряд расходится
+		\item Пусть $\DS q_* = \lim_{\ntoinf} \sqrt[n]{a_n}$. Тогда:
 		\begin{itemize}
 			\item Если $d_* < 1$, то ряд сходится
 			\item Если $d_* > 1$, то ряд расходится
@@ -372,37 +378,37 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \end{theorem}
 
 \begin{theorem}[Факт] \ \\
-	Если $a_n>0$ и существует $\displaystyle \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$,
-	то также существует и $\displaystyle \lim_{\ntoinf} \sqrt[n]{a_n}$, и они равны.
+	Если $a_n>0$ и существует $\DS \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$,
+	то также существует и $\DS \lim_{\ntoinf} \sqrt[n]{a_n}$, и они равны.
 \end{theorem}
 
 \begin{theorem}[Признак Лейбница]
 	Знакочередующийся ряд $a_1 - a_2 + a_3 - a_4 + ...$ с монотонно убывающим по абсолютной величине членом $a_1 \geqs a_2 \geqs a_3 \geqs ... > 0$
-	сходится \iff $\displaystyle \lim_{\ntoinf} a_n = 0$
+	сходится \iff $\DS \lim_{\ntoinf} a_n = 0$
 \end{theorem}
 
-Пример -- ряд Лейбница: $\displaystyle 1-\frac13+\frac15-\frac17+\frac19-... = \frac\pi4$
+Пример -- ряд Лейбница: $\DS 1-\frac13+\frac15-\frac17+\frac19-... = \frac\pi4$
 
 \begin{definition}[Абсолютная сходимость] \ \\
-	Ряд \rowak $\,$ сходится абсолютно, если ряд $\displaystyle\sum_{k=1}^{\infty}|a_k|$ сходится.
+	Ряд \rowak $\,$ сходится абсолютно, если ряд $\DS\sum_{k=1}^{\infty}|a_k|$ сходится.
 \end{definition}
 
 \begin{theorem}
 	Абсолютно сходящийся ряд сходится, причём
-	$\displaystyle \left|\sum_{k=1}^{\infty}a_k\right| \leqs \sum_{k=1}^{\infty}|a_k|$
+	$\DS \left|\sum_{k=1}^{\infty}a_k\right| \leqs \sum_{k=1}^{\infty}|a_k|$
 \end{theorem}
 \begin{proof}
 	Рассмотрим $0 \leqs a_k + |a_k| \leqs 2|a_k|$
 \end{proof}
 
 \bigbreak
-Пример: если сходится ряд $\displaystyle \sum_{n=1}^{\infty}a_n^2$,
-то сходится и ряд $\displaystyle \sum_{n=1}^{\infty}\frac{a_n}n$.
+Пример: если сходится ряд $\DS \sum_{n=1}^{\infty}a_n^2$,
+то сходится и ряд $\DS \sum_{n=1}^{\infty}\frac{a_n}n$.
 
 \bigbreak
-Свойство: если ряд $\displaystyle \sum_{n=1}^{\infty}a_n$ сходится,
-а ряд $\displaystyle \sum_{n=1}^{\infty}b_n$ расходится,
-то ряд $\displaystyle \sum_{n=1}^{\infty} (a_n + b_n)$ расходится.
+Свойство: если ряд $\DS \sum_{n=1}^{\infty}a_n$ сходится,
+а ряд $\DS \sum_{n=1}^{\infty}b_n$ расходится,
+то ряд $\DS \sum_{n=1}^{\infty} (a_n + b_n)$ расходится.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -455,7 +461,7 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\item $a$ -- предельная точка множества $E$
 	\item В \any окрестности точки $a$ найдётся бесконечно много точек из $E$
 	\item $\exists$ такая последовательность точек $x_n \in E$ ($x_n \neq a$),
-		  что $\displaystyle \lim_{\ntoinf}x_n=a$
+		  что $\DS \lim_{\ntoinf}x_n=a$
   \end{enumerate}
 \end{lemma}
 
@@ -464,7 +470,7 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \begin{definition}
 	Пусть дана функция $f$: $E\to\mathR$, заданная на множестве $E \subset \mathR$.
 	Пусть $a$ -- предельная точка множества $E$.
-	Тогда $\displaystyle \lim_{x \to a}f(x)=A$ (или $f(x) \xrightarrow[x \to a]{} A$),
+	Тогда $\DS \lim_{x \to a}f(x)=A$ (или $f(x) \xrightarrow[x \to a]{} A$),
 	если выполнено любое из равносильных условий:
 	\begin{enumerate}
 		\item Для \any окрестности $U_A$ $\exists$ такая окрестность $\ringU_a$,
@@ -473,8 +479,8 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 			  т.ч. $x \ne a$ $\implies$ $\left|f(x)-A\right|<\eps$
 			  (определение по Коши)
 		\item Для \any последовательности $\{x_n\}$ точек из $E$ ($x_n\ne a$),
-			  т.ч. $\displaystyle \lim_{\ntoinf}x_n = a$
-			  $\implies$ $\displaystyle \lim_{\ntoinf}f(x_n) = A$
+			  т.ч. $\DS \lim_{\ntoinf}x_n = a$
+			  $\implies$ $\DS \lim_{\ntoinf}f(x_n) = A$
 			  (определение по Гейне)
 	\end{enumerate}
 \end{definition}
@@ -490,11 +496,11 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \bigbreak
 Свойства пределов: \begin{enumerate}
 	\item Предел единственный.
-	\item Локальная ограниченность: если $f\!: E\to \mathR$, $a$ -- предельная точка $E$,
-  		  $\displaystyle \lim_{x\to a}f(x)=A$ и $A \in \mathR$,
+	\item Локальная ограниченность: если $f\on E\to\mathR$, $a$ -- предельная точка $E$,
+  		  $\DS \lim_{x\to a}f(x)=A$ и $A \in \mathR$,
   		  то $\exists$ такая окрестность $U_a$, что $f(x)$ ограничена на $U_a \cap E$.
-	\item Стабилизация знака: если $f\!: E\to \mathR$, $a$ -- предельная точка $E$,
-		  $\displaystyle \lim_{x\to a}f(x)=A$ и $A \in \mathR \setminus \{0\}$,
+	\item Стабилизация знака: если $f\on E\to\mathR$, $a$ -- предельная точка $E$,
+		  $\DS \lim_{x\to a}f(x)=A$ и $A \in \mathR \setminus \{0\}$,
   		  то $\exists$ такая окрестность $U_a$,
   		  что знаки $f(x)$ при $x \in \ringU_a \cap E$ и $A$ совпадают.
 \end{enumerate}
@@ -509,7 +515,7 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
   Если \begin{enumerate}
 	\item $f,g :\, E\to\mathR$, $\;$ $a$ -- предельная точка $E$
 	\item $f(x) \leqs g(x)$ при всех $x \in E \setminus \{a\}$
-	\item $\displaystyle\lim_{x\to a}f(x)=A$, $\displaystyle\lim_{x\to a}g(x)=B$
+	\item $\DS\lim_{x\to a}f(x)=A$, $\DS\lim_{x\to a}g(x)=B$
   \end{enumerate}
   Тогда $A \leqs B$
 \end{theorem}
@@ -518,9 +524,9 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
   Если \begin{enumerate}
 	\item $f,g,h :\, E\to\mathR$, $\;$ $a$ -- предельная точка $E$
 	\item $f(x) \leqs g(x) \leqs h(x)$ при всех $x \in E \setminus \{a\}$
-	\item $\displaystyle \lim_{x\to a}f(x)=\lim_{x\to a}h(x)=A$
+	\item $\DS \lim_{x\to a}f(x)=\lim_{x\to a}h(x)=A$
   \end{enumerate}
-  Тогда $\displaystyle \lim_{x\to a}g(x)=A$
+  Тогда $\DS \lim_{x\to a}g(x)=A$
 \end{theorem}
 
 \subsubsection{Односторонние пределы}
@@ -535,9 +541,9 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	Пусть $f:\, E\to\mathR$, $\;$ $a$ -- предельная точка множества $E_1=E \cap (-\infty,a)$.
 	Тогда: \begin{itemize}
 		\item Если $f$ возрастает и ограничена сверху, то
-			  $\exists$ $\displaystyle \lim_{x\to a-}f(x)$
+			  $\exists$ $\DS \lim_{x\to a-}f(x)$
 		\item Если $f$ \textit{убывает} и ограничена \textit{снизу}, то
-			  $\exists$ $\displaystyle \lim_{x\to a-}f(x)$
+			  $\exists$ $\DS \lim_{x\to a-}f(x)$
 	\end{itemize}
 \end{theorem}
 
@@ -546,16 +552,16 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsection{Непрерывность функции}
 
 \begin{definition}
-  $f\!: E\to\mathR$ непрерывна в точке $a \in E$,
+  $f\on E\to\mathR$ непрерывна в точке $a \in E$,
   если выполнено любое из равносильных условий:
   \begin{enumerate}
-	\item Если $a$ -- предельная точка, то $\displaystyle \lim_{x\to a}f(x)=f(a)$
-	\item $\displaystyle \forall\eps>0 \. \exists\delta>0 \text{ т.ч. }
+	\item Если $a$ -- предельная точка, то $\DS \lim_{x\to a}f(x)=f(a)$
+	\item $\DS \forall\eps>0 \. \exists\delta>0 \text{ т.ч. }
 		   |x-a|<\delta \implies |f(x)-f(a)|<\eps$
 	\item Для \any окрестности $U_{f(a)}$ $\exists$ такая окрестность $U_a$,
 		  что $f(U_a \cap E) \subset U_{f(a)}$
 	\item Для \any послед. точек $\{x_n\} \subset E$ т.ч.
-		  $\displaystyle \lim_{\ntoinf}x_n=a \implies \lim_{\ntoinf}f(x_n)=f(a)$
+		  $\DS \lim_{\ntoinf}x_n=a \implies \lim_{\ntoinf}f(x_n)=f(a)$
   \end{enumerate}
 \end{definition}
 
@@ -563,18 +569,18 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 \bigbreak
 Следствия: \begin{enumerate}
-	\item Многочлены $\displaystyle p(x)=\sum_{k=0}^n a_kx^k$ непрерывны на $\mathR$.
-	\item Рациональные функции (отношения многочленов $\displaystyle \frac{p(x)}{q(x)}$)
+	\item Многочлены $\DS p(x)=\sum_{k=0}^n a_kx^k$ непрерывны на $\mathR$.
+	\item Рациональные функции (отношения многочленов $\DS \frac{p(x)}{q(x)}$)
 		  непрерывны во всех точках, в которых знаменатель не обращается в ноль.
 \end{enumerate}
 
 \begin{theorem}[Теорема о стабилизации знака]
-	Если $f\!: E\to\mathR$ непрерывна в точке $a \in E$ и $f(a)\ne0$,
+	Если $f\on E\to\mathR$ непрерывна в точке $a \in E$ и $f(a)\ne0$,
 	то найдётся такая окрестность $U_a$, что знак $f(x)$ совпадает с $f(a)$.
 \end{theorem}
 
 \begin{theorem}[Непрерывность композиции]
-	Пусть $f\!: D\to\mathR, \. g\!: E\to\mathR \. f(D)\subset E$ и
+	Пусть $f\on D\to\mathR, \. g\on E\to\mathR \. f(D)\subset E$ и
 	$f$ непрерывна в точке $a\in D$, а $g$ непрерывна в точке $f(a)$.
 	Тогда $g \circ f$ непрерывна в точке $a$.
 \end{theorem}
@@ -592,22 +598,167 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 \bigbreak
 Расширение теоремы: если функция $f$ непрерывна на $[a,+\infty]$,
-и $\exists$ конечный предел $\displaystyle \lim_{x\to+\infty}f(x)$,
+и $\exists$ конечный предел $\DS \lim_{x\to+\infty}f(x)$,
 то $f$ ограничена на $[a,+\infty]$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Теорема Больцано-Коши}
 
+\begin{theorem}[Больцано-Коши]
+	Пусть $f$ непрерывна на $[a,b]$ и значения $f(a)$ и $f(b)$ разных знаков.
+	Тогда $\exists \, c \in (a,b)$, для которой $f(c)=0$.
+\end{theorem}
+\begin{proof}
+	Делением отрезка пополам...
+\end{proof}
+
+\begin{corollary}
+	Пусть $f$ непрерывна на $[a,b]$ и $f(a)<y<f(b)$ или $f(b)<y<f(a)$.
+	Тогда $\exists$ такая точка $c\in(a,b)$, что $f(c)=y$.
+\end{corollary}
+
+\begin{corollary}
+	Если \textit{непрерывная} на \textit{отрезке} функция принимает какие-то два значения,
+	то она принимает и все значения, лежащие между ними.
+\end{corollary}
+
+\begin{theorem}	Непрерывный образ отрезка -- отрезок. \end{theorem}
+
+\begin{theorem}
+	Непрерывный образ промежутка -- промежуток (возможно, другого типа).
+\end{theorem}
+
+\CenterFigure{\linewidth}{bolcano-koshi-test-1.png}
+
+\subsubsection{Обратные функции}
+
+\begin{definition}[Обратная функция]
+	Пусть $f\on X\to Y$, причём\begin{enumerate}
+		\item $f(x_1)\ne f(x_2)$ при $x_1\ne x_2$ (инъекция)
+		\item Для \any $y\in Y$ найдётся такой $x\in X$, что $y=f(x)$ (сюръекция)
+	\end{enumerate}
+	Тогда можно определить $g\on Y\to X$ так, что\begin{itemize}
+		\item $g(f(x))=x$ при всех $x\in X$
+		\item $f(g(y))=y$ при всех $y\in Y$
+	\end{itemize}
+\end{definition}
+
+\begin{theorem}
+	Пусть $f\on \intab\to\mathR$ непрерывна и строго монотонна,
+	$\DS m=\inf_{x \in \intab}f(x)$,
+	$\DS M=\sup_{x \in \intab}f(x)$.
+	Тогда:
+	\begin{enumerate}
+		\item $f$ -- обратима и $f^{-1}\on \left<m,M\right> \to \intab$
+		\item $f^{-1}$ -- строго монотонна
+		\item $f^{-1}$ -- непрерывна на $\left<m,M\right>$
+	\end{enumerate}
+\end{theorem}
+
+Обратные тригонометрические функции:
+\begin{align*}
+	  & \arcsin: \left[ -1, 1 \right] \to \left[ -\frac\pi2, \frac\pi2 \right]
+	\\& \arccos: \left[ -1, 1 \right] \to \left[ 0, \pi \right]
+	\\& \arctg:  \mathR \to \left( -\frac\pi2, \frac\pi2 \right)
+	\\& \arcctg: \mathR \to \left( 0, \pi \right)
+\end{align*}
+
+\bigskip
+\begin{problem}Доказать, что многочлен нечётной степени всегда имеет корень\end{problem}
+\begin{proof}Показать, что при $x\to\pm\infty$ он принимает значения как $>0$, так и $<0$\end{proof}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Замечательные пределы}
+
+\begin{align*}
+	   \lim_{x\to 0} \frac{\sin x}x &= 1
+	\\ \lim_{x\to 0} \left(x+1\right)^{1/x} &= e
+	\\ \lim_{x\to 0} \frac{\ln(1+x)}x &= 1
+	\\ \lim_{x\to 0} e^x &= 1+x
+	\\ \lim_{x\to 0} \frac{a^x-1}x &= \ln a    &(a>0)
+	\\ \lim_{x\to 0} \frac{(1+x)^p-1}x &= px   &(p \ne 0)
+\end{align*}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Эквивалентные функции}
 
+\begin{definition}[$f \sim g$ при $x \to a$]
+	Пусть $f,g\on E\to \mathR$, $a$ -- предельная точка $E$. \\
+	Если $\exists$ такая окрестность $\ringU_a$ и функция $\varphi\on E\to\mathR$,
+	что $f(x)=\varphi(x)g(x)$ при всех $x\in\ringU_a\cap E$
+	и $\DS \lim_{x\to a}\varphi(x)=1$,\\
+	то $f \sim g$ при $x\to a$ (или $\DS f \underset{x\to a}{\sim} g$).
+\end{definition}
 
+\medskip
+Свойства эквивалентности (при $x \to a$): \begin{enumerate}
+	\item $f \sim f$
+	\item если $f \sim g$, то $g \sim f$
+	\item если $f \sim g$ и $g \sim h$, то $f \sim h$
+	\item если $f_1 \sim g_1$ и $f_2 \sim g_2$, то $f_1 f_2 \sim g_1 g_2$
+	\item если $f_1 \sim g_1$, $f_2 \sim g_2$, причём
+		  $f_2(x)\ne0$ и $g_2(x)\ne0$ при $x\in \ringU_a$,
+		  то $\DS \frac{f_1}{f_2} \sim \frac{g_1}{g_2}$
+\end{enumerate}
+
+Замечание: эквивалентности нельзя складывать, т.е. $f_1 \pm f_2 \not\sim g_1 \pm g_2$
+
+\bigskip
+Замечательные пределы ($x\to0$):
+\begin{align*}
+	   & x \sim \sin x \sim \tg x \sim \arcsin x \sim \arctg x
+	\\ & x \sim \ln(1+x)
+	\\ & 1 - \cos x \sim \frac{x^2}2
+	\\ & a^x-1 \sim x \ln a		& (a>0, a\ne1)
+	\\ & (1+x)^p \sim px		& (p\ne0)
+\end{align*}
+
+
+\subsubsection{o-малое}
+
+\begin{definition}[$o(f)$]
+	Пусть $f,g\on E\to\mathR$, $a$ -- предельная точка $E$.
+	Если $\exists$ окрестность $\ringU_a$ и функция $\varphi\on E\to\mathR$,
+	такая что $f(x)=\varphi(x)g(x)$ при всех $x\in\ringU_a\cap E$
+	и $\DS \lim_{x\to a}\varphi(x)=0$,\\
+	то $f = o(g)$ при $x\to a$ или $\DS f \underset{x\to a}{=} o(g)$
+\end{definition}
+
+\medskip
+Пример: $\DS f=o(1) \quad \Longleftrightarrow \quad \lim_{x\to a}f(x)=0$
+\medskip
+
+\begin{corollary}
+	Следующие утверждения равносильны: \begin{enumerate}
+		\item $\DS f \underset{x\to a}\sim g$
+		\item $f=g+o(g)$ при $x\to a$
+		\item $f=g+o(f)$ при $x\to a$
+	\end{enumerate}
+\end{corollary}
+
+\medskip
+Свойства:
+\begin{enumerate}
+	\item $f \cdot o(g) = o(f \cdot g)$
+	\item Если $f$ ограничена в $\ringU_a$, то $o(fg)=o(g)$
+	\item $o(g) \pm o(g) = o(g)$ \medspace
+		  {\small (т.к. \textit{здесь} равенство означает принадлежность к классу функций)}
+	\item Если $f \sim g$, то $o(f)=o(g)$
+\end{enumerate}
+
+\medskip
+Замечательные пределы:
+\begin{align*}
+	   \sin x &= x + o(x)
+	\\ \cos x &= 1 - \frac{x^2}2 + o(x^2)
+	\\ a^x &= 1 + x \ln a + o(x)
+	\\ (1+x)^p &= 1 + px + o(x)
+\end{align*}
+
+\CenterFigure{\linewidth}{small-o-test-1.png}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -615,12 +766,89 @@ $\displaystyle\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \vignette
 \section{Производные}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Дифференцируемость и производная}
 
 
+\begin{definition}[Дифференцируемые функции]
+	Пусть $f\on\intab\to\mathR$ и $x_0\in\intab$. \\
+	$f$ -- дифференцируема в точке $x_0$, если $\exists$ такое $k\in\mathR$,
+	что $f(x) = f(x_0) \hm+ k(x-x_0) \hm+ o(x-x_0)$ при $x\to x_0$.
+\end{definition}
+
+
+\begin{definition}
+	Производной функции $f$ в точке $x_0$ называется
+	\[ f'(x_0) = \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=
+			   = \lim_{h\to0}\frac{f(x_0+h)-f(x_0)}h \]
+\end{definition}
+
+\bigskip
+\begin{theorem}[Критерий дифференцируемости] \ \\
+	Пусть $f\on \intab\to\mathR$ и $x_0\in\intab$.
+	Тогда след. утверждения эквивалентны:
+	\begin{enumerate}
+		\item $f$ дифференцируема в точке $x_0$
+		\item $f$ имеет в точке $x_0$ конечную производную
+		\item $\exists$ непрерывная в $x_0$ функция $\varphi\on\intab\to\mathR$
+			  такая, что $f(x)-f(x_0) = \varphi(x)(x-x_0)$
+	\end{enumerate}
+	И если они справедливы, то $k=f'(x_0)=\varphi(x_0)$
+\end{theorem}
+
+\bigskip
+Бесконечные производные:
+$\DS \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0} = \pm\infty$
+
+Односторонние производные:
+$\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
+\bigskip
+
+\begin{theorem}[Производная композиции]
+	Пусть
+	\begin{enumerate}
+		\item $f\on \intab \to \left<c,d\right>$
+		\item $g\on \left<c,d\right> \to \mathR$
+		\item $f$ -- дифференцируема в точке $x_0 \in\intab$
+		$g$ -- дифференцируема в точке $f(x_0)$
+	\end{enumerate}
+	Тогда $g \circ f$ дифференцируема в $x_0$ и
+	$(g \circ f)'(x_0) = g'(f(x_0)) \cdot f'(x_0)$
+\end{theorem}
+
+
+\medskip
+\begin{theorem}[Дифференцирование обратной функции]
+	Пусть $f\on\intab\to\mathR$ строго монотонна и непрерывна,
+	$f$ -- дифференцируема в точке $x_0 \in\intab$ и $f'(x_0) \ne 0$. \\
+	Тогда обратная функция $f^{-1}$ дифф. в точке $f(x_0)$ и
+	$\DS \left(f^{-1}\right)'\left(f(x_0)\right) = \frac1{f'(x_0)}$
+\end{theorem}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Теоремы о среднем}
+
+\begin{theorem}[Теорема Ферма]
+	Пусть $f\on\intab\to\mathR$ дифференцируема в $x_0\in(a,b)$.
+	Если $\DS f(x_0)=\max_{x\in\intab}f(x)$ или $f(x_0)=\min_{x\in\intab}f(x)$,
+	то $f'(x_0)=0$.
+\end{theorem}
+
+\begin{theorem}[Теорема Ролля]
+	Пусть $f\on[a,b]\to\mathR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
+	Если $f(a)=f(b)$, то $\exists$ такая точка $c\in(a,b)$, что $f'(c)=0$.
+\end{theorem}
+
+\begin{theorem}[Теорема Лагранжа]
+	Пусть $f\on[a,b]\to\mathR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
+	Тогда $\exists$ такая точка $c\in(a,b)$, что $f(b)-f(a)=f'(c)(b-a)$.
+\end{theorem}
+
+\begin{theorem}[Теорема Коши]
+	...
+\end{theorem}
 
 \todo
 
