@@ -78,6 +78,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 % text mode macros
 \def\circleone{\ding{192}\space}
 \def\circletwo{\ding{193}\space}
+\def\circlethree{\ding{194}\space}
 \def\lets{{\huge$\lrcorner$}\space}
 \def\iff{$\;\Longleftrightarrow\;$}
 \def\any{$\forall\;$}
@@ -198,7 +199,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 		\item Аксиома Архимеда:
 				$ \forall\. x,y>0 \. \exists \; n \in \NN \;: nx>y $
 		\item Аксиома полноты:
-			Пусть $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset...$.
+			\lets $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset...$.
 			Тогда существует число $c \in \RR$, принадлежащее всем отрезкам:
 			$\DS c \in \bigcap_{n=1}^{\infty} [a_n,b_n]$
 	\end{itemize}
@@ -206,7 +207,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 \bigskip
 
 \begin{theorem}[О стягивающихся отрезках] \ \\
-	Пусть $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset ...$
+	\lets $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset ...$
 	и $\DS \lim_{\ntoinf}(b_n-a_n) = 0$.
 	Тогда пересечение всех отрезков состоит из одной точки:
 	$\DS \{c\} = \bigcap_{n=1}^{\infty} [a_n,b_n]$, причём
@@ -394,11 +395,11 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 Пример: ряд $\DS\frac1{\sqrt{k}}$ расходится.
 
 \begin{theorem}[Признак Даламбера]
-  Пусть $a_n > 0$. Тогда:
+  \lets $a_n > 0$. Тогда:
   \begin{enumerate}
 	\item Если $\DS\frac{a_{n+1}}{a_n} \leqs d < 1$, то ряд \rowak сходится
 	\item Если $\DS\frac{a_{n+1}}{a_n} \geqs 1$, то ряд расходится
-	\item Пусть $\DS d_* = \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$. Тогда:
+	\item \lets $\DS d_* = \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$. Тогда:
 	  \begin{itemize}
 	  	\item Если $d_* < 1$, то ряд сходится
 	  	\item Если $d_* > 1$, то ряд расходится
@@ -408,11 +409,11 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \end{theorem}
 
 \begin{theorem}[Признак Коши]
-	Пусть $a_n>0$. Тогда:
+	\lets $a_n>0$. Тогда:
 	\begin{enumerate}
 		\item Если $\DS\sqrt[n]{a_n} \leqs d < 1$, то ряд \rowak сходится
 		\item Если $\DS\sqrt[n]{a_n} \geqs 1$, то ряд расходится
-		\item Пусть $\DS q_* = \lim_{\ntoinf} \sqrt[n]{a_n}$. Тогда:
+		\item \lets $\DS q_* = \lim_{\ntoinf} \sqrt[n]{a_n}$. Тогда:
 		\begin{itemize}
 			\item Если $d_* < 1$, то ряд сходится
 			\item Если $d_* > 1$, то ряд расходится
@@ -525,8 +526,8 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{Предел функции}
 
 \begin{definition}
-	Пусть дана функция $f$: $E\to\RR$, заданная на множестве $E \subset \RR$.
-	Пусть $a$ -- предельная точка множества $E$.
+	\lets дана функция $f$: $E\to\RR$, заданная на множестве $E \subset \RR$.
+	\lets $a$ -- предельная точка множества $E$.
 	Тогда $\DS \lim_{x \to a}f(x)=A$
 	\big(или $f(x) \xrightarrow[x \to a]{} A$ \big),
 	если выполнено любое из равносильных условий:
@@ -600,7 +601,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 
 \begin{theorem}
-	Пусть $f:\, E\to\RR$, $\;$ $a$ -- предельная точка множества $E_1=E \cap (-\infty,a)$.
+	\lets $f:\, E\to\RR$, $\;$ $a$ -- предельная точка множества $E_1=E \cap (-\infty,a)$.
 	Тогда: \begin{itemize}
 		\item Если $f$ возрастает и ограничена сверху, то
 			  $\exists$ $\DS \lim_{x\to a-}f(x)$
@@ -646,7 +647,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \bigskip
 
 \begin{theorem}[Непрерывность композиции]
-	Пусть $f\on D\to\RR, \. g\on E\to\RR \. f(D)\subset E$ и
+	\lets $f\on D\to\RR, \. g\on E\to\RR \. f(D)\subset E$ и
 	$f$ непрерывна в точке $a\in D$, а $g$ непрерывна в точке $f(a)$.
 	Тогда $g \circ f$ непрерывна в точке $a$.
 \end{theorem}
@@ -688,13 +689,13 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsection{Теорема Больцано-Коши}
 
 \begin{theorem}[Больцано-Коши]
-	Пусть $f$ непрерывна на $[a,b]$ и значения $f(a)$ и $f(b)$ разных знаков.
+	\lets $f$ непрерывна на $[a,b]$ и значения $f(a)$ и $f(b)$ разных знаков.
 	Тогда $\exists \, c \in (a,b)$, для которой $f(c)=0$.
 \end{theorem}
 \begin{proof} Делением отрезка пополам \end{proof}
 
 \begin{corollary}
-	Пусть $f$ непрерывна на $[a,b]$ и $f(a)<y<f(b)$ или $f(b)<y<f(a)$.
+	\lets $f$ непрерывна на $[a,b]$ и $f(a)<y<f(b)$ или $f(b)<y<f(a)$.
 	Тогда $\exists$ такая точка $c\in(a,b)$, что $f(c)=y$.
 \end{corollary}
 \begin{proof} Рассмотреть $g(x)=f(x)-y$ \end{proof}
@@ -723,7 +724,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{Обратные функции}
 
 \begin{definition}[Обратная функция]
-	Пусть $f\on X\to Y$, причём\begin{enumerate}
+	\lets $f\on X\to Y$, причём\begin{enumerate}
 		\item $f(x_1)\ne f(x_2)$ при $x_1\ne x_2$ (инъекция)
 		\item Для \any $y\in Y$ найдётся такой $x\in X$, что $y=f(x)$ (сюръекция)
 	\end{enumerate}
@@ -734,7 +735,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \end{definition}
 
 \begin{theorem}
-	Пусть $f\on \intab\to\RR$ непрерывна и строго монотонна,
+	\lets $f\on \intab\to\RR$ непрерывна и строго монотонна,
 	$\DS m=\inf_{x \in \intab}f(x)$,
 	$\DS M=\sup_{x \in \intab}f(x)$.
 	Тогда:
@@ -784,7 +785,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsection{Эквивалентные функции}
 
 \begin{definition}[$f \sim g$ при $x \to a$]
-	Пусть $f,g\on E\to \RR$, $a$ -- предельная точка $E$. \\
+	\lets $f,g\on E\to \RR$, $a$ -- предельная точка $E$. \\
 	Если $\exists$ такая окрестность $\ringU_a$ и функция $\varphi\on E\to\RR$,
 	что $f(x)=\varphi(x)g(x)$ при всех $x\in\ringU_a\cap E$
 	и $\DS \lim_{x\to a}\varphi(x)=1$,\\
@@ -818,7 +819,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{o-малое}
 
 \begin{definition}[$o(f)$]
-	Пусть $f,g\on E\to\RR$, $a$ -- предельная точка $E$.
+	\lets $f,g\on E\to\RR$, $a$ -- предельная точка $E$.
 	Если $\exists$ окрестность $\ringU_a$ и функция $\varphi\on E\to\RR$,
 	такая что $f(x)=\varphi(x)g(x)$ при всех $x\in\ringU_a\cap E$
 	и $\DS \lim_{x\to a}\varphi(x)=0$,\\
@@ -870,21 +871,22 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 
 \begin{definition}[Дифференцируемые функции]
-	Пусть $f\on\intab\to\RR$ и $x_0\in\intab$. \\
-	$f$ -- дифференцируема в точке $x_0$, если $\exists$ такое $k\in\RR$,
-	что $f(x) = f(x_0) \hm+ k(x-x_0) \hm+ o(x-x_0)$ при $x\to x_0$.
+	\lets $f\on\intab\to\RR$ и $x_0\in\intab$. \\
+	$f$ -- дифференцируема в точке $x_0$, если $\exists$ такое $k\in\RR$, что
+	\[ f(x) = f(x_0) + k(x-x_0) + o(x-x_0) \quad при x \to x_0. \]
 \end{definition}
 
 
 \begin{definition}
 	Производной функции $f$ в точке $x_0$ называется
-	\[ f'(x_0) = \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=
-			   = \lim_{h\to0}\frac{f(x_0+h)-f(x_0)}h \]
+	\[ f'(x_0) = \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}
+			   = \lim_{h\to 0}\frac{f(x_0+h)-f(x_0)}h \]
 \end{definition}
 \bigskip
 
+
 \begin{theorem}[Критерий дифференцируемости] \ \\
-	Пусть $f\on \intab\to\RR$ и $x_0\in\intab$.
+	\lets $f\on \intab\to\RR$ и $x_0\in\intab$.
 	Тогда след. утверждения эквивалентны:
 	\begin{enumerate}
 		\item $f$ дифференцируема в точке $x_0$
@@ -894,31 +896,54 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\end{enumerate}
 	И если они справедливы, то $k=f'(x_0)=\varphi(x_0)$
 \end{theorem}
-\bigskip
+\begin{proof}
+	\circletwo $\Rightarrow$ \circlethree: \[
+		\varphi(x) = \begin{cases}\begin{aligned}
+			& \frac{f(x)-f(x_0)}{x-x_0}  & \text{при } x \ne x_0 \\
+			& f'(x_0)                    & \text{при } x=x_0
+		\end{aligned}
+		\end{cases}
+	\]
+	\circlethree $\Rightarrow$ \circleone: \[
+		f(x) = f(x_0) + \varphi(x_0)(x-x_0) + \left( \varphi(x)-\varphi(x_0) \right) (x-x_0)
+	\]
+\end{proof}
+
+\begin{corollary}
+	$f$ дифференцируема в точке $x_0$ $\implies$ $f$ непрерывна в точке $x_0$
+\end{corollary}
+
+\bigskip\medskip
+
 
 Бесконечные производные:
 $\DS \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0} = \pm\infty$
 
 Односторонние производные:
 $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
+
+Производные можно складывать, вычитать, умножать
+и (если знаменатель $\ne0$ в точке $x_0$) делить.
 \bigskip
 
+
 \begin{theorem}[Производная композиции]
-	Пусть
-	\begin{enumerate}
-		\item $f\on \intab \to \left<c,d\right>$
-		\item $g\on \left<c,d\right> \to \RR$
-		\item $f$ -- дифференцируема в точке $x_0 \in\intab$
-		$g$ -- дифференцируема в точке $f(x_0)$
-	\end{enumerate}
-	Тогда $g \circ f$ дифференцируема в $x_0$ и
-	$(g \circ f)'(x_0) = g'(f(x_0)) \cdot f'(x_0)$
+	\def\intcd{\left<c,d\right>}
+	\lets $f\on \intab \to \intcd$,	\medspace $g\on \intcd \to \RR$,
+	\\ $f$ -- дифф. в точке $x_0 \in\intab$, \medspace $g$ -- дифф. в точке $f(x_0)$.
+	\\ Тогда $g \circ f$ дифференцируема в $x_0$
+	и $(g \circ f)'(x_0) = g'(f(x_0)) \cdot f'(x_0)$
 \end{theorem}
+\begin{proof}
+	Использовать определение дифференцируемости
+	\circlethree через непрерывную функцию
+\end{proof}
 \medskip
 
+
 \begin{theorem}[Дифференцирование обратной функции]
-	Пусть $f\on\intab\to\RR$ строго монотонна и непрерывна,
-	$f$ -- дифференцируема в точке $x_0 \in\intab$ и $f'(x_0) \ne 0$. \\
+	\lets $f\on\intab\to\RR$ строго монотонна и непрерывна,
+	дифференцируема в точке $x_0 \in\intab$ и $f'(x_0) \ne 0$. \\
 	Тогда обратная функция $f^{-1}$ дифф. в точке $f(x_0)$ и
 	$\DS \left(f^{-1}\right)'\left(f(x_0)\right) = \frac1{f'(x_0)}$
 \end{theorem}
@@ -928,7 +953,7 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 \subsection{Теоремы о среднем}
 
 \begin{theorem}[Теорема Ферма]
-	Пусть $f\on\intab\to\RR$ дифференцируема в $x_0\in(a,b)$.
+	\lets $f\on\intab\to\RR$ дифференцируема в $x_0\in(a,b)$.
 	Если $\DS f(x_0)=\max_{x\in\intab}f(x)$ или $f(x_0)=\min_{x\in\intab}f(x)$,
 	то $f'(x_0)=0$.
 \end{theorem}
@@ -936,14 +961,14 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 
 
 \begin{theorem}[Теорема Ролля]
-	Пусть $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
+	\lets $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
 	Если $f(a)=f(b)$, то $\exists$ такая точка $c\in(a,b)$, что $f'(c)=0$.
 \end{theorem}
 \bigskip
 
 
 \begin{theorem}[Теорема Лагранжа]
-	Пусть $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
+	\lets $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
 	Тогда $\exists$ такая точка $c\in(a,b)$, что $f(b)-f(a)=f'(c)(b-a)$.
 \end{theorem}
 \bigskip
