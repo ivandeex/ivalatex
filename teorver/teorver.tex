@@ -1,0 +1,367 @@
+%%% page margins
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry} % fix page margins
+
+% strengthen samepage because penalties are unreliable
+\newenvironment{onsamepage} {\begin{minipage}{\textwidth}} {\end{minipage}}
+
+%%% languages
+\usepackage{cmap}					% lookup in pdf
+\usepackage{mathtext} 				% cyrillic letters in formulas
+\usepackage[T2A]{fontenc}			% encoding
+\usepackage[utf8]{inputenc}			% source encoding
+\usepackage[english,russian]{babel}	% l18n and hyphenation
+
+%%% mathematics
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
+
+%%% перенос формул по Львовскому
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+
+% totally disable breaking inline formulas across lines
+\relpenalty=10000
+\binoppenalty=10000
+
+% reduce hyphenation
+\lefthyphenmin=8
+\righthyphenmin=8
+
+%%% fonts
+\usepackage{euscript,mathrsfs,pifont} % euclid font, cool math font, dingbats
+
+%%% figures
+\usepackage{graphicx,wrapfig,float}
+\numberwithin{figure}{section}
+\graphicspath{{images/}}
+\newcommand\cfigure[2]{
+	\begin{figure}[H] \centering \includegraphics[width=#1]{#2} \end{figure}
+}
+\newcommand\ccfigure[3]{
+	\begin{figure}[H] \centering \includegraphics[width=#1]{#2} \caption{#3} \end{figure}
+}
+
+%%% links
+\usepackage{color,hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=cyan}
+
+%%% styles
+\usepackage{amsthm}
+
+\usepackage{parskip}      % space between paragraphs rather than indentation
+\makeatletter             % fix \topsep in amsthm after \usepackage{parskip}
+\def\thm@space@setup{\thm@preskip=2.5\parskip \thm@postskip=0pt}
+\makeatother
+
+\theoremstyle{definition}
+\newtheorem{definition}{Опр-е.}[section]
+\newtheorem*{property}{Св-во}   %[definition]
+\newtheorem{theorem}{Tеор.}[section]
+\newtheorem*{corollary}{След-е} %[theorem]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{problem}{Задача}[section]
+
+% reduce space between theorem and proof
+\let\exproof\proof
+\def\proof{\vspace{-.6em}\exproof[Док-во]}
+\def\solution{\vspace{-.6em}\exproof[Решение]}
+%\renewcommand\qedsymbol{$\blacksquare$}
+
+
+%%% math mode macros
+% russian-style greeks
+\let\DS\displaystyle
+\let\eps\varepsilon
+\let\phi\varphi
+\let\leqs\leqslant
+\let\geqs\geqslant
+\def\BB{\mathbb{B}}
+\def\RR{\mathbb{R}}
+\def\SS{\mathfrak{S}}
+\def\mbyn{\dfrac{m}{n}}
+
+%%% text mode macros
+\def\lets{{\huge$\lrcorner$}\space}
+\def\iff{$\;\Longleftrightarrow\;$}
+\def\any{$\forall\;$}
+\def\todo{\guillemotleft $\mathcal{TODO}$ \guillemotright\textellipsis}
+\def\vignette{\vspace{48pt} \noindent \hrulefill~
+	          \raisebox{-8pt}[10pt][10pt]{\Huge\ding{102}}
+	          ~\hrulefill}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Теория Вероятности}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Непрерывные СВ}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Вероятностное пространство}
+
+\begin{definition}[$\sigma$-алгебра]
+\textit{$\sigma$-алгебра над множеством $X$}
+--- это семейство $\SS$ подмножеств множества $X$, т.ч.:
+\begin{enumerate}
+	\item $X \in \SS$ и $\varnothing \in \SS$
+	\item если $E \in \SS$, то $X \setminus E \in \SS$
+	\item если $\exists$ семейство $\{A_n\} \in \SS$ (конечное или счётное),
+	      то $\DS \bigcup_{n=1}^{\infty} A_n \in \SS$
+	      и $\DS \bigcap_{n=1}^{\infty} A_n \in \SS$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Борелевское множество]
+	\textit{$\BB$-множество} --- такое множество, которое может быть
+	получено из \textit{открытых или замкнутых промежутков} на $\RR$
+	конечным или счетным числом операций $\bigcup A_n$ и $\bigcap A_n$.
+\end{definition}
+
+\begin{definition}
+	\textit{Борелевская $\sigma$-алгебра} $\equiv$ минимальная
+	$\sigma$-алгебра борелевских множеств на $\RR$.
+\end{definition}
+
+
+\medskip
+\begin{problem}
+	Является ли множество всех рациональных точек на прямой борелевским,
+	т.е. верно ли, что
+	$\left\{ \mbyn, n=1,2,...; m=0,1,2,... \right\} \in \BB$?
+\end{problem}
+\begin{solution}
+	{\bfseries Да.}\\
+	Каждую точку можно рассматривать как отрезок
+	$\left[ \mbyn,\mbyn \right] =
+	\left( -\infty, \mbyn \right] \setminus \left( -\infty, \mbyn \right)$,
+	причём множество всех рациональных точек на прямой счетно.
+\end{solution}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Функции распределения и плотности}
+
+Функция распределения вероятности (CDF)
+\begin{enumerate}
+	\item $F_X(x) = P(X \leqs x)$
+	\item $0\leqs F_X \leqs 1$
+	\item $F$ -- монотонно неубывающая
+	\item $F(-\infty)=0$, $F(+\infty)=1$
+	\item $P(a< X \leqs b) = F(b)-F(a)$
+	\item $F$ -- непрерывна \textit{справа}
+	\item $F$ -- это некоторая вероятность, т.е. безразмерная величина
+\end{enumerate}
+
+Замечание: если бы CDF была определена как
+$P(X {\pmb{\textcolor{red}<}} x)$,
+то была бы непрерывна \textit{слева}.
+
+\cfigure{11cm}{cdf-example-big.png}
+
+\cfigure{6cm}{cdf-example-small.jpg}
+
+Функция плотности распределения (PDF):
+\begin{enumerate}
+	\item $f(u) \geqs 0$
+	\item $f(x)=F'(x)=\dfrac{dF(x)}{dx}$
+	\item $\DS P(X\leqs x)=F(x)=\int_{-\infty}^{x}f(u)du$
+	\item $\DS \int_{-\infty}^{+\infty}f(u)du=1$ -- условие нормировки
+	\item $P(X=a)=0$
+	\item $P(X \in \left<x,x+\delta\right>) \approx f(x) \delta$
+	\item размерность $f$ есть $\dfrac{1}{\text{размерность}(X)}$
+		  (например, $\text{см}^{-1}$, $\text{кг}^{-1}$)
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Характеристики непрерывных СВ}
+
+\begin{onsamepage}
+Матожидание $\DS M(x)=\int_{-\infty}^{+\infty}uf(u)du$
+
+$M(x)$ существует \iff интеграл сходится \textit{абсолютно}:
+$\DS \int_{-\infty}^{+\infty}|u|f(u)du < \infty$.
+\end{onsamepage}
+
+Матожидание может не существовать.
+Пример -- распределение Коши: $f(x)=\dfrac{1/\pi}{1+x^2}$.
+Для него $\DS \int_{-\infty}^{+\infty}|u|f(u)du
+            = \frac2\pi \int_0^\infty \frac{x\,\mathrm{d}x}{1+x^2}
+            = \frac1\pi \ln(1+x^2) \Big\rvert_0^\infty \to \infty$
+
+Если $f(x)=f(-x)$ (чётная), то $M(X)=0$ (если существует).
+
+\medskip
+
+Матожидание функции
+$\DS M\left( \phi(x) \right) = \int_{-\infty}^{+\infty}\phi(u)f(u)du$.
+
+\medskip
+
+Дисперсия $D(X) = M\left( X-M(X) \right) = M(X^2)-M^2(X)$
+
+\bigskip
+
+Медиана (характеристика \textit{положения}):
+$\mathrm{Me}(X) = arg \left\{ F_X(x) = 1/2 \right\}$
+
+Медиана существует \textit{всегда}.
+
+Если $f(x)=f(-x)$ (чётная), то для нормировки функции плотности имеем:
+\[ 1 = \int_{-\infty}^\infty f(u)du
+     = \int_{-\infty}^0 f(u)du + \int_0^\infty f(u)du
+     = F(0) + \int_\infty^0 f(-u)d(-u) = F(0) + F(0) \]
+а значит $F(0)=1/2$, т.е. $\mathrm{Me}(X) = 0$.
+
+\bigskip
+
+Нижний квартиль: $F(Q_1) = 1/4$
+
+Нижний квартиль: $F(Q_3) = 3/4$
+
+Межквартильный размах: $IQR=Q_3-Q_1$
+
+\medskip
+
+Квантиль уровня $\alpha$: $F(q_{\alpha})=\alpha$
+
+Квантильная функция $Q(p)=F^{-1}(x)$, $p\!\in\![0,1]$ --
+функция, обратная к функции распределения
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Экспоненциальное распределение}
+
+\cfigure{.9\linewidth}{exp-dist.png}
+
+$X \sim Exp(\lambda)$
+
+PDF: $\DS f(u) = \lambda e^{-\lambda u}$, $u\geqs0$, $\lambda>0$
+
+CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambda x}$
+
+\begin{align*}
+	   f(u)&=\lambda e^{-\lambda u} \qquad u\geqs 0 ,\; \lambda>0
+	\\ F(x)&=1-e^{-\lambda x} \qquad x\geqs 0
+	\\ M(x)&=\frac{1}{\lambda}
+	\\ D(x)&=\frac{1}{\lambda^2}
+	\\ \mathrm{Me}(x)&=\frac{\ln 2}{\lambda} \qquad \text{скошено вправо: } Me<M
+\end{align*}
+
+Свойство отсутствия памяти:
+\[ P(X>t+s|X>t) = \frac{P(X>t+s,X>t)}{P(X>t)} = \frac{P(X>t+s)}{P(X>t)} =
+   \frac{e^{-\lambda(t+s)}}{e^{-\lambda t}}=P(X>s) \quad (s,t\!\geqs\!0) \]
+
+Среди дискретных распределений свойством отсутствия памяти обладает геометрическое.
+Экспоненциальное распределение -- непрерывный аналог геометрического.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Процесс Пуассона}
+
+\textit{Случайный процесс} -- последовательость случайных величин в дискретном времени
+(обычно НОР, т.е. независимых одинаково распределённых).
+
+
+Пуассоновский процесс -- непрерывный аналог процесса Бернулли:
+	\[ P(k,t) = \frac{(\lambda t)^k}{k!} e^{-\lambda t} \]
+
+
+Свойства ПП:
+\begin{enumerate}
+	\item стационарный (распределение числа событий зависит только от длины интервала)
+	\item ординарный (вряд ли на очень малом интервале произойдёт больше одного события)
+	\item поток с отсутствием памяти.
+\end{enumerate}
+
+
+\begin{problem}
+	Будет ли пуассоновский процесс подходящей моделью процесса
+	прибытия пассажиров в пункт выдачи багажа в аэропорту?
+\end{problem}
+\begin{solution}
+  \textbf{Нет.}\\
+	Не выполняется требование независимости событий, т.к.
+	пассажиры приходят за багажом после посадки самолета и, если мы наблюдаем,
+	к примеру, что в зону получения багажа за последнюю минуту пришли 15 человек,
+	то следует ожидать значительное количество людей в течение следующей минуты.
+	Как получают багаж? Сначала толпа, потом редкие одиночки.
+\end{solution}
+
+
+\begin{onsamepage}
+\begin{problem}
+	Будет ли пуассоновский процесс подходящей моделью процесса поступления
+	звонков в регистратуру поликлиники в течение рабочего дня?
+\end{problem}
+\begin{solution}
+  \textbf{Нет.}\\
+	Не выполняется требование стационарности пуассоновского процесса, т.к.
+	частота звонков намного выше в утренние часы в сравнении с вечерними.
+	К концу дня поток звонков при любом распорядке будет снижаться
+	(если это не ночной стационар).
+\end{solution}
+\end{onsamepage}
+
+
+\subsection{Прочие распределения}
+
+Равномерное распределение $X \sim Uniform(a,b)$:
+\begin{align*}
+	   F(x) &=
+	   		\begin{cases}
+	   			0	& x<a \\
+		   		\dfrac{x-a}{b-a}	& a \leqs x \leqs b \\
+		   		1	& x>b
+			\end{cases}
+	\\ f(x) &= \begin{cases}
+				0		& x<a \\
+				1/(b-a)	& a \leqs x \leqs b \\
+				0		& x>b
+			\end{cases}
+	\\ Me = M &= (a+b)/2
+	\\ D &= (b-a)^2/12
+\end{align*}
+
+
+Распределение Лапласа:
+\begin{align*}
+	   f &= \frac{\lambda}2 e^{-\lambda|x|}
+	\\ M &= 0
+	\\ D &= \frac{2}{\lambda^2}
+\end{align*}
+
+
+Распределение Коши:
+\begin{align*}
+	   f(x)=\dfrac{1/\pi}{1+x^2}
+\end{align*}
+
+
+\subsection{Вспомогательные формулы}
+
+\begin{align*}
+	   \int_0^\infty     e^{-ax}dx &= \frac{1}{a}
+	\\ \int_0^\infty x   e^{-ax}dx &= \frac{1}{a^2}
+	\\ \int_0^\infty x^2 e^{-ax}dx &= \frac{2}{a^3}
+	\\ \int_0^\infty x^n e^{-ax}dx &= \frac{n!}{a^{n+1}}
+\end{align*}
+
+\begin{align*}
+	   a^3-b^3 &= (a-b)(a^2+ab+b^2)
+	\\ (a-b)^3 &= a^3-3a^2b+3ab^2-b^3
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
+
+\end{document}
