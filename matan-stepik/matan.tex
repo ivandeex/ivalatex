@@ -1,68 +1,69 @@
-% page margins
+%%% page margins
 \documentclass[a4paper,12pt]{article}
-\usepackage[margin=2.5cm]{geometry}
-\setlength{\parindent}{0cm}  % disable indentation
+\usepackage[margin=2.5cm]{geometry} % fix page margins
 
-% languages
+%%% languages
 \usepackage{cmap}					% lookup in pdf
 \usepackage{mathtext} 				% cyrillic letters in formulas
 \usepackage[T2A]{fontenc}			% encoding
 \usepackage[utf8]{inputenc}			% source encoding
 \usepackage[english,russian]{babel}	% l18n and hyphenation
 
-% mathematics
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
+%%% mathematics
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
 
-% перенос формул по Львовскому
+%%% перенос формул по Львовскому
 \newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
 
-% fonts
+% totally disable breaking inline formulas across lines
+\relpenalty=10000
+\binoppenalty=10000
+
+% reduce hyphenation
+\lefthyphenmin=8
+\righthyphenmin=8
+
+%%% fonts
 \usepackage{euscript,mathrsfs,pifont} % euclid font, cool math font, dingbats
 
-% tables
-\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
-\usepackage{longtable,multirow}  % long tables, merge table rows
-
-% figures
+%%% figures
 \usepackage{graphicx,wrapfig,float}
 \numberwithin{figure}{section}
 \graphicspath{{images/}}
-
-% links
-\usepackage{color,hyperref}
-\hypersetup{
-	colorlinks=true,
-	linkcolor=blue,
-	filecolor=magenta,      
-	urlcolor=cyan,
+\newcommand\cfigure[2]{
+	\begin{figure}[H] \centering \includegraphics[width=#1]{#2} \end{figure}
+}
+\newcommand\ccfigure[3]{
+	\begin{figure}[H] \centering \includegraphics[width=#1]{#2} \caption{#3} \end{figure}
 }
 
-% styles
-\usepackage{mathtools,thmtools}
-%\renewcommand\qedsymbol{$\blacksquare$}
+%%% links
+\usepackage{color,hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=cyan}
+
+%%% styles
+\usepackage{amsthm} %{,thmtools}
+
+\usepackage{parskip}      % space between paragraphs rather than indentation
+\makeatletter             % fix \topsep in amsthm after \usepackage{parskip}
+\def\thm@space@setup{\thm@preskip=2.5\parskip \thm@postskip=0pt}
+\makeatother
+
 \theoremstyle{definition}
 \newtheorem{definition}{Опр-е.}[section]
-\newtheorem*{property}{Св-во}  %[definition]
-%\theoremstyle{plain}
-%\theoremstyle{remark}
-\theoremstyle{definition}
+\newtheorem*{property}{Св-во}   %[definition]
 \newtheorem{theorem}{Tеор.}[section]
 \newtheorem*{corollary}{След-е} %[theorem]
 \newtheorem{lemma}{Лемма}[section]
+\newtheorem{problem}{Задача}[section]
 
-\declaretheoremstyle[
-spaceabove=0pt, spacebelow=24pt,
-headfont=\normalfont\bfseries, headpunct={.},
-notefont=\normalfont\mdseries, notebraces={(}{)},
-%postheadspace=.5em,
-postheadspace=\newline,
-bodyfont=\normalfont, qed=\qedsymbol
-]{solution}
+% reduce space between theorem and proof
+\let\exproof\proof
+\def\proof{\vspace{-.6em}\exproof[Док-во]}
+%\renewcommand\qedsymbol{$\blacksquare$}
 
-\declaretheorem[name=Задача,numberwithin=section,style=definition]{problem}
-\declaretheorem[name=Решение,numbered=no,style=solution]{solution}
 
-% math mode macros
+%%% math mode macros
 \def\DS{\displaystyle}
 \def\NN{\mathbb{N}}
 \def\RR{\mathbb{R}}
@@ -75,7 +76,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 \def\geqs{\geqslant}
 \def\intab{\left<a,b\right>}
 
-% text mode macros
+%%% text mode macros
 \def\circleone{\ding{192}\space}
 \def\circletwo{\ding{193}\space}
 \def\circlethree{\ding{194}\space}
@@ -85,23 +86,6 @@ bodyfont=\normalfont, qed=\qedsymbol
 \def\rowak{$\DS\sum_{k=1}^{\infty}a_k$\space}
 \def\todo{\guillemotleft$\mathcal{TODO}$\guillemotright\textellipsis}
 \def\vignette{\vspace{48pt} \noindent \hrulefill~ \raisebox{-8pt}[10pt][10pt]{\Huge\ding{102}}~ \hrulefill}
-
-% figures
-
-\newcommand\CenterFigure[2]{
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=#1]{#2}
-	\end{figure}
-}
-
-\newcommand\CenterFigureCaption[3]{
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=#1]{#2}
-		\caption{#3}
-	\end{figure}
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,22 +114,22 @@ bodyfont=\normalfont, qed=\qedsymbol
 		\item $\forall \eps>0 \. \exists N \. \forall n>N \. |x_n - a|<\eps$
 	\end{itemize}
 \end{definition}
-\bigskip
 
+\medskip
 Свойства последовательностей:
 \begin{itemize}
 	\item Не может иметь двух различных пределов
 	\item Если имеет предел, то $|x_n| \leqs M$
 	\item Пределы можно складывать, вычитать, умножать, делить, брать модуль
 \end{itemize}
-\bigskip
+
 
 \begin{property}[Переход к пределу в неравенстве]
 \[ \lim_{\ntoinf}x_n=a ,\; \lim_{\ntoinf}y_n=b ,\; x_n \leqs y_n
    \implies a \leqs b \]
 \end{property}
 \begin{proof} От противного \end{proof}
-\bigskip
+
 
 \begin{theorem}[О двух милиционерах]
 	\[ a_n \leqs c_n \leqs b_n , \quad
@@ -163,7 +147,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 	делить (нижний д.б. $\ne0$) и брать модуль.
 \end{property}
 \begin{proof} С умом подбираем $\eps$ и используем ограниченность... \end{proof}
-\bigskip
+
 
 \begin{definition}[Бесконечный предел] \[
 	\lim_{\ntoinf} x_n = +\infty
@@ -184,15 +168,16 @@ bodyfont=\normalfont, qed=\qedsymbol
 		\item Произвед. беск. малой на ограниченную -- беск. малая
 	\end{enumerate}
 \end{property}
-\bigskip
 
+\medskip
 Арифметические операции с бесконечностями...
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Вещественные числа. Супремум и инфимум.}
 
-\begin{definition}[Вещественные числа] \ \\
+\begin{definition}[Вещественные числа]
+	\leavevmode
 	\begin{itemize}
 		\item Аксиомы поля (9 штук)
 		\item Аксимомы порядка (5 штук)
@@ -200,13 +185,13 @@ bodyfont=\normalfont, qed=\qedsymbol
 				$ \forall\. x,y>0 \. \exists \; n \in \NN \;: nx>y $
 		\item Аксиома полноты:
 			\lets $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset...$.
-			Тогда существует число $c \in \RR$, принадлежащее всем отрезкам:
+			\\Тогда $\exists$ число $c \in \RR$, принадлежащее всем отрезкам:
 			$\DS c \in \bigcap_{n=1}^{\infty} [a_n,b_n]$
 	\end{itemize}
 \end{definition}
-\bigskip
 
-\begin{theorem}[О стягивающихся отрезках] \ \\
+
+\begin{theorem}[О стягивающихся отрезках]
 	\lets $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset ...$
 	и $\DS \lim_{\ntoinf}(b_n-a_n) = 0$.
 	Тогда пересечение всех отрезков состоит из одной точки:
@@ -214,7 +199,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 	$\DS \lim_{\ntoinf}a_n = \lim_{\ntoinf}b_n = c$
 \end{theorem}
 \begin{proof} По теореме о двух милиционерах \end{proof}
-\bigskip
+
 
 \begin{definition}
 	\lets $E$ -- непустое множество \\
@@ -227,31 +212,33 @@ bodyfont=\normalfont, qed=\qedsymbol
 		\end{cases*}
 	\]
 \end{definition}
-\bigskip
+
 
 \begin{theorem}
 	Всякое непустое ограниченное сверху (снизу) множество имеет $\sup$ ($\inf$)
 \end{theorem}
 \begin{proof} Делением отрезка пополам, затем переход к пределу в неравенстве... \end{proof}
-\bigskip
 
-\begin{theorem}  \ \\
+
+\begin{theorem}
+	\leavevmode
 	\begin{itemize}
 		\item Монотонно возрастающая ограниченная сверху последовательность сходится.
 		\item Монотонно убывающая ограниченная снизу последовательность сходится.
 	\end{itemize}
 \end{theorem}
 \begin{proof} Супремум... \end{proof}
-\bigskip
 
-\begin{theorem}  \ \\
+
+\begin{theorem}
+	\leavevmode
 	\begin{itemize}
 		\item Неограниченная сверху возрастающая последовательность стремится к $+\infty$.
 		\item Неограниченная снизу убывающая последовательность стремится к $-\infty$.
 	\end{itemize}
 \end{theorem}
 \begin{proof} По определению \end{proof}
-\bigskip
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -280,7 +267,7 @@ bodyfont=\normalfont, qed=\qedsymbol
 	\[ \{ a_n \} \to A \implies \{ a_{n_k} \} \to A \]
 \end{property}
 \begin{proof} По определению \end{proof}
-\bigskip
+
 
 \begin{theorem}[Больцано-Вейерштрасса]
 	Из всякой ограниченной последовательности можно выделить сходящуюся (к конечному пределу) подпоследовательность
@@ -290,9 +277,10 @@ bodyfont=\normalfont, qed=\qedsymbol
 	чтобы в нём оставалась бесконечная подпоследовательность.
 	Далее по теореме о двух милиционерах.
 \end{proof}
-\bigskip
 
-\begin{theorem}[Расширение теоремы Больцано-Вейерштрасса]  \ \\
+
+\begin{theorem}[Расширение теоремы Больцано-Вейерштрасса]
+	\leavevmode
 	\begin{itemize}
 		\item Из неограниченной сверху последовательности
 			  можно выделить подпоследовательность, сходящуюся к $+\infty$.
@@ -300,13 +288,13 @@ bodyfont=\normalfont, qed=\qedsymbol
 			  можно выделить подпоследовательность, сходящуюся к $-\infty$.
 	\end{itemize}
 \end{theorem}
-\bigskip
+
 
 \begin{corollary}
 	Из любой последовательности можно выделить под-последовательность,
 	имеющую конечный \textit{или бесконечный} предел.
 \end{corollary}
-\bigskip
+
 
 
 \begin{definition}
@@ -314,14 +302,14 @@ bodyfont=\normalfont, qed=\qedsymbol
 	\[ \forall \eps>0 \. \exists N :\. \forall m,n \geqs N \quad |x_m - x_n|<\eps \]
 \end{definition}
 
-\medskip
+
 Свойства: \begin{enumerate}
 	\item Фундаментальная последовательность ограничена
 	\item Сходящаяся последовательность фундаментальна
 	\item Если у фундаментальной последовательности есть сходящаяся
 		  подпоследовательность, то исходная последовательность сходится
 \end{enumerate}
-\bigskip
+
 
 \begin{corollary}[Критерий Коши]
 	Последовательность сходится \iff она фундаментальна
@@ -338,14 +326,13 @@ bodyfont=\normalfont, qed=\qedsymbol
 	Если $\{S_n\}$ не имеет предела или \textit{бесконечный} предел,
 	то ряд расходится.
 \end{definition}
-\bigskip
 
-\begin{theorem}[Необходимое условие сходимости ряда] \ \\
-	Если ряд $\DS \sum_{k=1}^n a_k$ сходится,
-	то $\DS \lim_{\ntoinf}a_n = 0$.
+
+\begin{theorem}[Необходимое условие сходимости ряда]
+	Если ряд $\DS \sum_{k=1}^n a_k$ сходится, то $\DS \lim_{\ntoinf}a_n = 0$.
 \end{theorem}
-\bigskip
 
+\bigskip
 Геометрическая прогрессия:
 	\[ S_n = \sum_{k=1}^n aq^{k-1} = a\frac{1-q^n}{1-q} \]
 	\[ \lim_{\ntoinf}S_n = \frac{a}{1-q} \quad \text{ при } |q|<1 \]
@@ -359,7 +346,7 @@ bodyfont=\normalfont, qed=\qedsymbol
        = \frac1{1\cdot2} + \frac1{2\cdot3} + \frac1{3\cdot4} + ... + \frac1{n(n+1)}
        = 1 - \frac1{n+1} \]
 \[ \lim_{\ntoinf}S_n = 1 \]
-\bigskip
+
 
 Свойства сходящихся рядов:
 \begin{enumerate}
@@ -422,11 +409,11 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\end{enumerate}
 \end{theorem}
 
-\begin{theorem}[Факт] \ \\
+\begin{theorem}[Факт]
 	Если $a_n>0$ и существует $\DS \lim_{\ntoinf} \frac{a_{n+1}}{a_n}$,
 	то также существует и $\DS \lim_{\ntoinf} \sqrt[n]{a_n}$, и они равны.
 \end{theorem}
-\bigskip
+
 
 \begin{theorem}[Признак Лейбница]
 	Знакочередующийся ряд $a_1 - a_2 + a_3 - a_4 + ...$
@@ -438,13 +425,13 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	Построить последовательность вложенных отрезков из частичных сумм
 	$S_{2n-1}$, $S_{2n}$, $S_{2n+1}$, $S_{2n+2}$
 \end{proof}
-\bigskip
+
 
 Пример -- ряд Лейбница: $\DS 1-\frac13+\frac15-\frac17+\frac19-... = \frac\pi4$
-\bigskip
 
 
-\begin{definition}[Абсолютная сходимость] \ \\
+
+\begin{definition}[Абсолютная сходимость]
 	Ряд \rowak сходится абсолютно,
 	если ряд $\DS\sum_{k=1}^{\infty}|a_k|$ сходится.
 \end{definition}
@@ -470,14 +457,13 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Тесты на сходимость рядов}
 
-\CenterFigure{\linewidth}{rows-test-1.png}
+\cfigure{\linewidth}{rows-test-1.png}
 
-\CenterFigure{\linewidth}{rows-test-2.png}
+\cfigure{\linewidth}{rows-test-2.png}
 
-\CenterFigure{\linewidth}{rows-test-3.png}
+\cfigure{\linewidth}{rows-test-3.png}
 
-\CenterFigure{\linewidth}{rows-test-4.png}
-
+\cfigure{\linewidth}{rows-test-4.png}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -498,7 +484,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \begin{definition} Окрестность $+\infty$ -- любой луч $(E,+\infty)$ \end{definition}
 
 \begin{definition} Окрестность $-\infty$ -- любой луч $(-\infty,E)$ \end{definition}
-\bigskip
+
 
 \begin{definition}
 	$a$ -- предельная точка множества $E \subset \RR$,
@@ -511,7 +497,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\item $\{a\}$ -- предельная точка ряда $\{a_n\}\xrightarrow[\ntoinf]{}a$
 	\item $\varnothing$ -- нет предельных точек у одиночной точки $\{a\} \in \RR$
 \end{enumerate}
-\bigskip
+
 
 \begin{lemma}[Утверждение.]
   Следующие условия равносильны:
@@ -544,7 +530,6 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 			  (определение по Гейне)
 	\end{enumerate}
 \end{definition}
-\bigskip
 
 Замечания к определению предела функции: \begin{enumerate}
 	\item Предел -- локальное свойство
@@ -555,7 +540,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
   	\item В определении по Гейне достаточно ограничиться \textit{только}
   		  последовательностями, которые \textit{монотонно} стремятся к $a$
 \end{enumerate}
-\bigskip
+
 
 Свойства пределов: \begin{enumerate}
 	\item Предел единственный.
@@ -572,7 +557,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{Арифметические действия с пределами}
 
 Пределы двух функций в точке можно складывать, вычитать, перемножать и делить (если предел нижней функции не равен 0).
-\bigskip
+
 
 \begin{theorem}[Предельный переход в неравенстве]
   Если \begin{enumerate}
@@ -627,9 +612,10 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 		  $\DS \lim_{\ntoinf}x_n=a \implies \lim_{\ntoinf}f(x_n)=f(a)$
   \end{enumerate}
 \end{definition}
-\bigskip
 
-Непрерывные в точке $a$ функции можно складывать, вычитать, умножать и (если $g(a)\ne0$) делить.
+
+Непрерывные в точке $a$ функции можно складывать, вычитать,
+умножать и (если $g(a)\ne0$) делить.
 \bigbreak
 
 Следствия: \begin{enumerate}
@@ -637,14 +623,14 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\item Отношения многочленов $\DS \frac{p(x)}{q(x)}$ (рациональные функции)
 		  непрерывны во всех точках, в которых знаменатель не обращается в ноль.
 \end{enumerate}
-\bigskip
+
 
 \begin{theorem}[Теорема о стабилизации знака]
 	Если $f\on E\to\RR$ непрерывна в точке $a \in E$ и $f(a)\ne0$,
 	то найдётся такая окрестность $U_a$, что знак $f(x)$ совпадает с $f(a)$.
 \end{theorem}
 \begin{proof} Следствие утверждения про пределы \end{proof}
-\bigskip
+
 
 \begin{theorem}[Непрерывность композиции]
 	\lets $f\on D\to\RR, \. g\on E\to\RR \. f(D)\subset E$ и
@@ -657,7 +643,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	не обязательно будет пределом композиции, напр. для
 	$f(x)=x\sin\frac1x$ ($x\ne0$), $g(y)=\{1\Leftarrow y\ne 0 ,\. 0\Leftarrow y=0\}$
 \end{proof}
-\bigskip
+
 
 Пример: $\sin x$ непрерывен на $\RR$. \\
 Вспомогательное нер-во: если $0<x<\frac\pi2$, то $\sin x<x<\tg x$.
@@ -678,7 +664,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\circletwo от противного:
 	\lets $f(x)<M$. Рассмотреть $g(x)=\frac1{M-f(x)}$ ...
 \end{proof}
-\bigskip
+
 
 Расширение теоремы: если функция $f$ непрерывна на $[a,+\infty]$,
 и $\exists$ конечный предел $\DS \lim_{x\to+\infty}f(x)$,
@@ -704,11 +690,11 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	Если \textit{непрерывная} на \textit{отрезке} функция принимает какие-то два значения,
 	то она принимает и все значения, лежащие между ними.
 \end{corollary}
-\bigskip
+
 
 \begin{corollary}Непрерывный образ отрезка -- отрезок\end{corollary}
 \begin{proof} Теорема Вейерштрасса + теорема Больцано-Коши \end{proof}
-\bigskip
+
 
 \begin{theorem}
 	Непрерывный образ промежутка -- промежуток (возможно, другого типа).
@@ -717,9 +703,9 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	Показать, что значения функции $(m,M) \subset f\left(\intab\right) \subset [m,M]$,
 	где $\DS m=\inf_{x\in\intab}f(x)$, $\DS M=\sup_{x\in\intab}f(x)$
 \end{proof}
-\bigskip
 
-\CenterFigure{\linewidth}{bolcano-koshi-test-1.png}
+
+\cfigure{\linewidth}{bolcano-koshi-test-1.png}
 
 \subsubsection{Обратные функции}
 
@@ -736,8 +722,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 \begin{theorem}
 	\lets $f\on \intab\to\RR$ непрерывна и строго монотонна,
-	$\DS m=\inf_{x \in \intab}f(x)$,
-	$\DS M=\sup_{x \in \intab}f(x)$.
+	\[ \DS m=\inf_{x \in \intab}f(x) ,\qquad \DS M=\sup_{x \in \intab}f(x)\].
 	Тогда:
 	\begin{enumerate}
 		\item $f$ -- обратима и $f^{-1}\on \left<m,M\right> \to \intab$
@@ -746,6 +731,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\end{enumerate}
 \end{theorem}
 \begin{proof}
+  \leavevmode
   \begin{enumerate}
 	\item Показать, что $f$ инъективна и сюръективна.
 	\item Монотонность $f^{-1}$ -- от противного.
@@ -753,7 +739,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 		  что в \any точке левый и правый пределы равны.
   \end{enumerate}
 \end{proof}
-\bigskip
+
 
 Обратные тригонометрические функции:
 \begin{align*}
@@ -763,7 +749,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\\& \arcctg:  \, \quad (\searrow) \quad \RR \to \left( 0, \pi \right)
 \end{align*}
 
-\bigskip
+
 \begin{problem}Доказать, что многочлен нечётной степени всегда имеет корень\end{problem}
 \begin{proof}Показать, что при $x\to\pm\infty$ он принимает значения как $>0$, так и $<0$\end{proof}
 
@@ -792,7 +778,6 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	то $f \sim g$ при $x\to a$ (или $\DS f \underset{x\to a}{\sim} g$).
 \end{definition}
 
-\medskip
 Свойства эквивалентности (при $x \to a$): \begin{enumerate}
 	\item $f \sim f$
 	\item если $f \sim g$, то $g \sim f$
@@ -805,7 +790,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 Замечание: эквивалентности нельзя складывать, т.е. $f_1 \pm f_2 \not\sim g_1 \pm g_2$
 
-\bigskip
+
 Замечательные пределы ($x\to0$):
 \begin{align*}
 	   & x \sim \sin x \sim \tg x \sim \arcsin x \sim \arctg x
@@ -826,9 +811,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	то $f = o(g)$ при $x\to a$ или $\DS f \underset{x\to a}{=} o(g)$
 \end{definition}
 
-\medskip
 Пример: $\DS f=o(1) \quad \Longleftrightarrow \quad \lim_{x\to a}f(x)=0$
-\medskip
 
 \begin{corollary}
 	Следующие утверждения равносильны: \begin{enumerate}
@@ -838,7 +821,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\end{enumerate}
 \end{corollary}
 
-\medskip
+
 Свойства:
 \begin{enumerate}
 	\item $f \cdot o(g) = o(f \cdot g)$
@@ -848,7 +831,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\item Если $f \sim g$, то $o(f)=o(g)$
 \end{enumerate}
 
-\medskip
+
 Замечательные пределы:
 \begin{align*}
 	   \sin x &= x + o(x)
@@ -857,7 +840,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\\ (1+x)^p &= 1 + px + o(x)
 \end{align*}
 
-\CenterFigure{\linewidth}{small-o-test-1.png}
+\cfigure{\linewidth}{small-o-test-1.png}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -882,10 +865,9 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\[ f'(x_0) = \lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}
 			   = \lim_{h\to 0}\frac{f(x_0+h)-f(x_0)}h \]
 \end{definition}
-\bigskip
 
 
-\begin{theorem}[Критерий дифференцируемости] \ \\
+\begin{theorem}[Критерий дифференцируемости] ~\\
 	\lets $f\on \intab\to\RR$ и $x_0\in\intab$.
 	Тогда след. утверждения эквивалентны:
 	\begin{enumerate}
@@ -897,6 +879,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	И если они справедливы, то $k=f'(x_0)=\varphi(x_0)$
 \end{theorem}
 \begin{proof}
+	~\\
 	\circletwo $\Rightarrow$ \circlethree: \[
 		\varphi(x) = \begin{cases}\begin{aligned}
 			& \frac{f(x)-f(x_0)}{x-x_0}  & \text{при } x \ne x_0 \\
@@ -909,11 +892,10 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 	\]
 \end{proof}
 
+
 \begin{corollary}
 	$f$ дифференцируема в точке $x_0$ $\implies$ $f$ непрерывна в точке $x_0$
 \end{corollary}
-
-\bigskip\medskip
 
 
 Бесконечные производные:
@@ -924,7 +906,6 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 
 Производные можно складывать, вычитать, умножать
 и (если знаменатель $\ne0$ в точке $x_0$) делить.
-\bigskip
 
 
 \begin{theorem}[Производная композиции]
@@ -938,7 +919,6 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 	Использовать определение дифференцируемости
 	\circlethree через непрерывную функцию
 \end{proof}
-\medskip
 
 
 \begin{theorem}[Дифференцирование обратной функции]
@@ -957,21 +937,18 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 	Если $\DS f(x_0)=\max_{x\in\intab}f(x)$ или $f(x_0)=\min_{x\in\intab}f(x)$,
 	то $f'(x_0)=0$.
 \end{theorem}
-\bigskip
 
 
 \begin{theorem}[Теорема Ролля]
 	\lets $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
 	Если $f(a)=f(b)$, то $\exists$ такая точка $c\in(a,b)$, что $f'(c)=0$.
 \end{theorem}
-\bigskip
 
 
 \begin{theorem}[Теорема Лагранжа]
 	\lets $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
 	Тогда $\exists$ такая точка $c\in(a,b)$, что $f(b)-f(a)=f'(c)(b-a)$.
 \end{theorem}
-\bigskip
 
 
 \begin{theorem}[Теорема Коши]
