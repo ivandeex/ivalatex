@@ -1,5 +1,5 @@
 %%% page margins
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt,fleqn]{article}
 \usepackage[margin=2.5cm]{geometry} % fix page margins
 
 % strengthen samepage because penalties are unreliable
@@ -14,6 +14,7 @@
 
 %%% mathematics
 \usepackage{amsmath,amsfonts,amssymb,mathtools}
+\everymath{\displaystyle}
 
 %%% перенос формул по Львовскому
 \newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
@@ -28,6 +29,7 @@
 
 %%% fonts
 \usepackage{euscript,mathrsfs,pifont} % euclid font, cool math font, dingbats
+\usepackage{tikzsymbols}
 
 %%% figures
 \usepackage{graphicx,wrapfig,float}
@@ -66,7 +68,6 @@
 \def\solution{\vspace{-.6em}\exproof[Решение]}
 %\renewcommand\qedsymbol{$\blacksquare$}
 
-
 %%% math mode macros
 % russian-style greeks
 \let\DS\displaystyle
@@ -74,10 +75,17 @@
 \let\phi\varphi
 \let\leqs\leqslant
 \let\geqs\geqslant
-\def\BB{\mathbb{B}}
-\def\RR{\mathbb{R}}
-\def\SS{\mathfrak{S}}
+\def\d{\mathrm{d}}
+\def\M{\mathrm{M}}
+\def\D{\mathrm{D}}
+\def\N{\mathbb{N}}
+\def\B{\mathbb{B}}
+\def\R{\mathbb{R}}
+\def\S{\mathfrak{S}}
+\def\on{\!:}
 \def\mbyn{\dfrac{m}{n}}
+
+\newcommand{\mbinom}[2] { \left( \! \middle( \genfrac{}{}{0pt}{}{#1}{#2} \middle) \! \right) }
 
 %%% text mode macros
 \def\lets{{\huge$\lrcorner$}\space}
@@ -97,9 +105,308 @@
 \begin{document}
 
 \maketitle
-%\tableofcontents
+\tableofcontents
 
 
+\vignette
+
+Конспект курса ``Теория вероятностей -- наука о случайности''
+(\href{https://stepik.org/course/2911}{часть I},
+ \href{https://stepik.org/course/3209}{часть II}).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Комбинаторика}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Основы}
+
+Перестановки (\textit{permutations}): $P_n = n!$
+
+Размещения (\textit{arrangements}) с повторениями:
+$\overline{A_n^k} = n^k$
+
+Размещения (\textit{arrangements}) без повторений:
+$A_n^k = (n)_k = n(n-1)...(n-k+1) = \dfrac{n!}{(n-k)!}$
+
+Сочетания (\textit{сombinations}) без повторений:
+$C_n^k = \binom{n}{k} = \frac{n!}{k!(n-k)!} = \dfrac{A_n^k}{k!}$
+
+Сочетания (\textit{сombinations}) с повторениями:
+$\overline{C_n^k} = \mbinom{n}{k} = C_{n+k-1}^k$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Беспорядки}
+
+\href{https://ru.wikipedia.org/wiki/Беспорядок_(перестановка)}{Беспорядок} --- это
+перестановка, у которой нет неподвижной точки. Например, письмо не попадает в свой конверт.
+
+Число беспорядков (субфакториал) считается по правилу включений-исключений:
+\[	!n = n! -\frac{n!}{1!} +\frac{n!}{2!} -\frac{n!}{3!}+\dotsm+(-1)^n\frac{n!}{n!}
+       = \sum_{k=0}^n (-1)^k\frac{n!}{k!}	\]
+$!n \approx \frac{n!}{e}$ при $n\to\infty$,
+поскольку $\sum_{k=0}^{\infty} (-1)^k\frac1k = \frac1e$
+
+\begin{align*}
+&	!n = \left\lceil \frac{n!+1}{e} \right\rceil \\
+& 	!1 = 0		\quad
+	!2 = 1		\quad
+	!3 = 2		\quad
+	!4 = 9		\quad
+	!5 = 44		\quad
+	!6 = 265
+\end{align*}
+
+Задача: Если $n$ писем случайным образом положить в $n$ конвертов, то какова \textit{вероятность}, что какое-нибудь из писем попадёт в \textit{свой} конверт?
+Ответ: \[ 1-\frac{!n}{n!} \approx 1-\frac1e \approx 0.632 \]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Вероятность}
+
+\subsection{Условная вероятность}
+
+\begin{onsamepage}
+\begin{align*}
+&	P(A|B) = \frac{P(A \cap B)}{P(B)}
+\\&	P(A_1 \cap ... \cap A_n)
+	= P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 \cap A_2)
+	  \cdot ... \cdot P(A_n|A_1 \cap ... \cap A_{n-1})
+\end{align*}
+
+Свойства условной вероятности:
+\[ P(A \cap B|C) = P(A|C) \cdot P(B|A \cap C) \]
+\[ P(A \cap B|A) = P(B|A) \]
+\end{onsamepage}
+
+Формула полной вероятности:
+
+\lets $\{H_i\}$ -- разбиение $\Omega$, т.е.
+$\Omega = H_1 \cup ... \cup H_n$ и $H_i \cap H_j = \varnothing$.
+Тогда:
+\[ P(B) = \sum_i P(B|H_i) \cdot P(H_i)  \]
+
+Формула Байеса:
+\begin{align*}
+P(A|B) &= \frac{P(B|A) P(A)}{P(B)} \\
+P(H_j|A) &= \frac{P(A|H_j)}{\sum_i P(A|H_i) P(H_i)}
+			\qquad \{H_i\} \text{ -- разбиение } \Omega
+\end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Дискретные СВ}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Дискретные распределения}
+
+Случайная величина -- это функция (отображение) $X\on \Omega\to\R$ \\
+Значение случайной велечины -- это число $x\in\R$
+
+Дискретное распределение (PMF, probability mass function): $p_X(x)=P(X=x)$
+
+Дискретная СВ: $p(x_1)=p_1, ..., p(x_n)=p_n$
+
+Условие нормировки: $\sum_i p_i = \sum_i P(X=x_i)=1$
+
+Функция случайной величины $Y=g(X)$:
+\[ P(Y=y) = P(g(X)=y) = \sum_{i:\: g(x_i)=y}P(X=x_i) \]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Многомерные дискретные распределения}
+
+Многомерное дискретное распределение $\equiv$ Multivariate discrete distribution
+
+Совместное распределение $X$ и $Y$ (\textit{joint PMF}): $p_{X,Y}(x,y)=P(X=x,Y=y)$
+
+Нормировка совместного распределения:
+$\sum_{i,j}p_{ij} = \sum_{i,j} P(X=x_i,Y=y_j) = 1$
+
+Маргинальное распределение:
+$p_X(x) = \!\!\sum_{y \in \Omega_Y} p_{X,Y}(x,y)$ \quad
+$p_Y(y) = \!\!\sum_{x \in \Omega_X} p_{X,Y}(x,y)$
+\cfigure{11cm}{marginal-distribs.png}
+
+$X$, $Y$ независимы: $\forall \; x,y: \; p_{X,Y}(x,y)=p_X(x) \cdot p_Y(y)$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Условные распределения}
+
+Условное распределение $X$ при условии, что событие $A$ наступило:
+\[ p_{X|A}(x)=P(X=x|A)=\dfrac{P(X=x,A)}{P(A)} \qquad P(A) \ne 0 \]
+
+Условное распределение $X$ при условии, что $Y=y$:
+\begin{align*}
+&	A=\{Y=y\}	\qquad p_Y(y)>0 \\
+&	p_{X|Y}(x|y) = P(X=x\,|\,Y=y) = \dfrac{P(X=x,Y=y)}{P(Y=y)} = \dfrac{p_{X,Y}(x,y)}{p_Y(y)} \\
+&	\forall y \quad \sum_k p_{X|Y}(x_k|y)=1		\qquad \text{(условие нормировки)}
+\end{align*}
+
+Формула умножения
+\begin{align*}
+&	p_{X,Y}(x,y) = p_{X|Y}(x|y) p_Y(y) = p_{Y|X}(y|x) p_X(x)
+\end{align*}
+
+Формула умножения для трёх СВ:
+\begin{align*}
+&	P(A \cap B \cap C) = P(A) P(B|A) P(C|A \cap B) \\
+&	p_{X,Y,Z}(x,y,z) = P(X=x, Y=y, Z=z) \\
+&	p_{X,Y,Z}(x,y,z) = p_X(x) p_{Y|X}(y|x) p_{Z|X,Y}(z|x,y) \\
+&	p_{Z|X,Y}(z|x,y) = P(Z=z|X=x,Y=y) = \frac{p_{X,Y,Z}(x,y,z)}{p_{X,Y}(x,y)}
+\end{align*}
+
+$X,Y,Z$ --- независимы, если $\forall x,y,z \quad p_{X,Y,Z}(x,y,z) = p_X(x)p_Y(y)p_Z(z)$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Моменты случайной величины}
+
+Матожидание $\M(X) = E(X) = \sum_i x_i p_i$
+\quad $\exists$ if сходится абсолютно $\sum_i |x_i|p_i < \infty$
+
+Если $Y=g(X)$,
+то $\M(Y)=\sum y_i \, p_Y(y_i) = \sum g(x_i) \, p_X(x_i)$
+
+Если $Z=\phi(X,Y)$,
+то $\M(Z) = \sum_i z_i \, p_Z(z_i) = \sum_{i,j} \phi(x_i,y_j) \, p_{X,Y}(x_i,y_j)$
+
+\begin{align*}
+&	\M(X^k) = \sum_i x_i^k p_X(x_i) &&\text{--- $k$-й начальный момент} \\
+&	\M[X-M(X)]^k 	&&\text{--- $k$-й центральный момент}
+\end{align*}
+
+Свойства мат. ожидания:
+\begin{enumerate}
+	\item линейность: $\M(aX+bY) = a\M(X)+b\M(Y)$
+	\item если $X$ и $Y$ независимы, то $\M(X\cdot Y) = \M(X)\cdot \M(Y)$
+\end{enumerate}
+
+Условное среднее:
+\[	\M(X|A) = \sum_i x_i \, p_{X|A}(x_i)
+	\quad\text{или}\quad
+	\M(X|Y=y) = \sum_i x_i \, p_{X|Y}(x_i|y) \]
+
+Формула полной вероятности:
+\[ \M(X) = \sum_i \M(X|H_i) \, P(H_i)  \]
+
+
+\begin{lemma}
+	Если $X\on x_k=k ,\; k=0,1,2,... ,\; P(X=k)=p_k$,
+	то $\; \M(X)=\sum_{k=0}^{\infty}P(X>k)$
+\end{lemma}
+\begin{proof}
+\begin{align*}
+&	P(X>k) = P(X=k+1) + P(X=k+2) + ... = \sum_{i=k+1}^{\infty}p_i \\
+&	\sum_{k=0}^{\infty}P(X>k) =
+	\sum_{k=0}^{\infty} \sum_{i=k+1}^{\infty}p_i
+	\; \overset{\Winkey}{=} \;
+	\sum_{i=1}^{\infty} \sum_{k=0}^{i-1} p_i =
+	\sum_{i=1}^{\infty} i \cdot p_i =
+	\sum_{i=0}^{\infty} i \cdot p_i = \M(X)
+\end{align*}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Простые распределения}
+
+Распределение Бернулли (Bernoulli distribution):
+\[ P(X=1)=p \quad P(X=0)=q \quad p\in[0,1] \quad q=1-p \]
+\[ \M(X) = p \]
+
+\medskip
+Равномерное дискретное распределение (Discrete uniform distribution):
+\[ P(X=x_k)=\dfrac{1}{N} \quad k=\overline{1,N} \]
+\[ \M(X) = \frac1n \sum_{i=1}^n x_i \]
+
+\medskip
+\begin{onsamepage}
+	Гипергеометрическое распределение (Hypergeometric distribution):
+	\[ P(X=r) = \dfrac{C_M^r C_N^{n-r}}{C_{M+N}^n} \qquad r = 0,...,\min(M,n) \]
+	Урна: $M$ белых + $N$ чёрных шаров. Вынимаем $n$ шаров.\\
+	$R$ -- число вынутых белых шаров.
+\end{onsamepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Биномиальное распределение (Binomial distribution)}
+
+Схема испытаний Бернулли:
+$A_1,...,A_n \quad P(A_i)=p \quad p\in[0,1] \quad q=1-p$
+
+Биномиальное распределение:
+\[ X \sim binomial(n,p) \quad P(X=k)=C_n^k p^k q^{n-k}
+   \quad k=\overline{0,n} \quad p\in[0,1] \quad q=1-p \]
+$k$ -- число успехов в схеме из $n$ испытаний Бернулли.
+
+Условие нормировки: $\DS \sum_{k=0}^n{P(k)} = \sum_{k=0}^n{C_n^k p^k q^{n-k}} = 1$
+
+С ростом числа опытов график уплотняется вокруг точки $np$.
+
+Симметрично при $p=0.5$, скошено влево при $p<0.5$.
+
+Можно представить как сумму НОР СВ Бернулли:
+\[ X_{binomial} = X_1 + ... + X_n \]
+Следовательно, среднее $M = np$
+
+Из чего можно получить красивое равенство:
+\[ \sum_{k=0}^n k C_n^k p^k q^{n-k} = np \]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Геометрическое распределение (Geometric distribution)}
+
+\[ X \sim Geom(p) \quad P(X=k)=pq^{k-1} \quad
+k\in\N \quad p\in[0,1] \quad q=1-p \]
+$k$ -- номер первого успеха в схеме Бернулли, т. е. до него в $k-1$ опыте были неудачи
+(схема Бернулли --- ряд \textit{независимых} опытов)
+
+Свойство: $P(X>n) = q^n$, т. к. $X>n$ \iff $n$ опытов окончились неудачей:
+  \[ P(X=\overline{n+1,\infty}) = \sum_{k=n}^{\infty}pq^k
+       = pq^n \sum_{k=0}^{\infty} q^k = pq^n\frac1{1-q} = pq^n\frac1p \]
+
+Успех наступил в 1-м опыте: $P(X=1) = p$
+
+Успех в 1-м опыте не наступил: $P(X>1) = q$
+
+Отсутствие памяти (memoryless):
+\[ P(X=m+n \;|\, X>m) = \dfrac{P(X=m+n)}{P(X>m)}
+   = \dfrac{pq^{m+n-1}}{q^m} = pq^{n-1} = P(X=n) \]
+Геометрическое --- единственное среди дискретных распределение с таким свойством.
+
+\begin{onsamepage}
+Мат. ожидание $M_{geom}(X) = \frac1p$
+{\par\centering\it число.опытов.до.первого.успеха $\times$ вероятность.успеха = \rm1 \par}
+\begin{proof}
+	\begin{align*}
+	P(X=1+n|X>1) &= P(X=1+n)	\\
+	\implies \M(X|X>1) &= \M(1+X) = 1+\M(X)	\\
+	\implies \M(X) &= \M(X|X=1) P(X=1) + \M(X|X>1) P(X>1) \\
+				   &= 1\cdot p + (1+\M(x))q = 1 + q \M(X)
+	\end{align*}
+\end{proof}
+Отсюда $\sum_{k=0}^{\infty}kq^k = \frac1{p^2}$
+\end{onsamepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Распределение Пуассона (Poisson distribution)}
+
+Является приближением последовательности биномиальных распределений:
+\[ S_n=binomial(n,p_n) \text{ при } n\to\infty ,\;
+p_n\to0 ,\; np_n\to\lambda \;\implies\;
+P(S_n=k)\to \dfrac{e^{-\lambda}\lambda^k}{k!} \]
+
+\[ X \sim Poisson(\lambda): P(X=k) = \dfrac{e^{-\lambda}\lambda^k}{k!}
+   \quad \lambda>0 \quad k=0,1,2,... \]
+Симметрично при $\lambda \approx 10$, скошено влево при $\lambda<10$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Непрерывные СВ}
 
@@ -107,27 +414,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Вероятностное пространство}
 
+\begin{onsamepage}
 \begin{definition}[$\sigma$-алгебра]
 \textit{$\sigma$-алгебра над множеством $X$}
---- это семейство $\SS$ подмножеств множества $X$, т.ч.:
+--- это семейство $\S$ подмножеств множества $X$, т.ч.:
 \begin{enumerate}
-	\item $X \in \SS$ и $\varnothing \in \SS$
-	\item если $E \in \SS$, то $X \setminus E \in \SS$
-	\item если $\exists$ семейство $\{A_n\} \in \SS$ (конечное или счётное),
-	      то $\DS \bigcup_{n=1}^{\infty} A_n \in \SS$
-	      и $\DS \bigcap_{n=1}^{\infty} A_n \in \SS$
+	\item $X \in \S$ и $\varnothing \in \S$
+	\item если $E \in \S$, то $X \setminus E \in \S$
+	\item если $\exists$ семейство $\{A_n\} \in \S$ (конечное или счётное),
+	      то $\DS \bigcup_{n=1}^{\infty} A_n \in \S$
+	      и $\DS \bigcap_{n=1}^{\infty} A_n \in \S$
 \end{enumerate}
 \end{definition}
+\end{onsamepage}
 
 \begin{definition}[Борелевское множество]
-	\textit{$\BB$-множество} --- такое множество, которое может быть
-	получено из \textit{открытых или замкнутых промежутков} на $\RR$
+	\textit{$\B$-множество} --- такое множество, которое может быть
+	получено из \textit{открытых или замкнутых промежутков} на $\R$
 	конечным или счетным числом операций $\bigcup A_n$ и $\bigcap A_n$.
 \end{definition}
 
 \begin{definition}
 	\textit{Борелевская $\sigma$-алгебра} $\equiv$ минимальная
-	$\sigma$-алгебра борелевских множеств на $\RR$.
+	$\sigma$-алгебра борелевских множеств на $\R$.
 \end{definition}
 
 
@@ -135,7 +444,7 @@
 \begin{problem}
 	Является ли множество всех рациональных точек на прямой борелевским,
 	т.е. верно ли, что
-	$\left\{ \mbyn, n=1,2,...; m=0,1,2,... \right\} \in \BB$?
+	$\left\{ \mbyn, n=1,2,...; m=0,1,2,... \right\} \in \B$?
 \end{problem}
 \begin{solution}
 	{\bfseries Да.}\\
@@ -185,10 +494,10 @@ $P(X {\pmb{\textcolor{red}<}} x)$,
 \subsection{Характеристики непрерывных СВ}
 
 \begin{onsamepage}
-Матожидание $\DS M(x)=\int_{-\infty}^{+\infty}uf(u)du$
+Матожидание $\M(x)=\int_{-\infty}^{+\infty}uf(u)du$
 
-$M(x)$ существует \iff интеграл сходится \textit{абсолютно}:
-$\DS \int_{-\infty}^{+\infty}|u|f(u)du < \infty$.
+$\M(x)$ существует \iff интеграл сходится \textit{абсолютно}:
+$\int_{-\infty}^{+\infty}|u|f(u)du < \infty$.
 \end{onsamepage}
 
 Матожидание может не существовать.
@@ -197,16 +506,16 @@ $\DS \int_{-\infty}^{+\infty}|u|f(u)du < \infty$.
             = \frac2\pi \int_0^\infty \frac{x\,\mathrm{d}x}{1+x^2}
             = \frac1\pi \ln(1+x^2) \Big\rvert_0^\infty \to \infty$
 
-Если $f(x)=f(-x)$ (чётная), то $M(X)=0$ (если существует).
+Если $f(x)=f(-x)$ (чётная), то $\M(X)=0$ (если существует).
 
 \medskip
 
 Матожидание функции
-$\DS M\left( \phi(x) \right) = \int_{-\infty}^{+\infty}\phi(u)f(u)du$.
+$\M\left( \phi(x) \right) = \int_{-\infty}^{+\infty}\phi(u) f(u) \d u$.
 
 \medskip
 
-Дисперсия $D(X) = M\left( X-M(X) \right) = M(X^2)-M^2(X)$
+Дисперсия $\D(X) = \M\left( X-\M(X) \right) = \M(X^2)-\M^2(X)$
 
 \bigskip
 
@@ -251,8 +560,8 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 \begin{align*}
 	   f(u)&=\lambda e^{-\lambda u} \qquad u\geqs 0 ,\; \lambda>0
 	\\ F(x)&=1-e^{-\lambda x} \qquad x\geqs 0
-	\\ M(x)&=\frac{1}{\lambda}
-	\\ D(x)&=\frac{1}{\lambda^2}
+	\\ \M(x)&=\frac{1}{\lambda}
+	\\ \D(x)&=\frac{1}{\lambda^2}
 	\\ \mathrm{Me}(x)&=\frac{\ln 2}{\lambda} \qquad \text{скошено вправо: } Me<M
 \end{align*}
 
@@ -312,6 +621,7 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 \end{onsamepage}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Прочие распределения}
 
 Равномерное распределение $X \sim Uniform(a,b)$:
@@ -346,7 +656,8 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 \end{align*}
 
 
-\subsection{Вспомогательные формулы}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Вспомогательные формулы}
 
 \begin{align*}
 	   \int_0^\infty     e^{-ax}dx &= \frac{1}{a}
@@ -354,10 +665,15 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 	\\ \int_0^\infty x^2 e^{-ax}dx &= \frac{2}{a^3}
 	\\ \int_0^\infty x^n e^{-ax}dx &= \frac{n!}{a^{n+1}}
 \end{align*}
-
 \begin{align*}
 	   a^3-b^3 &= (a-b)(a^2+ab+b^2)
 	\\ (a-b)^3 &= a^3-3a^2b+3ab^2-b^3
+\end{align*}
+\begin{align*}
+&	\sum_{k=0}^n k C_n^k p^k q^{n-k} = np \\
+&	\sum_{k=0}^{\infty}kq^k = \frac{1}{p^2} \\
+&	\sum_{i=0}^{\infty}\sum_{j=i+1}^{\infty}a_{ij} =
+	\sum_{j=1}^{\infty}\sum_{i=0}^{j-1}a_{ij}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
