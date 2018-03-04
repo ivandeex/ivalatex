@@ -115,18 +115,12 @@
 \begin{document}
 
 \maketitle
-\tableofcontents
-
-
-\begin{onsamepage}
-\vignette
-
 Конспект курсов ``Теория вероятностей -- наука о случайности''
 (\href{https://stepik.org/course/2911}{часть I},
- \href{https://stepik.org/course/3209}{часть II}).
+\href{https://stepik.org/course/3209}{часть II}).
 и ``Современная комбинаторика''
 (\href{https://www.coursera.org/learn/modern-combinatorics/home/welcome}{ссылка на курс})
-\end{onsamepage}
+\tableofcontents
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -150,6 +144,22 @@ $C_n^k = \binom{n}{k} = \frac{n!}{k!(n-k)!} = \dfrac{A_n^k}{k!}$
 
 Сочетания (\textit{сombinations}) с повторениями:
 $\overline{C}_n^{\,k} = \mbinom{n}{k} = C_{n+k-1}^k$
+
+\medskip
+\begin{onsamepage}
+	\textit{Задача} \textsuperscript{(\href{https://stepik.org/lesson/47129/step/4}{ссылка})}:
+	Подбрасывают 6 правильных костей.
+	Найти вероятность, что на них выпало ровно 3 разных значения.
+	\begin{solution}
+		Всего упорядоченных последовательностей $6^6$.
+		Три числа можно выбрать $C_6^3$ способами.
+		Используя 3 числа, можно составить $3^6$ последовательностей,
+		но среди них будут те, где содержится только 2 числа (их количество равно $3 \cdot (2^6-2)$,
+		т.е. 3-мя способами выбираем 2 числа из 3-х и из $2^6$ вариантов убираем 2 последовательности,
+		содержащие только 1 число), и те, где содержится только 1 число (3 штуки).
+		Искомая вероятность равна $C_6^3(3^6-3(2^6-1))/6^6 \approx 0.23148$
+	\end{solution}
+\end{onsamepage}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,8 +186,13 @@ $!n \approx \frac{n!}{e}$ при $n\to\infty$,
 	!6 = 265
 \end{align*}
 
-Задача: Если $n$ писем случайным образом положить в $n$ конвертов, то какова \textit{вероятность}, что какое-нибудь из писем попадёт в \textit{свой} конверт?
-Ответ: \[ 1-\frac{!n}{n!} \approx 1-\frac1e \approx 0.632 \]
+\medskip
+\begin{onsamepage}
+\textit{Задача}: Если $n$ писем случайным образом положить
+в $n$ конвертов, то какова \textit{вероятность}, что
+какое-нибудь из писем попадёт в \textit{свой} конверт?
+\begin{solution} $1-\frac{!n}{n!} \approx 1-\frac1e \approx 0.632$ \end{solution}
+\end{onsamepage}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -228,6 +243,7 @@ $\implies$ $1+2+...+m = \dfrac{m(m+1)}{2}$.
 $\implies$ $1^2+2^2+...+m^2 = \dfrac{m(m+1)(2m+1)}{6}$.
 \end{onsamepage}
 
+\bigskip
 \begin{onsamepage}
 \lets $A=\{a_1,...,a_n\}$ и $V$ -- множество всех $m$-размещений с повторениями из $A$, \\
 Тогда $|V| = N = n^m = (n-0)^m C_n^0$, причём $\pmb{m<n}$. \\
@@ -379,12 +395,15 @@ $X,Y,Z$ --- независимы, если $\forall x,y,z \quad p_{X,Y,Z}(x,y,z)
 &	\M[X-M(X)]^k 	&&\text{--- $k$-й центральный момент}
 \end{align*}
 
+\begin{onsamepage}
 Свойства мат. ожидания:
 \begin{enumerate}
 	\item линейность: $\M(aX+bY) = a\M(X)+b\M(Y)$
 	\item если $X$ и $Y$ независимы, то $\M(X\cdot Y) = \M(X)\cdot \M(Y)$
 \end{enumerate}
+\end{onsamepage}
 
+\bigskip
 Условное среднее:
 \[	\M(X|A) = \sum_i x_i \, p_{X|A}(x_i)
 	\quad\text{или}\quad
@@ -409,6 +428,36 @@ $X,Y,Z$ --- независимы, если $\forall x,y,z \quad p_{X,Y,Z}(x,y,z)
 	\sum_{i=0}^{\infty} i \cdot p_i = \M(X)
 \end{align*}
 \end{proof}
+
+\bigskip
+\begin{onsamepage}
+\textit{Задача} \textsuperscript{(\href{https://stepik.org/lesson/47129/step/13}{ссылка})}:
+По каналу связи передается либо бесконечная последовательность ``0'' с вероятностью $\tfrac23$,
+либо ``1'' -- с вероятностью $\tfrac13$. Каждый символ, независимо от других,
+воспринимается приемником с ошибкой (т.е. вместо ``1'' принимается ``0'' и наоборот)
+с вероятностью $0.25$. Найти среднее значение номера первой принятой ``1''.
+\begin{solution} ~\\
+Если передаются ``1'', то $P(Rcv_1|Snd_1)=0.75$ и $\M(Pos_1|Snd_1)=\tfrac1p=4/3$. \\
+Если передаются ``0'', то $P(Rcv_1|Snd_0)=0.25$ и $\M(Pos_1|Snd_0)=\tfrac1p=4$. \\
+По формуле полной вероятности: \\
+$ \M(Pos_1) = \M(Pos_1|Snd_1) \cdot P(Snd_1) + \M(Pos_1|Snd_0) \cdot P(Snd_0)
+			= \tfrac43 \!\cdot\! \tfrac13 + 4 \!\cdot\! \tfrac23 = \tfrac{28}{9} $.
+\end{solution}
+\end{onsamepage}
+
+\bigskip
+\begin{onsamepage}
+\textit{Задача}: \lets $X,Y \sim Geom(p)$ -- независимые СВ. Найти $\M(X|X+Y=c)$.
+\begin{solution}
+\begin{align*}
+&	P(X+Y=c) = P_{Pascal}(m=2,p,k=c) = C_{k-1}^{m-1} p^m q^{k-m} = (c-1)p^2q^{c-2} \\
+&	P(X|X+Y=c) = \frac{P(X=k)P(Y=c-k)}{P(X+Y=c)} = \frac{pq^{k-1} pq^{c-k-1}}{(c-1)p^2q^{c-2}} = \frac{1}{c-1}
+\end{align*}
+То есть: $Z=\{X|X+Y=c\}$ -- равномерно распределённая на $k=\overline{1,c-1}$ случайная величина.
+Отсюда: $\M(X|X+Y=c) = \M(Z) = \frac{1}{c-1}\cdot\frac{1+2+...+(c-1)}{2} = \frac{c}{2}$.
+\end{solution}
+\end{onsamepage}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -455,7 +504,6 @@ $Y$(см) $\cov_{X,Y}$(кг$\cdot$см) $\rho_{X,Y}$(``1'')
 Число комбинаций, когда ни одно письмо не попадёт в свой конверт $!n$. \\
 Вероятность, что ни одно письмо не попадёт в свой конверт $\frac{!n}{n!}$
 
-\begin{onsamepage}
 \lets $X$ - число писем, попавших в свой конверт. $X = \sum_k I_{A_k}$. \\
 $I_{A_k}$ -- индикаторная СВ,
 $A_k$ -- событие ``письмо $k$ попало в свой конверт''.
@@ -463,7 +511,8 @@ $A_k$ -- событие ``письмо $k$ попало в свой конвер
 &	\M(I_{A_k}) = P(A_k) = \frac{1}{n}	\qquad	\M(I_{A_k}^2) = \frac{1}{n} \\
 &	\M(I_{A_k} \cdot I_{A_m}) = P(A_k \cap A_m) = \frac{1}{n(n-1)}
 \end{align*}
-Тогда
+\begin{onsamepage}
+Тогда:
 \begin{align*}
 \M(X) &= n \M(I_{A_k}) = 1		\\
 \D(X) &= \sum_k \D(I_{A_k}) + 2 \sum_{k>m} \cov(I_{A_k},I_{A_m}) = \\
