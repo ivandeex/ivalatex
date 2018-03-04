@@ -70,20 +70,27 @@
 
 %%% math mode macros
 % russian-style greeks
-\let\DS\displaystyle
 \let\eps\varepsilon
 \let\phi\varphi
 \let\leqs\leqslant
 \let\geqs\geqslant
-\def\d{\mathrm{d}}
-\def\M{\mathrm{M}}
-\def\D{\mathrm{D}}
+\let\DS\displaystyle
+
+% math-style capitals
 \def\N{\mathbb{N}}
 \def\B{\mathbb{B}}
 \def\R{\mathbb{R}}
 \def\S{\mathfrak{S}}
+\def\d{\mathrm{d}}
+
 \def\on{\!:}
 \def\mbyn{\dfrac{m}{n}}
+
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\corr}{corr}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\D}{D}
 
 \newcommand{\mbinom}[2] { \left( \! \middle( \genfrac{}{}{0pt}{}{#1}{#2} \middle) \! \right) }
 
@@ -198,6 +205,7 @@ P(H_j|A) &= \frac{P(A|H_j)}{\sum_i P(A|H_i) P(H_i)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
 \section{Дискретные СВ}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -264,7 +272,7 @@ $X,Y,Z$ --- независимы, если $\forall x,y,z \quad p_{X,Y,Z}(x,y,z)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Моменты случайной величины}
+\subsection{Моменты случайной величины. Матожидание}
 
 Матожидание $\M(X) = E(X) = \sum_i x_i p_i$
 \quad $\exists$ if сходится абсолютно $\sum_i |x_i|p_i < \infty$
@@ -311,24 +319,111 @@ $X,Y,Z$ --- независимы, если $\forall x,y,z \quad p_{X,Y,Z}(x,y,z)
 \end{align*}
 \end{proof}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Дисперсия}
+
+\begin{align*}
+&	\D(X) = \var(X) = \M(X-\M X)^2 = \M(X^2) - (\M X)^2 \geqs 0 \\
+&	\D(c) = 0 \\
+&	\D(cX) = c^2\D(X)
+\end{align*}
+
+Среднее квадратическое отклонение (standard deviation):
+$\sigma(X) = \sqrt{\D(X)}$
+
+$X$ и $Y$ независимы $implies$ $\D(X+Y) = \D(X) + \D(Y)$
+
+В общем случае  $\D(X+Y) = \D(X) + \D(Y) + 2\cov(X,Y)$
+
+Ковариация  $\cov(X,Y) = \M[(X-\M X)(Y-\M Y)] = \M(XY)-\M(X)\M(Y)$
+
+$X$ и $Y$ независимы $\implies$ $\cov(X,Y)=0$ (но не наоборот)
+
+Коэффициент корреляции (correlation)
+$r = \rho = \corr(X,Y) = \frac{\cov(X,Y)}{\sigma(X) \cdot \sigma(Y)} $
+
+Свойства корреляции:
+\begin{itemize}
+	\item $-1 \leqs \rho \leqs 1$
+	\item $X$, $Y$ -- независимы $\implies$ $\rho=0$
+	\item $Y=aX+c$, $a>0$ $\implies$ $\rho=1$
+	\item $Y=aX+c$, $a<0$ $\implies$ $\rho=-1$
+\end{itemize}
+
+Размерность:
+$X$(кг) $\D_X$(кг${}^2$) $\sigma_X$(кг)
+$Y$(см) $\cov_{X,Y}$(кг$\cdot$см) $\rho_{X,Y}$(``1'')
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Задача о беспорядках}
+
+\lets $n$ писем случайно разбрасываются по $n$ конвертам.
+
+Число комбинаций, когда ни одно письмо не попадёт в свой конверт $!n$. \\
+Вероятность, что ни одно письмо не попадёт в свой конверт $\frac{!n}{n!}$
+
+\begin{onsamepage}
+\lets $X$ - число писем, попавших в свой конверт. $X = \sum_k I_{A_k}$. \\
+$I_{A_k}$ -- индикаторная СВ,
+$A_k$ -- событие ``письмо $k$ попало в свой конверт''.
+\begin{align*}
+&	\M(I_{A_k}) = P(A_k) = \frac{1}{n}	\qquad	\M(I_{A_k}^2) = \frac{1}{n} \\
+&	\M(I_{A_k} \cdot I_{A_m}) = P(A_k \cap A_m) = \frac{1}{n(n-1)}
+\end{align*}
+Тогда
+\begin{align*}
+\M(X) &= n \M(I_{A_k}) = 1		\\
+\D(X) &= \sum_k \D(I_{A_k}) + 2 \sum_{k>m} \cov(I_{A_k},I_{A_m}) = \\
+	  &=   \sum_k \left( \M(I_{A_k}^2) - \M^2(I_{A_k}) \right)
+	 	 +2\sum_{k>m} \big( \M(I_{A_k} I_{A_m}) - \M(I_{A_k}) \M(I_{A_m}) \big) = \\
+	  &= n \left( \frac{1}{n} - \frac{1}{n^2} \right)
+	     + 2\, \frac{n(n-1)}{2} \left( \frac{1}{n(n-1)} - \frac{1}{n^2} \right) = \\
+	  &= 1
+\end{align*}
+\end{onsamepage}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Простые распределения}
 
+
+Индикаторная СВ:
+\begin{align*}
+&	I_A(\omega) = \begin{cases*}
+			1, \qquad \omega \in A	\\
+			0, \qquad \omega \notin A
+		\end{cases*}	\\
+&	p(I_A=1) = p_A		\\
+&	\M(I_A) = p_A	\qquad	\M(I_A^2) = p_A  \\
+&	\D(I_A) = p_A - p_A^2	\\
+&	\M(I_A I_B) = \M(I_{A \cap B}) = P(A \cap B)
+\end{align*}
+
 Распределение Бернулли (Bernoulli distribution):
-\[ P(X=1)=p \quad P(X=0)=q \quad p\in[0,1] \quad q=1-p \]
-\[ \M(X) = p \]
+\begin{align*}
+&	P(X=1)=p \quad P(X=0)=q \quad p\in[0,1] \quad q=1-p \\
+&	\M(X) = p \\
+&	\D(X) = pq
+\end{align*}
 
 \medskip
 Равномерное дискретное распределение (Discrete uniform distribution):
-\[ P(X=x_k)=\dfrac{1}{N} \quad k=\overline{1,N} \]
-\[ \M(X) = \frac1n \sum_{i=1}^n x_i \]
+\begin{align*}
+&	P(X=x_k)=\dfrac{1}{N} \quad k=\overline{1,N} \\
+&	\M(X) = \frac{1}{n} \sum_{i=1}^n x_i \\
+&	\D(X) = 
+\end{align*}
 
 \medskip
 \begin{onsamepage}
-	Гипергеометрическое распределение (Hypergeometric distribution):
-	\[ P(X=r) = \dfrac{C_M^r C_N^{n-r}}{C_{M+N}^n} \qquad r = 0,...,\min(M,n) \]
-	Урна: $M$ белых + $N$ чёрных шаров. Вынимаем $n$ шаров.\\
-	$R$ -- число вынутых белых шаров.
+Гипергеометрическое распределение (Hypergeometric distribution):
+\begin{align*}
+&	P(X=r) = \dfrac{C_M^r C_N^{n-r}}{C_{M+N}^n} \qquad r = 0,...,\min(M,n)
+\end{align*}
+Урна: $M$ белых + $N$ чёрных шаров. Вынимаем $n$ шаров. \\
+	  $R$ -- число вынутых белых шаров.
 \end{onsamepage}
 
 
@@ -351,7 +446,7 @@ $k$ -- число успехов в схеме из $n$ испытаний Бе�
 
 Можно представить как сумму НОР СВ Бернулли:
 \[ X_{binomial} = X_1 + ... + X_n \]
-Следовательно, среднее $M = np$
+Следовательно, среднее $\M = np$ и дисперсия $\D = npq$
 
 Из чего можно получить красивое равенство:
 \[ \sum_{k=0}^n k C_n^k p^k q^{n-k} = np \]
@@ -379,17 +474,84 @@ $k$ -- номер первого успеха в схеме Бернулли, т
 Геометрическое --- единственное среди дискретных распределение с таким свойством.
 
 \begin{onsamepage}
+Следствия из свойства отсутствия памяти:
+\begin{align*}
+&	P(X=1+n|X>1) = P(X=1+n)  \qquad \implies \\
+&	\M(X|X>1) = \M(X+1) = \M(X)+1  \\
+&	\M(X^2|X>1) = \M\left( (X+1)^2 \right)
+\end{align*}
+\end{onsamepage}
+
+\begin{onsamepage}
 Мат. ожидание $M_{geom}(X) = \frac1p$
 {\par\centering\it число.опытов.до.первого.успеха $\times$ вероятность.успеха = \rm1 \par}
 \begin{proof}
-	\begin{align*}
-	P(X=1+n|X>1) &= P(X=1+n)	\\
-	\implies \M(X|X>1) &= \M(1+X) = 1+\M(X)	\\
-	\implies \M(X) &= \M(X|X=1) P(X=1) + \M(X|X>1) P(X>1) \\
-				   &= 1\cdot p + (1+\M(x))q = 1 + q \M(X)
-	\end{align*}
+\begin{align*}
+ \M(X) &= \M(X|X=1) P(X=1) + \M(X|X>1) P(X>1) \\
+	   &= 1\cdot p + (1+\M(x))q = 1 + q \M(X)
+\end{align*}
 \end{proof}
 Отсюда $\sum_{k=0}^{\infty}kq^k = \frac1{p^2}$
+\end{onsamepage}
+
+\[ \D(X)=\frac{q}{p^2} \]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Распределение Паскаля (Negative binomial)}
+
+\begin{onsamepage}
+\begin{align*}
+&	Z \sim Pascal(m,p) \qquad P(Z=k)=C_{k-1}^{m-1} p^m q^{k-m} \\
+&	p\in[0,1] \quad q=1-p  \qquad  k \geqs m \quad k,m\in\N
+\end{align*}
+$k$ -- номер опыта, на котором произошёл $m$-й успех в схеме Бернулли
+
+\medskip
+\def\kh{\kappa}
+\def\mh{m}
+Выводится так:
+\begin{align*}
+P_{Pascal}(Z=\kh;m=\mh) &= P_{binomial}(X=\mh-1; n=\kh-1) \cdot p		\\
+						&= p \cdot C_{\kh-1}^{\mh-1} p^{\mh-1} q^{(\kh-1)-(\mh-1)}
+						= C_{\kh-1}^{\mh-1} p^{\mh} q^{\kh-\mh}
+\end{align*}
+\end{onsamepage}
+
+$Z \sim Pascal(m,p)$ можно представить (в силу отсутствия памяти у $Geom$)
+как сумму $m$ независимых одинаково распределённых (НОР) СВ:
+		$Z=X_1+...+X_m$, где $X_i \sim Geom(p)$.
+Отсюда получаем \mbox{мат. ожидание} и дисперсию:  % \mbox prevents hypenation
+\[	\M(Z) = \frac{m}{p}	\qquad	\D(Z) = \frac{m q}{p^2} \]
+
+\hangindent=6.2em \hangafter=1
+\textbf{Замечание}: Часто под распределением ``Negative binomial''
+подразумевается число \textbf{неудач} до наступления $m$-го успеха:
+$\M_\text{неудач} = \M(Z)-m$.
+
+
+\subsection{Сумма случайного числа НОР случайных величин}
+
+\begin{onsamepage}
+\lets $Z=\sum_{k=1}^N X_k$,
+	причём $\M(X_k)=\M_X$, $\D(X_k)=D_X$, $\M(N)=\M_N$, $\D(N)=\D_N$. \\
+Тогда $\M(Z) = \M_X \M_N$, $\D(Z) = \D_X \M_N + \M_X^2 \D_N$.
+\begin{proof} ~\\
+\lets $P_N(N=n) = P_n$, $\M(X^2) = \M_{X^2}$, $\M(Z) = \M_Z$.
+\begin{align*}
+	\M(Z) &= \sum_i \M(Z|H_i) P(H_i) = \sum_n \M(Z|N=n) P(N=n) = \\
+	      &= \sum_n \sum_{k=1}^n \M(X_k) P_n = \sum_n P_n n \M_X = \M_N \M_X
+\end{align*}
+\begin{align*}
+	\D(Z) &= \M(Z^2) - \M^2(Z) = \sum_n \M(Z^2|N=n) P(N=n) - \M_Z^2 = \\
+		  &= \sum_n \M \left( \sum_{k=1}^n X_k \right)^2 P_n - \M_Z^2 =
+	         \sum_n P_n \left( \sum_{i=1}^nX_i \right) \left( \sum_{j=1}^nX_j \right) - \M_Z^2 = \\
+		  &= \sum_n P_n \sum_{i=1}^n X_i^2 + \sum_n P_n 2 \sum_{i < j}^n X_i X_j - \M_Z^2 = \\
+	      &= \sum_n P_n n \M(X^2) + \sum_n P_n 2 \frac{n(n-1)}{2} \M(X) \M(X) - \M_Z^2 = \\
+	      &= \M_{X^2} \M_N + \sum_n P_n n^2 \M_X^2 - \sum_n P_n n \M_X^2 - \M_N^2 \M_X^2 = \\
+	      &= \M_N \M_{X^2} - \M_N \M_X^2 + \M(N^2) \M_X^2 - \M_N^2 \M_X^2 = \M_N \D_X + \D_N \M_X^2
+\end{align*}
+\end{proof}
 \end{onsamepage}
 
 
@@ -397,17 +559,19 @@ $k$ -- номер первого успеха в схеме Бернулли, т
 \subsection{Распределение Пуассона (Poisson distribution)}
 
 Является приближением последовательности биномиальных распределений:
-\[ S_n=binomial(n,p_n) \text{ при } n\to\infty ,\;
-p_n\to0 ,\; np_n\to\lambda \;\implies\;
-P(S_n=k)\to \dfrac{e^{-\lambda}\lambda^k}{k!} \]
-
-\[ X \sim Poisson(\lambda): P(X=k) = \dfrac{e^{-\lambda}\lambda^k}{k!}
-   \quad \lambda>0 \quad k=0,1,2,... \]
+\begin{align*}
+&	S_n=binomial(n,p_n) \text{ при } n\to\infty ,\; p_n\to0 ,\; np_n\to\lambda
+\;\implies\; P(S_n=k)\to \dfrac{e^{-\lambda}\lambda^k}{k!}		\\
+&	X \sim Poisson(\lambda): P(X=k) = \dfrac{e^{-\lambda}\lambda^k}{k!}
+\quad \lambda>0 \quad k=0,1,2,...		\\
+&	\M(X) = \D(X) = \frac{1}{\lambda}
+\end{align*}
 Симметрично при $\lambda \approx 10$, скошено влево при $\lambda<10$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
 \section{Непрерывные СВ}
 
 
