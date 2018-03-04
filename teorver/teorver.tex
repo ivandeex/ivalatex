@@ -94,6 +94,9 @@
 
 \newcommand{\mbinom}[2] { \left( \! \middle( \genfrac{}{}{0pt}{}{#1}{#2} \middle) \! \right) }
 
+\usepackage{relsize}  % for \mathlarger
+\newcommand{\bigsumunder}[1]{ {\mathlarger\sum_{\mathclap{\substack{#1}}}} }
+
 %%% text mode macros
 \def\lets{{\huge$\lrcorner$}\space}
 \def\iff{$\;\Longleftrightarrow\;$}
@@ -105,7 +108,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Теория Вероятности}
+\title{Комбинаторика и Теория Вероятностей}
 \author{}
 \date{}
 
@@ -115,15 +118,20 @@
 \tableofcontents
 
 
+\begin{onsamepage}
 \vignette
 
-Конспект курса ``Теория вероятностей -- наука о случайности''
+Конспект курсов ``Теория вероятностей -- наука о случайности''
 (\href{https://stepik.org/course/2911}{часть I},
  \href{https://stepik.org/course/3209}{часть II}).
+и ``Современная комбинаторика''
+(\href{https://www.coursera.org/learn/modern-combinatorics/home/welcome}{ссылка на курс})
+\end{onsamepage}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
 \section{Комбинаторика}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,7 +140,7 @@
 Перестановки (\textit{permutations}): $P_n = n!$
 
 Размещения (\textit{arrangements}) с повторениями:
-$\overline{A_n^k} = n^k$
+$\overline{A}_n^{\,k} = n^k$
 
 Размещения (\textit{arrangements}) без повторений:
 $A_n^k = (n)_k = n(n-1)...(n-k+1) = \dfrac{n!}{(n-k)!}$
@@ -141,23 +149,25 @@ $A_n^k = (n)_k = n(n-1)...(n-k+1) = \dfrac{n!}{(n-k)!}$
 $C_n^k = \binom{n}{k} = \frac{n!}{k!(n-k)!} = \dfrac{A_n^k}{k!}$
 
 Сочетания (\textit{сombinations}) с повторениями:
-$\overline{C_n^k} = \mbinom{n}{k} = C_{n+k-1}^k$
+$\overline{C}_n^{\,k} = \mbinom{n}{k} = C_{n+k-1}^k$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Беспорядки}
 
-\href{https://ru.wikipedia.org/wiki/Беспорядок_(перестановка)}{Беспорядок} --- это
+\href{https://ru.wikipedia.org/wiki/%D0%91%D0%B5%D1%81%D0%BF%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA_(%D0%BF%D0%B5%D1%80%D0%B5%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0)}{Беспорядок} --- это
 перестановка, у которой нет неподвижной точки. Например, письмо не попадает в свой конверт.
 
-Число беспорядков (субфакториал) считается по правилу включений-исключений:
+Число беспорядков
+(\href{https://ru.wikipedia.org/wiki/%D0%A1%D1%83%D0%B1%D1%84%D0%B0%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%B0%D0%BB}{субфакториал})
+считается по правилу включений-исключений:
 \[	!n = n! -\frac{n!}{1!} +\frac{n!}{2!} -\frac{n!}{3!}+\dotsm+(-1)^n\frac{n!}{n!}
        = \sum_{k=0}^n (-1)^k\frac{n!}{k!}	\]
 $!n \approx \frac{n!}{e}$ при $n\to\infty$,
 поскольку $\sum_{k=0}^{\infty} (-1)^k\frac1k = \frac1e$
 
 \begin{align*}
-&	!n = \left\lceil \frac{n!+1}{e} \right\rceil \\
+&	!n = \left\lfloor \frac{n!+1}{e} \right\rfloor \\
 & 	!1 = 0		\quad
 	!2 = 1		\quad
 	!3 = 2		\quad
@@ -171,6 +181,87 @@ $!n \approx \frac{n!}{e}$ при $n\to\infty$,
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Комбинаторные тождества}
+
+\begin{align*}
+&	C_n^k = C_n^{n-k}	\\
+&	C_n^0 C_m^k + C_n^1 C_m^{k-1} + ... + C_n^{k-1} C_m^1 + C_n^k C_m^0 = C_{n+m}^k	\\
+&	(C_n^0)^2 + (C_n^1)^2 + ... + (C_n^n)^2 = C_{2n}^n	\\
+&	(x+y)^n = \sum_{k=0}^n C_n^k x^k y^{n-k}			\\
+&	C_n^0 + C_n^1 + \cdots + C_n^n = \sum_{k=0}^n C_n^k = \mathlarger{2^n}	\\
+&	C_n^0 - C_n^1 + \cdots + (-1)^n C_n^n = \sum_{k=0}^n (-1)^k C_n^k
+		= \begin{cases*}1, \quad \text{при } n=0		\\
+						0, \quad \text{при } n>0	\qquad	(\text{т.к. } (1-1)^n=0)
+		  \end{cases*}		\\
+&	C_n^0 + C_n^2 + C_n^4 + ... = \mathlarger{2^{n-1}}	\\
+&	C_n^1 + C_n^3 + C_n^5 + ... = \mathlarger{2^{n-1}}
+\end{align*}
+\begin{align*}
+&	P(n_1,...,n_k) = \frac{(n_1 + \dots + n_k)!}{n_1! \cdot n_2! \cdots n_k!}	\\
+&	(x_1+...+x_k)^n = \bigsumunder{0 \leqs n_i \leqs n \\ n_1+...+n_k=n}
+								P(n_1,...,n_k) x_1^{n1} \cdots x_k^{n_k}		\\
+&	\mathlarger{k^n} = \bigsumunder{0 \leqs n_i \leqs n \\ n_1+...+n_k=n}
+								P(n_1,...,n_k)
+\end{align*}
+
+\begin{onsamepage}
+\lets $A=\{a_1,...,a_{n+1}\}$ и $V$ -- множество всех $m$-сочетаний с повторениями из $A$. \\
+\lets $V_i$ -- такое $m$-сочетание с повторениями из $A$, которое $i$ раз содержит $a_1$.
+\begin{align*}
+&	|V|=|V_0|+|V_1|+...+|V_m|	\\
+&	|V| = \overline{C}_{n+1}^{\,m} = C_{n+m}^m = C_{n+m}^n				\\
+&	|V_0| = \overline{C}_n^{\,m} = C_{n+m-1}^{m} = C_{m+n-1}^{n-1}		\\
+&	|V_1| = \overline{C}_n^{\,m-1} = C_{n+m-2}^{m-1} = C_{m+n-2}^{n-1}	\\
+&	\cdots	\\
+&	|V_m| = \overline{C}_n^{\,0} = C_{n+0-1}^0 = C_{n-1}^{n-1}
+\end{align*}
+Отсюда $C_{m+n}^n = C_{m+n-1}^{n-1} + C_{m+n-2}^{n-1} + ... + C_{n-1}^{n-1}$
+
+\bigskip
+При $n=2$
+получаем $C_{m+2}^2 = \tfrac{(m+1)(m+1)}{2} = C_{m+1}^1+C_{m+1}^1+...+C_1^1$ \\
+$\implies$ $1+2+...+m = \dfrac{m(m+1)}{2}$.
+
+\medskip
+При $n=3$
+получаем $C_{m+3}^3 = \tfrac{(m+3)(m+2)(m+1)}{6} = C_{m+2}^2+C_{m+1}^2+...+C_2^2$ \\
+$\implies$ $1^2+2^2+...+m^2 = \dfrac{m(m+1)(2m+1)}{6}$.
+\end{onsamepage}
+
+\begin{onsamepage}
+\lets $A=\{a_1,...,a_n\}$ и $V$ -- множество всех $m$-размещений с повторениями из $A$, \\
+Тогда $|V| = N = n^m = (n-0)^m C_n^0$, причём $\pmb{m<n}$. \\
+\lets свойство $\alpha_i$ -- размещение \textbf{не} содержит $a_i$,
+      и наоборот $\alpha'_i$ -- содержит. \\
+Имеем $N(\alpha_i)=(n-1)^m$,
+      $N(\alpha_i,\alpha_j)=(n-2)^m$, ...,
+      $N(\alpha_1,...,\alpha_n)=0$. \\
+Поскольку $m<n$, то $N(\alpha'_1,...,\alpha'_n)=0$. \\
+По формуле включений-исключений с учётом
+	$|V_{\alpha_{i_1},...,\alpha_{i_k}}| = C_n^k$:
+\[ n^m C_n^0 - (n-1)^m C_n^1 + (n-2)^m C_n^2
+   + ... + (-1)^{n-1} 1^m C_n^{n-1} + (-1)^n 0^m C_n^n = 0 \]
+\end{onsamepage}
+
+\medspace
+Ещё тождество:
+\begin{align*}
+&	k \, C_n^k = n \, C_{n-1}^{k-1}		\\
+&	1 \, C_n^1 + 2 \, C_n^2 + ... + n \, C_n^n = \sum_{k=1}^n k \, C_n^k = n \, 2^{n-1}
+\end{align*}
+
+\begin{onsamepage}
+Сколькими способами можно расселить 10 гостей в 4 различных комнатах так,
+чтобы ни одна комната не осталась пустой?
+\begin{solution}
+	По формуле включений-исключений:
+	$4^{10} - C_4^1 \cdot 3^{10} + C_4^2 \cdot 2^{10} - C_4^3 \cdot 1^{10}$
+\end{solution}
+\end{onsamepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
 \section{Вероятность}
 
 \subsection{Условная вероятность}
@@ -190,8 +281,8 @@ $!n \approx \frac{n!}{e}$ при $n\to\infty$,
 
 Формула полной вероятности:
 
-\lets $\{H_i\}$ -- разбиение $\Omega$, т.е.
-$\Omega = H_1 \cup ... \cup H_n$ и $H_i \cap H_j = \varnothing$.
+\lets $\{H_i\}$ -- разбиение $\Omega = \bigsqcup_{i=1}^n H_i$, т.е.
+$\Omega = \bigcup_{i=1}^n H_i$ и $H_i \cap H_j = \varnothing$ при $i \ne j$.
 Тогда:
 \[ P(B) = \sum_i P(B|H_i) \cdot P(H_i)  \]
 
@@ -821,6 +912,7 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vignette
 \section{Вспомогательные формулы}
 
 \begin{align*}
@@ -837,11 +929,11 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 &	\sum_{k=0}^n k C_n^k p^k q^{n-k} = np \\
 &	\sum_{k=0}^{\infty}kq^k = \frac{1}{p^2} \\
 &	\sum_{i=0}^{\infty}\sum_{j=i+1}^{\infty}a_{ij} =
-	\sum_{j=1}^{\infty}\sum_{i=0}^{j-1}a_{ij}
+	\sum_{j=1}^{\infty}\sum_{i=0}^{j-1}a_{ij} \\
+&	\sum_{n=1}^{\infty}\frac{n}{2^n} = 2
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \vignette
-
 \end{document}
