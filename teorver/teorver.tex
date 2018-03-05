@@ -60,12 +60,12 @@
 \newtheorem{theorem}{Tеор.}[section]
 \newtheorem*{corollary}{След-е} %[theorem]
 \newtheorem{lemma}{Лемма}[section]
-\newtheorem{problem}{Задача}[section]
 
 % reduce space between theorem and proof
 \let\exproof\proof
+\def\problem{\vspace{.6em}\exproof[Задача]}
 \def\proof{\vspace{-.6em}\exproof[Док-во]}
-\def\solution{\vspace{-.6em}\exproof[Решение]}
+\def\solution{\vspace{-.4em}\exproof[Решение]}
 %\renewcommand\qedsymbol{$\blacksquare$}
 
 %%% math mode macros
@@ -91,6 +91,7 @@
 \DeclareMathOperator{\corr}{corr}
 \DeclareMathOperator{\M}{M}
 \DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\Me}{Me}
 
 \newcommand{\mbinom}[2] { \left( \! \middle( \genfrac{}{}{0pt}{}{#1}{#2} \middle) \! \right) }
 
@@ -147,18 +148,19 @@ $\overline{C}_n^{\,k} = \mbinom{n}{k} = C_{n+k-1}^k$
 
 \medskip
 \begin{onsamepage}
-	\textit{Задача} \textsuperscript{(\href{https://stepik.org/lesson/47129/step/4}{ссылка})}:
+\begin{problem}[\href{https://stepik.org/lesson/47129/step/4}{ссылка}]
 	Подбрасывают 6 правильных костей.
 	Найти вероятность, что на них выпало ровно 3 разных значения.
-	\begin{solution}
-		Всего упорядоченных последовательностей $6^6$.
-		Три числа можно выбрать $C_6^3$ способами.
-		Используя 3 числа, можно составить $3^6$ последовательностей,
-		но среди них будут те, где содержится только 2 числа (их количество равно $3 \cdot (2^6-2)$,
-		т.е. 3-мя способами выбираем 2 числа из 3-х и из $2^6$ вариантов убираем 2 последовательности,
-		содержащие только 1 число), и те, где содержится только 1 число (3 штуки).
-		Искомая вероятность равна $C_6^3(3^6-3(2^6-1))/6^6 \approx 0.23148$
-	\end{solution}
+\end{problem}
+\begin{solution}
+	Всего упорядоченных последовательностей $6^6$.
+	Три числа можно выбрать $C_6^3$ способами.
+	Используя 3 числа, можно составить $3^6$ последовательностей,
+	но среди них будут те, где содержится только 2 числа (их количество равно $3 \cdot (2^6-2)$,
+	т.е. 3-мя способами выбираем 2 числа из 3-х и из $2^6$ вариантов убираем 2 последовательности,
+	содержащие только 1 число), и те, где содержится только 1 число (3 штуки).
+	Искомая вероятность равна $C_6^3(3^6-3(2^6-1))/6^6 \approx 0.23148$
+\end{solution}
 \end{onsamepage}
 
 
@@ -188,10 +190,14 @@ $!n \approx \frac{n!}{e}$ при $n\to\infty$,
 
 \medskip
 \begin{onsamepage}
-\textit{Задача}: Если $n$ писем случайным образом положить
-в $n$ конвертов, то какова \textit{вероятность}, что
-какое-нибудь из писем попадёт в \textit{свой} конверт?
-\begin{solution} $1-\frac{!n}{n!} \approx 1-\frac1e \approx 0.632$ \end{solution}
+\begin{problem}
+	Если $n$ писем случайным образом положить в $n$ конвертов,
+	то какова \textit{вероятность}, что какое-нибудь из писем
+	попадёт в \textit{свой} конверт?
+\end{problem}
+\begin{solution}
+	$1-\frac{!n}{n!} \approx 1-\frac1e \approx 0.632$
+\end{solution}
 \end{onsamepage}
 
 
@@ -267,8 +273,10 @@ $\implies$ $1^2+2^2+...+m^2 = \dfrac{m(m+1)(2m+1)}{6}$.
 \end{align*}
 
 \begin{onsamepage}
-Сколькими способами можно расселить 10 гостей в 4 различных комнатах так,
-чтобы ни одна комната не осталась пустой?
+\begin{problem}
+	Сколькими способами можно расселить 10 гостей в 4 различных комнатах
+	так, чтобы ни одна комната не осталась пустой?
+\end{problem}
 \begin{solution}
 	По формуле включений-исключений:
 	$4^{10} - C_4^1 \cdot 3^{10} + C_4^2 \cdot 2^{10} - C_4^3 \cdot 1^{10}$
@@ -319,7 +327,7 @@ P(H_j|A) &= \frac{P(A|H_j)}{\sum_i P(A|H_i) P(H_i)}
 \subsection{Дискретные распределения}
 
 Случайная величина -- это функция (отображение) $X\on \Omega\to\R$ \\
-Значение случайной велечины -- это число $x\in\R$
+Значение случайной величины -- это число $x\in\R$
 
 Дискретное распределение (PMF, probability mass function): $p_X(x)=P(X=x)$
 
@@ -431,30 +439,34 @@ $X,Y,Z$ --- независимы, если $\forall x,y,z \quad p_{X,Y,Z}(x,y,z)
 
 \bigskip
 \begin{onsamepage}
-\textit{Задача} \textsuperscript{(\href{https://stepik.org/lesson/47129/step/13}{ссылка})}:
-По каналу связи передается либо бесконечная последовательность ``0'' с вероятностью $\tfrac23$,
-либо ``1'' -- с вероятностью $\tfrac13$. Каждый символ, независимо от других,
-воспринимается приемником с ошибкой (т.е. вместо ``1'' принимается ``0'' и наоборот)
-с вероятностью $0.25$. Найти среднее значение номера первой принятой ``1''.
-\begin{solution} ~\\
-Если передаются ``1'', то $P(Rcv_1|Snd_1)=0.75$ и $\M(Pos_1|Snd_1)=\tfrac1p=4/3$. \\
-Если передаются ``0'', то $P(Rcv_1|Snd_0)=0.25$ и $\M(Pos_1|Snd_0)=\tfrac1p=4$. \\
-По формуле полной вероятности: \\
-$ \M(Pos_1) = \M(Pos_1|Snd_1) \cdot P(Snd_1) + \M(Pos_1|Snd_0) \cdot P(Snd_0)
-			= \tfrac43 \!\cdot\! \tfrac13 + 4 \!\cdot\! \tfrac23 = \tfrac{28}{9} $.
+\begin{problem}[\href{https://stepik.org/lesson/47129/step/13}{ссылка}]
+	По каналу связи передаётся либо бесконечная последовательность ``0'' с вероятностью $\tfrac23$,
+	либо ``1'' -- с вероятностью $\tfrac13$. Каждый символ, независимо от других,
+	воспринимается приёмником с ошибкой (т.е. вместо ``1'' принимается ``0'' и наоборот)
+	с вероятностью $0.25$. Найти среднее значение номера первой принятой ``1''.
+\end{problem}
+\begin{solution}
+	Если передаются ``1'', то $P(Rcv_1|Snd_1)=0.75$ и $\M(Pos_1|Snd_1)=\tfrac1p=4/3$. \\
+	Если передаются ``0'', то $P(Rcv_1|Snd_0)=0.25$ и $\M(Pos_1|Snd_0)=\tfrac1p=4$. \\
+	По формуле полной вероятности: \\
+	$ \M(Pos_1) = \M(Pos_1|Snd_1) \cdot P(Snd_1) + \M(Pos_1|Snd_0) \cdot P(Snd_0)
+				= \tfrac43 \!\cdot\! \tfrac13 + 4 \!\cdot\! \tfrac23 = \tfrac{28}{9} $.
 \end{solution}
 \end{onsamepage}
 
 \bigskip
 \begin{onsamepage}
-\textit{Задача}: \lets $X,Y \sim Geom(p)$ -- независимые СВ. Найти $\M(X|X+Y=c)$.
+\begin{problem}
+	\lets $X,Y \sim Geom(p)$ -- независимые СВ. Найти $\M(X|X+Y=c)$.
+\end{problem}
 \begin{solution}
-\begin{align*}
-&	P(X+Y=c) = P_{Pascal}(m=2,p,k=c) = C_{k-1}^{m-1} p^m q^{k-m} = (c-1)p^2q^{c-2} \\
-&	P(X|X+Y=c) = \frac{P(X=k)P(Y=c-k)}{P(X+Y=c)} = \frac{pq^{k-1} pq^{c-k-1}}{(c-1)p^2q^{c-2}} = \frac{1}{c-1}
-\end{align*}
-То есть: $Z=\{X|X+Y=c\}$ -- равномерно распределённая на $k=\overline{1,c-1}$ случайная величина.
-Отсюда: $\M(X|X+Y=c) = \M(Z) = \frac{1}{c-1}\cdot\frac{1+2+...+(c-1)}{2} = \frac{c}{2}$.
+	\begin{align*}
+	&	P(X+Y=c) = P_{pascal}(m=2,p,k=c) = C_{k-1}^{m-1} p^m q^{k-m} = (c-1)p^2q^{c-2} \\
+	&	P(X|X+Y=c)  = \frac{P(X=k)P(Y=c-k)}{P(X+Y=c)}
+					= \frac{pq^{k-1} pq^{c-k-1}}{(c-1)p^2q^{c-2}} = \frac{1}{c-1}
+	\end{align*}
+	То есть: $Z=\{X|X+Y=c\}$ -- СВ, равномерно распределённая на $k=\overline{1,c-1}$.
+	Отсюда: $\M(X|X+Y=c) = \M(Z) = \frac{1+2+...+(c-1)}{c-1} = \frac{c}{2}$.
 \end{solution}
 \end{onsamepage}
 
@@ -472,7 +484,7 @@ $ \M(Pos_1) = \M(Pos_1|Snd_1) \cdot P(Snd_1) + \M(Pos_1|Snd_0) \cdot P(Snd_0)
 Среднее квадратическое отклонение (standard deviation):
 $\sigma(X) = \sqrt{\D(X)}$
 
-$X$ и $Y$ независимы $implies$ $\D(X+Y) = \D(X) + \D(Y)$
+$X$ и $Y$ независимы $\implies$ $\D(X+Y) = \D(X) + \D(Y)$
 
 В общем случае  $\D(X+Y) = \D(X) + \D(Y) + 2\cov(X,Y)$
 
@@ -519,8 +531,7 @@ $A_k$ -- событие ``письмо $k$ попало в свой конвер
 	  &=   \sum_k \left( \M(I_{A_k}^2) - \M^2(I_{A_k}) \right)
 	 	 +2\sum_{k>m} \big( \M(I_{A_k} I_{A_m}) - \M(I_{A_k}) \M(I_{A_m}) \big) = \\
 	  &= n \left( \frac{1}{n} - \frac{1}{n^2} \right)
-	     + 2\, \frac{n(n-1)}{2} \left( \frac{1}{n(n-1)} - \frac{1}{n^2} \right) = \\
-	  &= 1
+	     + 2\, \frac{n(n-1)}{2} \left( \frac{1}{n(n-1)} - \frac{1}{n^2} \right) = 1
 \end{align*}
 \end{onsamepage}
 
@@ -538,7 +549,7 @@ $A_k$ -- событие ``письмо $k$ попало в свой конвер
 &	p(I_A=1) = p_A		\\
 &	\M(I_A) = p_A	\qquad	\M(I_A^2) = p_A  \\
 &	\D(I_A) = p_A - p_A^2	\\
-&	\M(I_A I_B) = \M(I_{A \cap B}) = P(A \cap B)
+&	\M(I_A \cdot I_B) = \M(I_{A \cap B}) = P(A \cap B)
 \end{align*}
 
 Распределение Бернулли (Bernoulli distribution):
@@ -553,7 +564,7 @@ $A_k$ -- событие ``письмо $k$ попало в свой конвер
 \begin{align*}
 &	P(X=x_k)=\dfrac{1}{N} \quad k=\overline{1,N} \\
 &	\M(X) = \frac{1}{n} \sum_{i=1}^n x_i \\
-&	\D(X) = 
+&	\D(X) = \frac{n^2-1}{12}
 \end{align*}
 
 \medskip
@@ -574,7 +585,7 @@ $A_k$ -- событие ``письмо $k$ попало в свой конвер
 $A_1,...,A_n \quad P(A_i)=p \quad p\in[0,1] \quad q=1-p$
 
 Биномиальное распределение:
-\[ X \sim binomial(n,p) \quad P(X=k)=C_n^k p^k q^{n-k}
+\[ X \sim Binomial(n,p) \quad P(X=k)=C_n^k p^k q^{n-k}
    \quad k=\overline{0,n} \quad p\in[0,1] \quad q=1-p \]
 $k$ -- число успехов в схеме из $n$ испытаний Бернулли.
 
@@ -652,7 +663,7 @@ $k$ -- номер опыта, на котором произошёл $m$-й ус
 \def\mh{m}
 Выводится так:
 \begin{align*}
-P_{Pascal}(Z=\kh;m=\mh) &= P_{binomial}(X=\mh-1; n=\kh-1) \cdot p		\\
+P_{pascal}(Z=\kh;m=\mh) &= P_{binomial}(X=\mh-1; n=\kh-1) \cdot p		\\
 						&= p \cdot C_{\kh-1}^{\mh-1} p^{\mh-1} q^{(\kh-1)-(\mh-1)}
 						= C_{\kh-1}^{\mh-1} p^{\mh} q^{\kh-\mh}
 \end{align*}
@@ -673,9 +684,13 @@ $\M_\text{неудач} = \M(Z)-m$.
 \subsection{Сумма случайного числа НОР случайных величин}
 
 \begin{onsamepage}
-\lets $Z=\sum_{k=1}^N X_k$,
-	причём $\M(X_k)=\M_X$, $\D(X_k)=D_X$, $\M(N)=\M_N$, $\D(N)=\D_N$. \\
-Тогда $\M(Z) = \M_X \M_N$, $\D(Z) = \D_X \M_N + \M_X^2 \D_N$.
+\begin{lemma}
+	\lets $Z=\sum_{k=1}^N X_k$, \\
+	причём $\M(X_k)=\M_X$, $\D(X_k)=D_X$, $\M(N)=\M_N$, $\D(N)=\D_N$.
+
+	Тогда $\M(Z) = \M_X \M_N$, $\D(Z) = \D_X \M_N + \M_X^2 \D_N$.
+\end{lemma}
+
 \begin{proof} ~\\
 \lets $P_N(N=n) = P_n$, $\M(X^2) = \M_{X^2}$, $\M(Z) = \M_Z$.
 \begin{align*}
@@ -700,7 +715,7 @@ $\M_\text{неудач} = \M(Z)-m$.
 
 Является приближением последовательности биномиальных распределений:
 \begin{align*}
-&	S_n=binomial(n,p_n) \text{ при } n\to\infty ,\; p_n\to0 ,\; np_n\to\lambda
+&	S_n \sim Binomial(n,p_n) \text{ при } n\to\infty ,\; p_n\to0 ,\; np_n\to\lambda
 \;\implies\; P(S_n=k)\to \dfrac{e^{-\lambda}\lambda^k}{k!}		\\
 &	X \sim Poisson(\lambda): P(X=k) = \dfrac{e^{-\lambda}\lambda^k}{k!}
 \quad \lambda>0 \quad k=0,1,2,...		\\
@@ -743,7 +758,6 @@ $\M_\text{неудач} = \M(Z)-m$.
 	$\sigma$-алгебра борелевских множеств на $\R$.
 \end{definition}
 
-
 \medskip
 \begin{problem}
 	Является ли множество всех рациональных точек на прямой борелевским,
@@ -766,11 +780,11 @@ $\M_\text{неудач} = \M(Z)-m$.
 \begin{enumerate}
 	\item $F_X(x) = P(X \leqs x)$
 	\item $0\leqs F_X \leqs 1$
-	\item $F$ -- монотонно неубывающая
+	\item $F$ --- монотонно неубывающая
 	\item $F(-\infty)=0$, $F(+\infty)=1$
 	\item $P(a< X \leqs b) = F(b)-F(a)$
-	\item $F$ -- непрерывна \textit{справа}
-	\item $F$ -- это некоторая вероятность, т.е. безразмерная величина
+	\item $F$ --- непрерывна \textit{справа}
+	\item $F$ --- это некоторая вероятность, т.е. безразмерная величина
 \end{enumerate}
 
 Замечание: если бы CDF была определена как
@@ -786,7 +800,7 @@ $P(X {\pmb{\textcolor{red}<}} x)$,
 	\item $f(u) \geqs 0$
 	\item $f(x)=F'(x)=\dfrac{dF(x)}{dx}$
 	\item $\DS P(X\leqs x)=F(x)=\int_{-\infty}^{x}f(u)du$
-	\item $\DS \int_{-\infty}^{+\infty}f(u)du=1$ -- условие нормировки
+	\item $\DS \int_{-\infty}^{+\infty}f(u)du=1$ --- условие нормировки
 	\item $P(X=a)=0$
 	\item $P(X \in \left<x,x+\delta\right>) \approx f(x) \delta$
 	\item размерность $f$ есть $\dfrac{1}{\text{размерность}(X)}$
@@ -824,7 +838,7 @@ $\M\left( \phi(x) \right) = \int_{-\infty}^{+\infty}\phi(u) f(u) \d u$.
 \bigskip
 
 Медиана (характеристика \textit{положения}):
-$\mathrm{Me}(X) = arg \left\{ F_X(x) = 1/2 \right\}$
+$\Me(X) = arg \left\{ F_X(x) = 1/2 \right\}$
 
 Медиана существует \textit{всегда}.
 
@@ -832,7 +846,7 @@ $\mathrm{Me}(X) = arg \left\{ F_X(x) = 1/2 \right\}$
 \[ 1 = \int_{-\infty}^\infty f(u)du
      = \int_{-\infty}^0 f(u)du + \int_0^\infty f(u)du
      = F(0) + \int_\infty^0 f(-u)d(-u) = F(0) + F(0) \]
-а значит $F(0)=1/2$, т.е. $\mathrm{Me}(X) = 0$.
+а значит $F(0)=1/2$, т.е. $\Me(X) = 0$.
 
 \bigskip
 
@@ -846,7 +860,7 @@ $\mathrm{Me}(X) = arg \left\{ F_X(x) = 1/2 \right\}$
 
 Квантиль уровня $\alpha$: $F(q_{\alpha})=\alpha$
 
-Квантильная функция $Q(p)=F^{-1}(x)$, $p\!\in\![0,1]$ --
+Квантильная функция $Q(p)=F^{-1}(x)$, $p\!\in\![0,1]$ ---
 функция, обратная к функции распределения
 
 
@@ -866,7 +880,7 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 	\\ F(x)&=1-e^{-\lambda x} \qquad x\geqs 0
 	\\ \M(x)&=\frac{1}{\lambda}
 	\\ \D(x)&=\frac{1}{\lambda^2}
-	\\ \mathrm{Me}(x)&=\frac{\ln 2}{\lambda} \qquad \text{скошено вправо: } Me<M
+	\\ \Me(x)&=\frac{\ln 2}{\lambda} \qquad \text{скошено вправо: } \Me < \M
 \end{align*}
 
 Свойство отсутствия памяти:
@@ -883,10 +897,11 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 \textit{Случайный процесс} -- последовательость случайных величин в дискретном времени
 (обычно НОР, т.е. независимых одинаково распределённых).
 
-
-Пуассоновский процесс -- непрерывный аналог процесса Бернулли:
-	\[ P(k,t) = \frac{(\lambda t)^k}{k!} e^{-\lambda t} \]
-
+Пуассоновский процесс -- непрерывный аналог процесса Бернулли, когда интервалы между успехами распределены экспоненциально $P(T>\Delta t) = e^{-\lambda \Delta t} \approx 1-\lambda \Delta t$:
+\begin{align*}
+&	P(k,t) = \frac{(\lambda t)^k}{k!} e^{-\lambda t}	\\
+&	\M = \D = \lambda t
+\end{align*}
 
 Свойства ПП:
 \begin{enumerate}
@@ -896,6 +911,7 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 \end{enumerate}
 
 
+\begin{onsamepage}
 \begin{problem}
 	Будет ли пуассоновский процесс подходящей моделью процесса
 	прибытия пассажиров в пункт выдачи багажа в аэропорту?
@@ -908,6 +924,7 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 	то следует ожидать значительное количество людей в течение следующей минуты.
 	Как получают багаж? Сначала толпа, потом редкие одиночки.
 \end{solution}
+\end{onsamepage}
 
 
 \begin{onsamepage}
@@ -941,22 +958,22 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 				1/(b-a)	& a \leqs x \leqs b \\
 				0		& x>b
 			\end{cases}
-	\\ Me = M &= (a+b)/2
-	\\ D &= (b-a)^2/12
+	\\ \Me = \M &= (a+b)/2
+	\\ \D &= (b-a)^2/12
 \end{align*}
 
 
 Распределение Лапласа:
 \begin{align*}
 	   f &= \frac{\lambda}2 e^{-\lambda|x|}
-	\\ M &= 0
-	\\ D &= \frac{2}{\lambda^2}
+	\\ \M &= 0
+	\\ \D &= \frac{2}{\lambda^2}
 \end{align*}
 
 
 Распределение Коши:
 \begin{align*}
-	   f(x)=\dfrac{1/\pi}{1+x^2}
+&	f(x)=\dfrac{1/\pi}{1+x^2}
 \end{align*}
 
 
