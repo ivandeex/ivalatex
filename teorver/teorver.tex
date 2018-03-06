@@ -897,18 +897,23 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 \textit{Случайный процесс} -- последовательость случайных величин в дискретном времени
 (обычно НОР, т.е. независимых одинаково распределённых).
 
-Пуассоновский процесс -- непрерывный аналог процесса Бернулли, когда интервалы между успехами распределены экспоненциально $P(T>\Delta t) = e^{-\lambda \Delta t} \approx 1-\lambda \Delta t$:
+Пуассоновский процесс -- непрерывный аналог процесса Бернулли,
+когда интервалы между успехами распределены экспоненциально
+$P(T>\Delta t) = e^{-\lambda \Delta t} \approx 1-\lambda \Delta t$:
 \begin{align*}
 &	P(k,t) = \frac{(\lambda t)^k}{k!} e^{-\lambda t}	\\
 &	\M = \D = \lambda t
 \end{align*}
 
+
+\begin{onsamepage}
 Свойства ПП:
 \begin{enumerate}
 	\item стационарный (распределение числа событий зависит только от длины интервала)
 	\item ординарный (вряд ли на очень малом интервале произойдёт больше одного события)
 	\item поток с отсутствием памяти.
 \end{enumerate}
+\end{onsamepage}
 
 
 \begin{onsamepage}
@@ -940,6 +945,53 @@ CDF: $\DS F(X) = P(X\leqs x) = \int_0^x \lambda e^{-\lambda u} du = 1-e^{-\lambd
 	(если это не ночной стационар).
 \end{solution}
 \end{onsamepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Преобразования СВ}
+
+\begin{lemma}[Производный поток Бернулли] ~\\
+	\lets $X \sim Bernoulli(p_x)$, $Y \sim Bernoulli(p_y)$ и $Z = \mathrm{OR}(X,Y)$. \\
+	$\implies$ $Z \sim Bernoulli(p_z)$ и $p_x = p_x + p_y - p_x p_y$.
+\end{lemma}
+
+\begin{lemma}[Линейное преобразование] ~\\
+	\lets $Y=aX+B$, $a\ne 0$. Тогда
+	\begin{align*}
+	&	F_Y(t) = \begin{cases*}
+					F_X \left( \frac{t-b}{a} \right),		& a>0 \\
+					1 - F_X \left( \frac{t-b}{a} \right),	& a<0
+				 \end{cases*} \\
+	&	f_Y(u) = \frac{1}{|a|} f_X \left( \frac{u-b}{a} \right)
+	\end{align*}
+\end{lemma}
+
+\begin{lemma}[Монотонное преобразование] ~\\
+	\lets $Y=g(X)$, причём $g \nearrow$. Тогда
+	\begin{align*}
+	&	F_Y(t) = F_X \left( g^{-1}(t) \right)	\\
+	&	f_Y(u) = \frac{ f_X \left( g^{-1}(u) \right) }{ g'(u) }
+	\end{align*}
+\end{lemma}
+
+
+\begin{onsamepage}
+\begin{lemma}[Монотонно убывающее преобразование] ~\\
+	\lets $Y=g(X)$, причём $g \searrow$. Тогда
+	\begin{align*}
+	&	F_Y(t) = 1 - F_X \left( g^{-1}(t) \right)	\\
+	&	f_Y(u) = - \frac{ f_X \left( g^{-1}(u) \right) }{ g'(u) }
+	\end{align*}
+\end{lemma}
+\end{onsamepage}
+
+
+\begin{lemma}[Получение заданной СВ из равномерной] ~\\
+	\lets $X \sim Uniform(0,1)$ и $Y = F_{*}^{-1}(X)$,
+	причём $F_{*}^{-1}(t) \nearrow : [0,1] \to \R$.
+
+	Тогда $F_Y(t) = F_{*}(t)$
+\end{lemma}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
