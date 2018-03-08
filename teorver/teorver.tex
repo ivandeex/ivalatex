@@ -313,7 +313,7 @@ $\Omega = \bigcup_{i=1}^n H_i$ и $H_i \cap H_j = \varnothing$ при $i \ne j$.
 Формула Байеса:
 \begin{align*}
 P(A|B) &= \frac{P(B|A) P(A)}{P(B)} \\
-P(H_j|A) &= \frac{P(A|H_j)}{\sum_i P(A|H_i) P(H_i)}
+P(H_j|A) &= \frac{P(A|H_j)\,P(H_j)}{\sum_i P(A|H_i) P(H_i)}
 			\qquad \{H_i\} \text{ -- разбиение } \Omega
 \end{align*}
 
@@ -1027,6 +1027,162 @@ $P(T>\Delta t) = e^{-\lambda \Delta t} \approx 1-\lambda \Delta t$:
 \begin{align*}
 &	f(x)=\dfrac{1/\pi}{1+x^2}
 \end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Многомерные непрерывные распределения}
+
+
+\begin{definition}[Совместная функция распределения ``join distribution function'']
+\begin{align*}
+&	F_{X,Y}(x,y) = P(X\leqs x, Y\leqs y)
+	= \int_{-\infty}^x \int_{-\infty}^y f_{X,Y}(u,v) \, \d u \, \d v	\\
+&	x_1 \leqs x_2 \implies F_{X,Y}(x_1,y) \leqs F_{X,Y}(x_2,y)	\quad \forall y	\\
+&	y_1 \leqs y_2 \implies F_{X,Y}(x,y_1) \leqs F_{X,Y}(x,y_2)	\quad \forall x	\\
+&	F_{X,Y}(-\infty,y) = F_{X,Y}(x,-\infty) = 0	\\
+&	F_{X,Y}(+\infty,+\infty) = 1
+\end{align*}
+\end{definition}
+
+\begin{definition}[Совместная функция плотности ``join density function'']
+\begin{align*}
+&	f_{X,Y}(x,y) = \mathsmaller{\frac{\partial^2}{\partial x\,\partial y}} F_{X,Y}(x,y)	\\
+&	f(x,y) \geqs 0		\\
+&	\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f_{X,Y}(u,v) \, \d u \, \d v = 1
+\end{align*}
+\end{definition}
+
+\begin{definition}[Маргинальная плотность]
+\begin{align*}
+&	f_X(u) = \int_{-\infty}^{\infty} f_{X,Y}(u,v) \, \d v	\\
+&	f_Y(v) = \int_{-\infty}^{\infty} f_{X,Y}(u,v) \, \d u
+\end{align*}
+\end{definition}
+
+\begin{definition}[Маргинальная функция распределения]
+\begin{align*}
+&	F_X(x) = P(X \leqs x) = F_{X,Y}(x,\infty)	\\
+&	F_Y(y) = P(Y \leqs y) = F_{X,Y}(\infty,y)
+\end{align*}
+\end{definition}
+
+\begin{definition}[Совместное мат. ожидание]
+\begin{align*}
+&	\M \left(\phi(X,Y) \right)
+	= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}
+			\phi(u,v) \, f(u,v) \, \d u \, \d v
+\end{align*}
+\end{definition}
+
+\begin{definition}[$X$ и $Y$ независимы]
+\begin{align*}
+&	\forall \, x, \, y	\\
+&	P(X \leqs x, \, Y \leqs y) = P(X \leqs x) \, P(Y \leqs y)	\\
+&	F_{X,Y}(x,y) = F_X(x) \, F_Y(y)		\\
+&	f_{X,Y}(x,y) = f_X(x) \, f_Y(y)		\\
+&	\M(X\,Y) = \M(X)\,\M(Y)		\\
+&	\D(X+Y) = \D(X) + \D(Y)
+\end{align*}
+\end{definition}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Условные непрерывные распределения}
+
+\begin{definition}[Условное распределение при условии события $A$]
+\begin{align*}
+&	P(A)>0	\\
+&	F_{X|A}(x|A) = P(X \leqs x \,| A) = \frac{P(X \leqs x)}{P(A)}	\\
+&	f_{X|A}(x|A) = F'_{X|A}(x|A) = \frac{f_X(x)}{P(A)}	\\
+&	\M(X|A) = \int_{-\infty}^{\infty} x \, f_{X|A}(x|A) \, \d x
+\end{align*}
+\end{definition}
+
+\begin{definition}[Условное распределение при условии $Y=y$]
+\begin{align*}
+&	F_{X|Y}(x|y)
+	= \lim_{\Delta y\to 0} \frac{P(X\leqs x ,\; y<Y\leqs y+\Delta y)}
+								{P(y< Y\leqs y+\Delta y)}
+	= \frac{\frac{\partial}{\partial y}F_{X,Y}(x,y)}{f_Y(y)}	\\
+&	f_{X|Y}(x|y)
+	= \mathsmaller{\frac{\partial}{\partial x}} F_{X|Y}(x|y)
+	= \frac{f_{X,Y}(x,y)}{f_Y(y)}
+	= \frac{f_{X,Y}(x,y)}
+		   {\mathlarger\int_{-\infty}^{+\infty} f_{X,Y}(x,y)\d x}	\\
+\end{align*}
+\end{definition}
+
+
+\begin{definition}[Формула умножения]
+\begin{align*}
+&	f_{X,Y}(x,y) = f_Y(y) \, f_{X|Y}(x|y) = f_X(x) \, f_{Y|X}(y|x)
+\end{align*}
+\end{definition}
+
+
+\begin{definition}[Формула Байеса]
+\begin{align*}
+&	f_{Y|X}(y|x)
+	= \frac{ f_{X|Y}(x|y) \, f_Y(y) }{ f_X(x) }
+	= \frac{ f_{X|Y}(x|y) \, f_Y(y) }
+			{ \mathlarger\int_{-\infty}^{\infty} f_{X,Y}(x,y) \, \d y }
+\end{align*}
+\end{definition}
+
+\begin{definition}[Формула Байеса для дискретно-непрерывных распределений]
+\begin{align*}
+&	p_{N|X}(n|x)
+	= \frac{ p_N(n) \, f_{X|N}(x|n) }{ f_X(x) }
+	= \frac{ p_N(n) \, f_{X|N}(x|n) }{ \sum_n p_N(n) \, f_{X|N}(x|n) }
+	\\
+&	f_{X|N}(x|n)
+	= \frac{ f_X(x) \, p_{N|X}(n|x) }{ p_N(n) }
+	= \frac{ f_X(x) \, p_{N|X}(n|x) }
+		{ \mathlarger\int_{-\infty}^{\infty} f_X(x) \, p_{N|X}(n|x) \, \d x }
+\end{align*}
+\end{definition}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Условное среднее (regression function)}
+
+\begin{definition}[Условное среднее]
+\begin{align*}
+&	\M(X|Y=y) = \int_{-\infty}^{\infty} x \, f_{X|Y}(x|y) \d x
+\end{align*}
+\end{definition}
+
+\begin{onsamepage}
+\begin{lemma}[Формула полного среднего]
+	$\M \left( \M(X|Y) \right) = \M(X)$
+\end{lemma}
+\begin{proof}
+\begin{align*}
+	\M(X|Y=y) &= \int_\R x \, f_{X|Y}(x|y) \, \d x	= \phi(Y)	\\
+	\M\left(\phi(Y)\right) &= \int_\R \phi(y) f_Y(y) \d y
+	 = \int_\R \int_\R x \, f_{X|Y}(x|y) f_Y(y) \, \d x \, \d y	= \\
+	&= \int_\R \int_\R x \, f_{X,Y}(x,y) \, \d x \, \d y
+	 = \int_\R \left( \int_\R \, f_{X,Y}(x,y) \, \d y \right) x \, \d x = \\
+	&= \int_\R x \, f_X(x) \, \d x
+	 = \M(X)
+\end{align*}
+\end{proof}
+\end{onsamepage}
+
+\begin{lemma}[Свойства условного среднего]
+\begin{align*}
+&	\M(aX+bY\,|Z) = a\M(X|Z)+b\M(Y|Z)	\\
+&	\M(g(y) \cdot X \,|Y) = g(y) \cdot \M(X|Y)
+\end{align*}
+\end{lemma}
+
+\begin{theorem}
+\lets $\phi(Y)=\M(X|Y)$.
+Тогда для $\forall$ функции $g(Y)$
+\[ \M\left( X - g(Y) \right)^2 \geqs \M\left( X - \phi(Y) \right)^2 \]
+\end{theorem}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
