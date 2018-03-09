@@ -1018,6 +1018,38 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Правило Лопиталя}
 
+\begin{align*}
+&	\text{\lets } f,g\on(a,b)\to\R \quad f,g\Diff(a,b) \quad g'(x) \ne 0
+\\
+&	\lim_{x\to a+}f(x) = \lim_{x\to a+}g(x) = 0 \implies
+	\lim_{x\to a+} \frac{f(x)}{g(x)} = \lim_{x\to a+}\frac{f'(x)}{g'(x)}
+\\
+&	f,g\on(a,b) \quad \lim_{x\to a+}g(x) = \infty \implies
+	\lim_{x\to a+} \frac{f(x)}{g(x)} = \lim_{x\to a+}\frac{f'(x)}{g'(x)}
+\\
+&	\text{etc...}
+\end{align*}
+\begin{align*}
+&	\forall p>0 \quad \forall a>1			\\
+&	\lim_{x\to\infty}\frac{\ln x}{x^p} = 0	\\
+&	\lim_{x\to\infty}\frac{x^p}{a^x} = 0
+\end{align*}
+\begin{align*}
+&	\ln \ln x		\ll
+	(\ln x)^{100}	\ll
+	\sqrt[100]{x}	\ll
+	x^{100}			\ll
+	(\ln x)^{\ln x}	\ll
+	x^{\ln x} \equiv \\ & \equiv
+	e^{(\ln x)^2}	\ll
+	e^{\sqrt{x}}	\ll
+	e^x				\ll
+	(\ln x)^x		\ll
+	x^x				\ll
+	e^{x^2}
+\end{align*}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Формула Тейлора}
