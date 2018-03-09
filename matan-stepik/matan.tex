@@ -2,6 +2,9 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[margin=2.5cm]{geometry} % fix page margins
 
+% strengthen samepage because penalties are unreliable
+\newenvironment{onsamepage} {\begin{minipage}{\textwidth}} {\end{minipage}}
+
 %%% languages
 \usepackage{cmap}					% lookup in pdf
 \usepackage{mathtext} 				% cyrillic letters in formulas
@@ -11,9 +14,7 @@
 
 %%% mathematics
 \usepackage{amsmath,amsfonts,amssymb,mathtools}
-
-%%% перенос формул по Львовскому
-\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+\usepackage{bm}
 
 % totally disable breaking inline formulas across lines
 \relpenalty=10000
@@ -65,8 +66,10 @@
 
 %%% math mode macros
 \def\DS{\displaystyle}
-\def\NN{\mathbb{N}}
-\def\RR{\mathbb{R}}
+\def\N{\mathbb{N}}
+\def\R{\mathbb{R}}
+\def\Cont{\!\in\!\mathcal{C}\mathrm{ont}}
+\def\Diff{\!\in\!\mathcal{D}\mathrm{iff}}
 \def\.{\;\;}
 \def\on{\!:}
 \def\eps{\varepsilon}
@@ -182,10 +185,10 @@
 		\item Аксиомы поля (9 штук)
 		\item Аксимомы порядка (5 штук)
 		\item Аксиома Архимеда:
-				$ \forall\. x,y>0 \. \exists \; n \in \NN \;: nx>y $
+				$ \forall\. x,y>0 \. \exists \; n \in \N \;: nx>y $
 		\item Аксиома полноты:
 			\lets $[a_1,b_1] \supset [a_2,b_2] \supset [a_3,b_3] \supset...$.
-			\\Тогда $\exists$ число $c \in \RR$, принадлежащее всем отрезкам:
+			\\Тогда $\exists$ число $c \in \R$, принадлежащее всем отрезкам:
 			$\DS c \in \bigcap_{n=1}^{\infty} [a_n,b_n]$
 	\end{itemize}
 \end{definition}
@@ -245,15 +248,15 @@
 \subsection{Определение числа $e$}
 
 \begin{lemma}[Неравенство Бернулли]
-	\[ x>-1, n \in \NN \implies (1+x)^n \geqs 1+nx \]
+	\[ x>-1, n \in \N \implies (1+x)^n \geqs 1+nx \]
 \end{lemma}
 \begin{proof} По индукции \end{proof}
 
 \begin{corollary}
-	\[ x>-1, n \in \NN \implies \sqrt[n]{1+x} \leqs 1+\frac{x}{n} \]
+	\[ x>-1, n \in \N \implies \sqrt[n]{1+x} \leqs 1+\frac{x}{n} \]
 \end{corollary}
 
-\[ \lim_{\ntoinf} \frac{a^n}{n^k} = +\infty \quad a>1, \; k \in \NN \]
+\[ \lim_{\ntoinf} \frac{a^n}{n^k} = +\infty \quad a>1, \; k \in \N \]
 
 \[ \lim_{\ntoinf} \sqrt[n]{a} = 1 \quad a>0 \]
 
@@ -487,7 +490,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 
 \begin{definition}
-	$a$ -- предельная точка множества $E \subset \RR$,
+	$a$ -- предельная точка множества $E \subset \R$,
 	если $\ringU_a \cap E \neq \varnothing$ для любой $\ringU_a$
 \end{definition}
 
@@ -495,7 +498,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 Примеры:\begin{enumerate}
 	\item $[a,b]$ -- множество предельных точек $(a,b)$
 	\item $\{a\}$ -- предельная точка ряда $\{a_n\}\xrightarrow[\ntoinf]{}a$
-	\item $\varnothing$ -- нет предельных точек у одиночной точки $\{a\} \in \RR$
+	\item $\varnothing$ -- нет предельных точек у одиночной точки $\{a\} \in \R$
 \end{enumerate}
 
 
@@ -512,7 +515,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{Предел функции}
 
 \begin{definition}
-	\lets дана функция $f$: $E\to\RR$, заданная на множестве $E \subset \RR$.
+	\lets дана функция $f$: $E\to\R$, заданная на множестве $E \subset \R$.
 	\lets $a$ -- предельная точка множества $E$.
 	Тогда $\DS \lim_{x \to a}f(x)=A$
 	\big(или $f(x) \xrightarrow[x \to a]{} A$ \big),
@@ -544,11 +547,11 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 Свойства пределов: \begin{enumerate}
 	\item Предел единственный.
-	\item Локальная ограниченность: если $f\on E\to\RR$, $a$ -- предельная точка $E$,
-  		  $\DS \lim_{x\to a}f(x)=A$ и $A \in \RR$,
+	\item Локальная ограниченность: если $f\on E\to\R$, $a$ -- предельная точка $E$,
+		  $\DS \lim_{x\to a}f(x)=A$ и $A \in \R$,
   		  то $\exists$ такая окрестность $U_a$, что $f(x)$ ограничена на $U_a \cap E$.
-	\item Стабилизация знака: если $f\on E\to\RR$, $a$ -- предельная точка $E$,
-		  $\DS \lim_{x\to a}f(x)=A$ и $A \in \RR \setminus \{0\}$,
+	\item Стабилизация знака: если $f\on E\to\R$, $a$ -- предельная точка $E$,
+		  $\DS \lim_{x\to a}f(x)=A$ и $A \in \R \setminus \{0\}$,
   		  то $\exists$ такая окрестность $U_a$,
   		  что знаки $f(x)$ при $x \in \ringU_a \cap E$ и $A$ совпадают.
 \end{enumerate}
@@ -561,7 +564,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 \begin{theorem}[Предельный переход в неравенстве]
   Если \begin{enumerate}
-	\item $f,g :\, E\to\RR$, $\;$ $a$ -- предельная точка $E$
+	\item $f,g :\, E\to\R$, $\;$ $a$ -- предельная точка $E$
 	\item $f(x) \leqs g(x)$ при всех $x \in E \setminus \{a\}$
 	\item $\DS\lim_{x\to a}f(x)=A$, $\DS\lim_{x\to a}g(x)=B$
   \end{enumerate}
@@ -570,7 +573,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 \begin{theorem}[Теорема о сжатой функции (аналог теоремы о двух милиционерах)]
   Если \begin{enumerate}
-	\item $f,g,h :\, E\to\RR$, $\;$ $a$ -- предельная точка $E$
+	\item $f,g,h :\, E\to\R$, $\;$ $a$ -- предельная точка $E$
 	\item $f(x) \leqs g(x) \leqs h(x)$ при всех $x \in E \setminus \{a\}$
 	\item $\DS \lim_{x\to a}f(x)=\lim_{x\to a}h(x)=A$
   \end{enumerate}
@@ -580,13 +583,13 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{Односторонние пределы}
 
 \begin{definition}[Монотонная функция]
-	$f :\, E\to\RR$ монотонно возрастает (убывает), если для \any $x \leqs y$
+	$f :\, E\to\R$ монотонно возрастает (убывает), если для \any $x \leqs y$
 	выполнено $f(x) \leqs f(y)$ \big(или $f(x) \geqs f(y)$\big)
 \end{definition}
 
 
 \begin{theorem}
-	\lets $f:\, E\to\RR$, $\;$ $a$ -- предельная точка множества $E_1=E \cap (-\infty,a)$.
+	\lets $f:\, E\to\R$, $\;$ $a$ -- предельная точка множества $E_1=E \cap (-\infty,a)$.
 	Тогда: \begin{itemize}
 		\item Если $f$ возрастает и ограничена сверху, то
 			  $\exists$ $\DS \lim_{x\to a-}f(x)$
@@ -600,7 +603,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsection{Непрерывность функции}
 
 \begin{definition}
-  $f\on E\to\RR$ непрерывна в точке $a \in E$,
+  $f\on E\to\R$ непрерывна в точке $a \in E$,
   если выполнено любое из равносильных условий:
   \begin{enumerate}
 	\item Если $a$ -- предельная точка, то $\DS \lim_{x\to a}f(x)=f(a)$
@@ -619,21 +622,21 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \bigbreak
 
 Следствия: \begin{enumerate}
-	\item Многочлены $\DS p(x)=\sum_{k=0}^n a_kx^k$ непрерывны на $\RR$.
+	\item Многочлены $\DS p(x)=\sum_{k=0}^n a_kx^k$ непрерывны на $\R$.
 	\item Отношения многочленов $\DS \frac{p(x)}{q(x)}$ (рациональные функции)
 		  непрерывны во всех точках, в которых знаменатель не обращается в ноль.
 \end{enumerate}
 
 
 \begin{theorem}[Теорема о стабилизации знака]
-	Если $f\on E\to\RR$ непрерывна в точке $a \in E$ и $f(a)\ne0$,
+	Если $f\on E\to\R$ непрерывна в точке $a \in E$ и $f(a)\ne0$,
 	то найдётся такая окрестность $U_a$, что знак $f(x)$ совпадает с $f(a)$.
 \end{theorem}
 \begin{proof} Следствие утверждения про пределы \end{proof}
 
 
 \begin{theorem}[Непрерывность композиции]
-	\lets $f\on D\to\RR, \. g\on E\to\RR \. f(D)\subset E$ и
+	\lets $f\on D\to\R, \. g\on E\to\R \. f(D)\subset E$ и
 	$f$ непрерывна в точке $a\in D$, а $g$ непрерывна в точке $f(a)$.
 	Тогда $g \circ f$ непрерывна в точке $a$.
 \end{theorem}
@@ -645,7 +648,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \end{proof}
 
 
-Пример: $\sin x$ непрерывен на $\RR$. \\
+Пример: $\sin x$ непрерывен на $\R$. \\
 Вспомогательное нер-во: если $0<x<\frac\pi2$, то $\sin x<x<\tg x$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -721,7 +724,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \end{definition}
 
 \begin{theorem}
-	\lets $f\on \intab\to\RR$ непрерывна и строго монотонна,
+	\lets $f\on \intab\to\R$ непрерывна и строго монотонна,
 	\[ \DS m=\inf_{x \in \intab}f(x) ,\qquad \DS M=\sup_{x \in \intab}f(x)\].
 	Тогда:
 	\begin{enumerate}
@@ -745,8 +748,8 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \begin{align*}
 	  & \arcsin:     \quad (\nearrow) \quad \left[ -1, 1 \right] \to \left[ -\frac\pi2, \frac\pi2 \right]
 	\\& \arccos:     \quad (\searrow) \quad \left[ -1, 1 \right] \to \left[ 0, \pi \right]
-	\\& \arctg: \;\; \quad (\nearrow) \quad \RR \to \left( -\frac\pi2, \frac\pi2 \right)
-	\\& \arcctg:  \, \quad (\searrow) \quad \RR \to \left( 0, \pi \right)
+	\\& \arctg: \;\; \quad (\nearrow) \quad \R \to \left( -\frac\pi2, \frac\pi2 \right)
+	\\& \arcctg:  \, \quad (\searrow) \quad \R \to \left( 0, \pi \right)
 \end{align*}
 
 
@@ -771,8 +774,8 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsection{Эквивалентные функции}
 
 \begin{definition}[$f \sim g$ при $x \to a$]
-	\lets $f,g\on E\to \RR$, $a$ -- предельная точка $E$. \\
-	Если $\exists$ такая окрестность $\ringU_a$ и функция $\varphi\on E\to\RR$,
+	\lets $f,g\on E\to \R$, $a$ -- предельная точка $E$. \\
+	Если $\exists$ такая окрестность $\ringU_a$ и функция $\varphi\on E\to\R$,
 	что $f(x)=\varphi(x)g(x)$ при всех $x\in\ringU_a\cap E$
 	и $\DS \lim_{x\to a}\varphi(x)=1$,\\
 	то $f \sim g$ при $x\to a$ (или $\DS f \underset{x\to a}{\sim} g$).
@@ -804,8 +807,8 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 \subsubsection{o-малое}
 
 \begin{definition}[$o(f)$]
-	\lets $f,g\on E\to\RR$, $a$ -- предельная точка $E$.
-	Если $\exists$ окрестность $\ringU_a$ и функция $\varphi\on E\to\RR$,
+	\lets $f,g\on E\to\R$, $a$ -- предельная точка $E$.
+	Если $\exists$ окрестность $\ringU_a$ и функция $\varphi\on E\to\R$,
 	такая что $f(x)=\varphi(x)g(x)$ при всех $x\in\ringU_a\cap E$
 	и $\DS \lim_{x\to a}\varphi(x)=0$,\\
 	то $f = o(g)$ при $x\to a$ или $\DS f \underset{x\to a}{=} o(g)$
@@ -854,8 +857,8 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 
 \begin{definition}[Дифференцируемые функции]
-	\lets $f\on\intab\to\RR$ и $x_0\in\intab$. \\
-	$f$ -- дифференцируема в точке $x_0$, если $\exists$ такое $k\in\RR$, что
+	\lets $f\on\intab\to\R$ и $x_0\in\intab$. \\
+	$f$ -- дифференцируема в точке $x_0$, если $\exists$ такое $k\in\R$, что
 	\[ f(x) = f(x_0) + k(x-x_0) + o(x-x_0) \quad при x \to x_0. \]
 \end{definition}
 
@@ -868,13 +871,13 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 
 \begin{theorem}[Критерий дифференцируемости] ~\\
-	\lets $f\on \intab\to\RR$ и $x_0\in\intab$.
+	\lets $f\on \intab\to\R$ и $x_0\in\intab$.
 	Тогда след. утверждения эквивалентны:
 	\begin{enumerate}
-		\item $f$ дифференцируема в точке $x_0$
+		\item $f\Diff\{x_0\}$
 		\item $f$ имеет в точке $x_0$ конечную производную
-		\item $\exists$ непрерывная в $x_0$ функция $\varphi\on\intab\to\RR$
-			  такая, что $f(x)-f(x_0) = \varphi(x)(x-x_0)$
+		\item $\exists$ непрерывная в $x_0$ функция $\varphi\on\intab\to\R$
+			  т.ч. $f(x)-f(x_0) = \varphi(x)(x-x_0)$
 	\end{enumerate}
 	И если они справедливы, то $k=f'(x_0)=\varphi(x_0)$
 \end{theorem}
@@ -894,7 +897,7 @@ $\DS\sum_{k=1}^\infty \frac1{k^2} = \frac{\pi^2}6 $
 
 
 \begin{corollary}
-	$f$ дифференцируема в точке $x_0$ $\implies$ $f$ непрерывна в точке $x_0$
+	$f\Diff\{x_0\}$ $\implies$ $f\Cont\{x_0\}$
 \end{corollary}
 
 
@@ -910,10 +913,9 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 
 \begin{theorem}[Производная композиции]
 	\def\intcd{\left<c,d\right>}
-	\lets $f\on \intab \to \intcd$,	\medspace $g\on \intcd \to \RR$,
+	\lets $f\on \intab \to \intcd$,	\medspace $g\on \intcd \to \R$,
 	\\ $f$ -- дифф. в точке $x_0 \in\intab$, \medspace $g$ -- дифф. в точке $f(x_0)$.
-	\\ Тогда $g \circ f$ дифференцируема в $x_0$
-	и $(g \circ f)'(x_0) = g'(f(x_0)) \cdot f'(x_0)$
+	\\ Тогда $(g \circ f)\Diff\{x_0\}$ и $(g \circ f)'(x_0) = g'(f(x_0)) \cdot f'(x_0)$
 \end{theorem}
 \begin{proof}
 	Использовать определение дифференцируемости
@@ -922,9 +924,9 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 
 
 \begin{theorem}[Дифференцирование обратной функции]
-	\lets $f\on\intab\to\RR$ строго монотонна и непрерывна,
-	дифференцируема в точке $x_0 \in\intab$ и $f'(x_0) \ne 0$. \\
-	Тогда обратная функция $f^{-1}$ дифф. в точке $f(x_0)$ и
+	\lets $f\on\intab\to\R$ строго монотонна и $f\Cont$,
+	$f\Diff$ в точке $x_0 \in\intab$ и $f'(x_0) \ne 0$. \\
+	Тогда обратная функция $f^{-1}\Diff$ в точке $f(x_0)$ и
 	$\DS \left(f^{-1}\right)'\left(f(x_0)\right) = \frac1{f'(x_0)}$
 \end{theorem}
 
@@ -933,33 +935,84 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 \subsection{Теоремы о среднем}
 
 \begin{theorem}[Теорема Ферма]
-	\lets $f\on\intab\to\RR$ дифференцируема в $x_0\in(a,b)$.
-	Если $\DS f(x_0)=\max_{x\in\intab}f(x)$ или $f(x_0)=\min_{x\in\intab}f(x)$,
+	\lets $f\on\intab\to\R$, $f\Diff\{x_0\}$ в $x_0\in(a,b)$. \\
+	Если $\DS f(x_0)=\max_{x\in\intab}f(x)$ или $\DS f(x_0)=\min_{x\in\intab}f(x)$,
 	то $f'(x_0)=0$.
 \end{theorem}
 
-
 \begin{theorem}[Теорема Ролля]
-	\lets $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
+	\lets $f\on[a,b]\to\R$, $f\Cont[a,b]$, $f\Diff(a,b)$. \\
 	Если $f(a)=f(b)$, то $\exists$ такая точка $c\in(a,b)$, что $f'(c)=0$.
 \end{theorem}
 
-
 \begin{theorem}[Теорема Лагранжа]
-	\lets $f\on[a,b]\to\RR$ непрерывна на $[a,b]$ и дифф. на $(a,b)$.
+	\lets $f\on[a,b]\to\R$, $f\Cont[a,b]$, $f\Diff(a,b)$. \\
 	Тогда $\exists$ такая точка $c\in(a,b)$, что $f(b)-f(a)=f'(c)(b-a)$.
 \end{theorem}
 
-
 \begin{theorem}[Теорема Коши]
-	...
+	\lets $f,g\on[a,b]\to\R$, $\;f,g\Cont[a,b]$, $f,g\Diff(a,b)$,
+	причём $g'(x) \neq 0$ на $(a,b)$.
+	Тогда $\exists$ такая точка $c\in(a,b)$,
+	что $\dfrac{f(b)-f(a)}{b-a}=\dfrac{f'(c)}{g'(c)}$.
 \end{theorem}
 
-\todo
+\begin{corollary}
+	\lets $f'(c)=g'(c)$, $\forall c\in(a,b)$ и $f(a)=g(a)$ или $f(b)=g(b)$. \\
+	Тогда $f(x)=g(x)$, $\forall x\in[a,b]$.
+\end{corollary}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Производная и монотонность}
+
+\begin{onsamepage}
+\begin{theorem}[Условия монотонности]
+	\lets $f\on\intab\to\R \quad f\Cont\intab \quad f\Diff(a,b)$.
+	Тогда \begin{enumerate}
+		\item $f$ возрастает на $\intab$ \iff $f'(x) \geqs 0$ при всех $x\in(a,b)$.
+		\item $f'(x)>0$, $\;\forall\,x\!\in\!(a,b)$ $\implies$ $f$ \textit{строго} возрастает
+			  (обратное верно не всегда).
+	\end{enumerate}
+\end{theorem}
+\end{onsamepage}
+
+\begin{corollary}[Критерий постоянства]
+	\lets $f\on\intab\to\R \quad f\Cont\intab \quad f\Diff(a,b)$. \\
+	Тогда $f\!=\!\mathrm{const}\intab$ \iff $f'(x)=0$ $\;\forall\;x\in(a,b)$.
+\end{corollary}
+
+\begin{corollary}[Строгое неравенство]
+	\lets $f\on\left[a,b\right>\to\R \quad f\Cont\left[a,b\right> \quad f\Diff(a,b)$. \\
+	Если $f(a)=g(a)$ и $f'(x)<g'(x)$ при \any $x\in(a,b)$ $\implies$ $f(x)<g(x)$ при \any $x\in(a,b)$.
+\end{corollary}
+
+
+\begin{theorem}[Дарбу]
+	\lets $f\on[a,b]\to\R$ и $f\Diff \, \pmb{\pmb{[}} a,b \,\pmb{\pmb{]}}$. \\
+	$\implies \; \forall\; f'(a) < y < f'(b) \quad \exists \; c\in\pmb{(}a,b\pmb{)}: \quad f'(c)=y$. \\
+	(Непрерывность $f'(x)$ не требуется!)
+\end{theorem}
+\begin{proof}
+	Сначала рассмотреть $y=0$ и $f'(a)<0<f'(b)$.
+	По Т. Ферма $\exists$ экстремум $c\in[a,b]$....
+	Доказать, что $c \ne a$, $c \ne b$.
+	Через $g(x)=f(x)-yx$ перейти к \any$y$.
+\end{proof}
+
+\begin{corollary}
+	Функция производной не может иметь разрывов.
+\end{corollary}
+
+\begin{corollary}
+	\lets $f\on\intab\to\R$, $\;f\Diff\intab$ и $f'(x)\ne 0$ на $\intab$. \\
+	$\implies$ $f$ --- строго монотонна.
+\end{corollary}
+
+\begin{corollary}
+	\lets $f\on\intab\to\R$, $\;f\Diff\intab$. Тогда $f'(\intab)$ --- промежуток.
+\end{corollary}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -986,6 +1039,13 @@ $\DS f'_{\pm}(x_0) = \lim_{x\to x_0\pm}\frac{f(x)-f(x_0)}{x-x_0}$
 \subsection{Первообразная и неопределённый интеграл}
 
 \todo
+
+Некоторые интегралы:
+\begin{align*}
+&	\int \ln x \, dx = x \, \ln x - x
+\end{align*}
+
+Не представимы в замкнутой форме: $e^{-x^2}$, $\sin x/x$, $\cos x/x$, $1/\ln x$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
